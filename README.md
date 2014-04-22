@@ -1,2 +1,2 @@
-ostb-seed
+ostb
 =========
