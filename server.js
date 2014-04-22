@@ -14,6 +14,7 @@ var options = {
 share.server.attach(app, options);
 
 app.get('/', function(req, res) {
+  console.log('recieved request');
   res.render('index');
 });
 
