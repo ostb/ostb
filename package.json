@@ -7,6 +7,7 @@
   "dependencies": {
     "express": "4.0.0",
     "share": "0.6",
-    "ejs": "~0.8.5"
+    "ejs": "~0.8.5",
+    "nodegit@": "0.0.79"
   }
 }
