@@ -1,3 +1,37 @@
-<h2>Open Source Textbook</h2>
 
-<p>This is our index.ejs page</p>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Hello World</title>
+	</head>
+
+	<body>
+
+		<h2>Open Source Textbook</h2>
+
+		<p>This is our index.ejs page</p>
+		
+		<div id="header">
+			<div id="htext">
+				Editing <b>hello</b></input>
+			</div>
+		</div>
+
+
+		<div id="editor"></div>
+		
+		<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>  
+	    <script src="/channel/bcsocket.js"></script> 
+		<script src="/share/share.js"></script>
+		<script src="/share/ace.js"></script>
+		<!-- <script src="/share/share.uncompressed.js"></script> -->	
+
+		<script>
+		var editor = ace.edit("editor");
+		sharejs.open('hello', 'text', 'http://cubinity.cloudapp.net:3000', function(error, doc) {
+			doc.attach_ace(editor);
+		});
+		</script>
+
+	</body>
+</html>	
