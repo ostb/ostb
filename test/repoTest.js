@@ -4,7 +4,8 @@ var fs = require('fs');
 var Promise = require('bluebird');
 var port = 3000;
 var express = require('express');
-var git = require('nodegit');
+var gitteh  = require("gitteh");
+
 var app;
 
 describe('undefined repo', function() {
@@ -13,23 +14,20 @@ describe('undefined repo', function() {
     app = express();
     app.listen(3000);
 
-    if(fs.existsSync('./users/alejandroREAL/')) {   //remove if exists and recreate
-      fs.rmdirSync('./users/alejandroREAL/');
-    }
-    var newRepo = new git.Repo.init('./users/alejandroREAL/', false, function(error, Repo) {
+    gitteh.initRepository('./users/alejandroREAL/', false, function() {
       done();
     });
   });
 
   it('should return undefined for a non-existent repo', function(done) {
-    git.Repo.open('./users/alejandroFAKE/', function(error, repo) {
+    gitteh.openRepository('./users/alejandroFAKE/', function(error, repo) {
       (typeof repo).should.equal('undefined');
       done();
     });
   });
 
   it('should retrieve a created repo', function(done) {
-    git.Repo.open('./users/alejandroREAL/', function(error, repo) {
+    gitteh.openRepository('./users/alejandroREAL/', function(error, repo) {
       (typeof repo).should.equal('object');
       done();
     });

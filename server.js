@@ -1,9 +1,11 @@
 var express = require('express');
-var share = require('share');
-var Q = require('q');
+var share   = require('share');
+var Q       = require('q');
+var gitteh  = require("gitteh");
 
-var git = require('nodegit');
-var open = require('nodegit').Repo.open;
+// var git  = require('nodegit');
+// var open = require('nodegit').Repo.open;
+
 
 var app = express();
 
@@ -21,19 +23,13 @@ app.get('/', function(req, res) {
   console.log('received request');
   res.render('index');
 
-  // var newRepo = new git.Repo.init('./users/alejandro/', false, function(error, Repo) {
-  //   if (error) console.log(error);
-  //   console.log('created repo ', Repo);
+  // gitteh.initRepository('./users/alejandro/', false, function(){
+  //   console.log('repo create');
   // });
 
-  open('./users/alejandro/', function(error, Repo) {
-    if (error) console.log(error);
-    console.log('retrieved repo ', Repo);
-    
-    Repo.createCommit('updateRef', 'author', 'committer', 'message', null, [], function(oid) {
-      console.log('commit success: ', oid);
+    gitteh.openRepository('./users/alejandro/', function(error, repo) {
+      console.log('repo: ', repo);
     });
-  });
 
 });
 
