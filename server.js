@@ -1,8 +1,9 @@
 var express = require('express');
 var share = require('share');
-// var hat = require('hat');
-var git = require('nodegit');
 var Q = require('q');
+
+var git = require('nodegit');
+var open = require('nodegit').Repo.open;
 
 var app = express();
 
@@ -25,7 +26,7 @@ app.get('/', function(req, res) {
   //   console.log('created repo ', Repo);
   // });
 
-  git.Repo.open('./users/alejandro/', function(error, Repo) {
+  open('./users/alejandro/', function(error, Repo) {
     if (error) console.log(error);
     console.log('retrieved repo ', Repo);
     
