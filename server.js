@@ -1,6 +1,7 @@
 var express = require('express');
-var share = require('share');
-// var hat = require('hat');
+var share   = require('share');
+var Q       = require('q');
+
 var app = express();
 
 app.set('views', __dirname + '/views');
@@ -15,7 +16,7 @@ var options = {
 share.server.attach(app, options);
 
 app.get('/', function(req, res) {
-  console.log('recieved request');
+  console.log('received request');
   res.render('index');
 });
 
