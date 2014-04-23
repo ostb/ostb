@@ -13,9 +13,6 @@ describe('undefined repo', function() {
     app = express();
     app.listen(3000);
 
-    if(fs.existsSync('./users/alejandroREAL/')) {   //remove if exists and recreate
-      fs.rmdirSync('./users/alejandroREAL/');
-    }
     var newRepo = new git.Repo.init('./users/alejandroREAL/', false, function(error, Repo) {
       done();
     });
