@@ -6,8 +6,9 @@
   "main": "server.js",
   "dependencies": {
     "express": "4.0.0",
-    "share": "0.6",
-    "ejs": "~0.8.5",
-    "nodegit@": "0.0.79"
+    "share": "^0.6.3",
+    "ejs": "^0.8.8",
+    "bluebird": "^1.2.3",
+    "nodegit": "^0.1.1"
   }
 }

@@ -2,6 +2,8 @@ var express = require('express');
 var share = require('share');
 // var hat = require('hat');
 var git = require('nodegit');
+var Promise = require('bluebird');
+
 var app = express();
 
 app.set('views', __dirname + '/views');
@@ -18,31 +20,14 @@ app.get('/', function(req, res) {
   console.log('recieved request');
   res.render('index');
 
-  var newRepo = new git.raw.Repo();
-  console.log(newRepo);
+  console.log('git', git);
 
-  newRepo.init('./users/alejandro/', false, function(error, Repo) {
+  var newRepo = new git.Repo.init('./users/alejandro/', false, function(error, Repo) {
     if (error) console.log(error);
     console.log('created repo ', Repo);
   });
+
+  
 });
-
-  // git.repo('./users/alejandro/.git', function(error, repository) {
-  //   if (error) throw error;
-  //   console.log('retrieve repo: ', repository);
-
-  //   repository.init('./users/alejandro/', false, function(error, data) {
-  //     if (error) throw error;
-  //     console.log('created repo ', data);
-
-  //     git.repo('./users/alejandro/.git', function(error, repository) {
-  //       if (error) throw error;
-  //       console.log('user repo: ', repository);
-  //     });
-  //   });
-    
-  // });
-
-// });
 
 app.listen(3000);
