@@ -20,9 +20,14 @@ app.get('/', function(req, res) {
   console.log('recieved request');
   res.render('index');
 
-  var newRepo = new git.Repo.init('./users/alejandro/', false, function(error, Repo) {
+  // var newRepo = new git.Repo.init('./users/alejandro/', false, function(error, Repo) {
+  //   if (error) console.log(error);
+  //   console.log('created repo ', Repo);
+  // });
+
+  git.Repo.open('./users/alejandro/', function(error, Repo) {
     if (error) console.log(error);
-    console.log('created repo ', Repo);
+    console.log('retrieved repo ', Repo);
   });
 
 });
