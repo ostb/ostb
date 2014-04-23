@@ -1,6 +1,5 @@
-
 <!DOCTYPE HTML>
-<html>
+<html ng-app="angularApp">
 	<head>
 		<title>Hello World</title>
 		<meta charset="utf-8">
@@ -9,14 +8,13 @@
 				font-size: 1em;
 			}
 		</style>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script type="text/javascript" src="/js/app.js"></script>
 	</head>
 
 	<body>
-
 		<h2>Open Source Textbook</h2>
-
 		<p>This is our index.ejs page</p>
-		
 		<div id="header">
 			<div id="htext">
 				Editing <b>hello</b></input>
@@ -24,15 +22,21 @@
 		</div>
 		<textarea id="editor" disabled>Loading...</textarea>
 
-
 		<div id="editor"></div>
-		
+
+
+        <button ng-click="goPost()"> button yo!! </button>
+
+<!-- 		<div>
+          <input type="text" ng-model="yourName" placeholder="Enter a name here">
+          <h1>Hello, {{ yourName }}!<h1>
+		</div>
+ -->		
 		<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>  
 	    <script src="/channel/bcsocket.js"></script> 
 		<script src="/share/share.uncompressed.js"></script>
 		<script src="/share/share.js"></script>
 		<script src="/share/textarea.js"></script>
-
 		<script>
 			var elem = document.getElementById('editor');
 
@@ -46,6 +50,5 @@
 				}
 			});
 		</script>
-
 	</body>
 </html>	

@@ -3,7 +3,7 @@ var share = require('share');
 // var hat = require('hat');
 var app = express();
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/client/views');
 app.set('view engine', 'ejs');
 // app.use(express.static(__dirname + '/views'));
 
