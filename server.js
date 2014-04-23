@@ -2,7 +2,7 @@ var express = require('express');
 var share = require('share');
 // var hat = require('hat');
 var git = require('nodegit');
-// var Promise = require('bluebird');
+var Q = require('q');
 
 var app = express();
 
@@ -25,7 +25,12 @@ app.get('/', function(req, res) {
   //   console.log('created repo ', Repo);
   // });
 
-  git.Repo.open('./users/alejandro/', function(error, Repo) {
+  // git.Repo.open('./users/alejandro/', function(error, Repo) {
+  //   if (error) console.log(error);
+  //   console.log('retrieved repo ', Repo);
+  // });
+
+  Q(git.Repo.open('./users/alejandro/')).then(function(error, Repo) {
     if (error) console.log(error);
     console.log('retrieved repo ', Repo);
   });
