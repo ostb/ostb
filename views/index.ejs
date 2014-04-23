@@ -1,3 +1,51 @@
-<h2>Open Source Textbook</h2>
 
-<p>This is our index.ejs page</p>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Hello World</title>
+		<meta charset="utf-8">
+		<style>
+			#editor {
+				font-size: 1em;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<h2>Open Source Textbook</h2>
+
+		<p>This is our index.ejs page</p>
+		
+		<div id="header">
+			<div id="htext">
+				Editing <b>hello</b></input>
+			</div>
+		</div>
+		<textarea id="editor" disabled>Loading...</textarea>
+
+
+		<div id="editor"></div>
+		
+		<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>  
+	    <script src="/channel/bcsocket.js"></script> 
+		<script src="/share/share.uncompressed.js"></script>
+		<script src="/share/share.js"></script>
+		<script src="/share/textarea.js"></script>
+
+		<script>
+			var elem = document.getElementById('editor');
+
+			sharejs.open('hello', 'text', function(error, doc) {
+				window.doc = doc;
+				if (error) {
+					console.log(error);
+				} else {
+					elem.disabled = false;
+					doc.attach_textarea(elem);
+				}
+			});
+		</script>
+
+	</body>
+</html>	
