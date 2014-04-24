@@ -1,6 +1,6 @@
 var express = require('express');
 var share   = require('share');
-var Q       = require('q');
+var Promise       = require('bluebird');
 
 var app = express();
 
