@@ -39,7 +39,8 @@ var child;
 // });
 
 // shell.init('alejandro', 'intro_biology');
-shell.createUser('elliott');
+// shell.createUser('elliott');
+shell.commit('alejandro', 'intro_biology', 'test commit');
 
 app.get('/', function(req, res) {
   console.log('received request');
