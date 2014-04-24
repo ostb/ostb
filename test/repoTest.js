@@ -14,11 +14,8 @@ describe('undefined repo', function() {
     app = express();
     app.listen(3000);
 
-<<<<<<< HEAD
     var newRepo = new git.Repo.init('./users/alejandroREAL/', false, function(error, Repo) {
-=======
     gitteh.initRepository('./users/alejandroREAL/', false, function() {
->>>>>>> 69b48bb979eb32174fadd2affe4209110a6b02f1
       done();
     });
   });
