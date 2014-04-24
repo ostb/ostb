@@ -1,6 +1,7 @@
 var express = require('express');
 var share   = require('share');
 var Promise = require('bluebird');
+var shell = require('./server/shell_commands');
 
 var app = express();
 
@@ -36,6 +37,9 @@ var child;
 // exec("cd ~/users/" + "alejandro" + "/" + "intro_biology" + "&& git add --all && git commit", function (error, stdout, stderr) {
 //   sys.print('stdout: ' + stdout);
 // });
+
+// shell.init('alejandro', 'intro_biology');
+shell.createUser('elliott');
 
 app.get('/', function(req, res) {
   console.log('received request');
