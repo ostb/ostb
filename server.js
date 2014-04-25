@@ -25,8 +25,6 @@ share.server.attach(app, options);
 // shell.createUser('elliott');
 // shell.commit('alejandro', 'intro_biology', 'test commit');
 
-// var walk = require('./server_modules/walk');
-
 app.get('/', function(req, res) {
   console.log('received request');
   res.render('index');
