@@ -15,14 +15,16 @@ exports.init = function(username, repo) {
   .then(function() {
     fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
   }).then(function() {
-    commit(username, repo, 'Created new project: ' + repo);
+    return commit(username, repo, 'Created new project: ' + repo);
   })
 }
 
 var commit = exports.commit = function(username, repo, commitMessage) {
-  exec('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"', function (error, stdout, stderr) {
-    sys.print('stdout: ' + stdout);
-  });
+  // exec('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"', function (error, stdout, stderr) {
+  //   sys.print('stdout: ' + stdout);
+  // });
+
+  return execute('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"');
 }
 
 exports.log = function(username, repo) {
