@@ -46,12 +46,12 @@ share.server.attach(app, options);
 
 // shell.commit('alejandro', 'intro_biology', 'test commit');
 
-shell.log('alejandro', 'intro_biology');
+// shell.log('alejandro', 'intro_biology');
 
-// shell.init('alejandro', 'intro_biology')
-// .then(function() {
-//   shell.log('alejandro', 'intro_biology')
-// })
+shell.getCommitHash('alejandro', 'intro_biology')
+.then(function(hash) {
+  console.log('commit hash: ', hash[0]);
+});
 
 
 app.get('/', function(req, res) {

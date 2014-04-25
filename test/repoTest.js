@@ -40,7 +40,8 @@ describe('repo & user testing', function() {
       done();
     })
   });
-});
 
+  it('should create an initial commit')
+});
 
 

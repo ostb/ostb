@@ -24,7 +24,17 @@ var commit = exports.commit = function(username, repo, commitMessage) {
   //   sys.print('stdout: ' + stdout);
   // });
 
-  return execute('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"');
+  return execute('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
+  .then(function() {
+    return getCommitHash(username, repo);
+  })
+  .then(function(hash) {
+    console.log('commit hash: ', hash);
+  });
+}
+
+var getCommitHash = exports.getCommitHash = function(username, repo) {
+  return execute('cd ~/users/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD');
 }
 
 exports.log = function(username, repo) {
