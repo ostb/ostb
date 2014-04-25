@@ -13,11 +13,11 @@ describe('repo & user testing', function() {
   before(function() {
     app = express();
     app.listen(3000);
-
   });
 
   after(function() {
-    fs.rmdir('/Users/ethoreby/users/alejandroTest');
+    fs.rmdirSync('/Users/ethoreby/users/alejandroTest/test_repo');
+    fs.rmdirSync('/Users/ethoreby/users/alejandroTest');
   })
 
   it('should create a user directory', function(done) {
@@ -27,11 +27,12 @@ describe('repo & user testing', function() {
     });
   });
 
-  it('should retrieve a created repo', function() {
-    gitteh.openRepository('./users/alejandroREAL/', function(error, repo) {
-      (typeof repo).should.equal('object');
+  it('should initialize a repo', function(done) {
+    shell.init('alejandroTest', 'test_repo')
+    .then(function() {
+      (fs.existsSync('/Users/ethoreby/users/alejandroTest/test_repo')).should.equal(true);
       done();
-    });
+    })
   });
 });
 
