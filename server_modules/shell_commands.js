@@ -46,3 +46,8 @@ exports.log = function(username, repo) {
 exports.deleteRepo = function(username, repo) {
   return execute('rm -rf  ~/users/' + username + '/' + repo);
 }
+
+var sanitize = function(input) {
+  input = input.trim().replace(/ /g, '\\ ');
+  return input.replace(/;/g, '\\;');
+}

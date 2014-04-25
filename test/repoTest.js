@@ -41,7 +41,14 @@ describe('repo & user testing', function() {
     })
   });
 
-  it('should create an initial commit')
+  it('should create an initial commit', function(done) {
+    shell.getCommitHash('alejandroTest', 'test_repo')
+    .then(function(hash) {
+      (hash[0].length > 0).should.equal(true);
+      done();
+    })
+  })
 });
+
 
 
