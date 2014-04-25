@@ -21,9 +21,16 @@ share.server.attach(app, options);
 // var example = require('git-node/examples/read');
 
 
+// shell.createUser('aria')
+// .then(function(stdout) {
+//   console.log('stdout: ' + stdout);
+// })
+// .catch(function(err){
+//   console.log('error: ', err);
+// });
 // shell.init('alejandro', 'intro_biology');
-// shell.createUser('elliott');
 // shell.commit('alejandro', 'intro_biology', 'test commit');
+// shell.log('alejandro', 'intro_biology');
 
 app.get('/', function(req, res) {
   console.log('received request');

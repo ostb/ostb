@@ -4,23 +4,25 @@ var fs = require('fs');
 var Promise = require('bluebird');
 var port = 3000;
 var express = require('express');
-var gitteh  = require("gitteh");
+var shell = require('../server_modules/shell_commands');
 
 var app;
 
-describe('undefined repo', function() {
+describe('repo & user testing', function() {
 
-  before(function(done) {
+  before(function() {
     app = express();
     app.listen(3000);
 
-    var newRepo = new git.Repo.init('./users/alejandroREAL/', false, function(error, Repo) {
-    gitteh.initRepository('./users/alejandroREAL/', false, function() {
-      done();
-    });
+    fs.mkdirSync('testUsers/');
+
   });
 
-  it('should return undefined for a non-existent repo', function(done) {
+  after(function() {
+    fs.rmdir('testUsers/');
+  })
+
+  it('should return null for a non-existent repo', function(done) {
     gitteh.openRepository('./users/alejandroFAKE/', function(error, repo) {
       (typeof repo).should.equal('undefined');
       done();
