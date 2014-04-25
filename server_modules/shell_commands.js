@@ -58,6 +58,10 @@ exports.deleteRepo = function(username, repo) {
   return execute('rm -rf  ~/users/' + username + '/' + repo);
 }
 
+exports.deleteUser = function(username) {
+  return execute('rm -rf  ~/users/' + sanitizeSpaces(username));
+}
+
 var sanitizeSpaces = function(input) {
   return input.trim().replace(/ /g, '\\ ');
 }
