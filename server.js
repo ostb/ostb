@@ -28,13 +28,13 @@ share.server.attach(app, options);
 //   console.log('error: ', err);
 // });
 
-shell.init('alejandro', 'intro_biology')
-.then(function(stdout) {
-  console.log('stdout: ' + stdout);
-})
-.catch(function(err){
-  console.log('error: ', err);
-});
+// shell.init('alejandro', 'intro_biology')
+// .then(function(stdout) {
+//   console.log('stdout: ' + stdout);
+// })
+// .catch(function(err){
+//   console.log('error: ', err);
+// });
 
 // shell.deleteRepo('alejandro', 'intro_biology')
 // .then(function(stdout) {

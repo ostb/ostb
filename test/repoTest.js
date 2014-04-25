@@ -15,9 +15,15 @@ describe('repo & user testing', function() {
     app.listen(3000);
   });
 
-  after(function() {
-    fs.rmdirSync('/Users/ethoreby/users/alejandroTest/test_repo');
-    fs.rmdirSync('/Users/ethoreby/users/alejandroTest');
+  after(function(done) {
+    shell.deleteRepo('alejandroTest', 'test_repo')
+    .then(function(stdout) {
+      fs.rmdirSync('/Users/ethoreby/users/alejandroTest');
+      done();
+    })
+    .catch(function(err){
+      console.log('error: ', err);
+    });
   })
 
   it('should create a user directory', function(done) {
