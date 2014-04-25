@@ -54,3 +54,12 @@ exports.deleteRepo = function(username, repo) {
 var sanitizeSpaces = function(input) {
   return input.trim().replace(/ /g, '\\ ');
 }
+
+var isLegalName = function(name) {
+  var regex = /^[\w\-\s]+$/;
+  return regex.test(name);
+}
+
+
+
+

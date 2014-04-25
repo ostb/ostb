@@ -52,7 +52,7 @@ describe('repo & user testing', function() {
     })
   })
 
-  it('should sanitize inputs', function(done) {
+  it('should sanitize white space in inputs', function(done) {
     shell.init('alejandroTest', ' test repo ')
     .then(function() {
       (fs.existsSync('/Users/ethoreby/users/alejandroTest/test\ repo')).should.equal(true);
