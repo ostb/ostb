@@ -17,6 +17,9 @@ describe('repo & user testing', function() {
 
   after(function(done) {
     shell.deleteRepo('alejandroTest', 'test_repo')
+    .then(function() {
+      return shell.deleteRepo('alejandroTest', 'test repo')
+    })
     .then(function(stdout) {
       fs.rmdirSync('/Users/ethoreby/users/alejandroTest');
       done();
@@ -45,6 +48,14 @@ describe('repo & user testing', function() {
     shell.getCommitHash('alejandroTest', 'test_repo')
     .then(function(hash) {
       (hash[0].length > 0).should.equal(true);
+      done();
+    })
+  })
+
+  it('should sanitize inputs', function(done) {
+    shell.init('alejandroTest', ' test repo ')
+    .then(function() {
+      (fs.existsSync('/Users/ethoreby/users/alejandroTest/test\ repo')).should.equal(true);
       done();
     })
   })

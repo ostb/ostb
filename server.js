@@ -20,7 +20,7 @@ share.server.attach(app, options);
 // var example = require('git-node/examples/create');
 // var example = require('git-node/examples/read');
 
-// shell.createUser('aria')
+// shell.createUser('alejandro sanchez')
 // .then(function(stdout) {
 //   console.log('stdout: ' + stdout);
 // })
@@ -28,13 +28,13 @@ share.server.attach(app, options);
 //   console.log('error: ', err);
 // });
 
-// shell.init('alejandro', 'intro_biology')
-// .then(function(stdout) {
-//   console.log('stdout: ' + stdout);
-// })
-// .catch(function(err){
-//   console.log('error: ', err);
-// });
+shell.init('alejandro sanchez', 'intro_biology')
+.then(function(stdout) {
+  console.log('stdout: ' + stdout);
+})
+.catch(function(err){
+  console.log('error: ', err);
+});
 
 // shell.deleteRepo('alejandro', 'intro_biology')
 // .then(function(stdout) {
@@ -48,10 +48,10 @@ share.server.attach(app, options);
 
 // shell.log('alejandro', 'intro_biology');
 
-shell.getCommitHash('alejandro', 'intro_biology')
-.then(function(hash) {
-  console.log('commit hash: ', hash[0]);
-});
+// shell.getCommitHash('alejandro', 'intro_biology')
+// .then(function(hash) {
+//   console.log('commit hash: ', hash[0]);
+// });
 
 
 app.get('/', function(req, res) {
