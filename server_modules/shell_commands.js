@@ -9,10 +9,17 @@ exports.createUser = function(username) {
 }
 
 exports.init = function(username, repo) {
-  return execute('git init ~/users/' + username + '/' + repo);
+  // return execute('git init ~/users/' + username + '/' + repo);
+  
+  return execute('git init ~/users/' + username + '/' + repo)
+  .then(function() {
+    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
+  }).then(function() {
+    commit(username, repo, 'Created new project: ' + repo);
+  })
 }
 
-exports.commit = function(username, repo, commitMessage) {
+var commit = exports.commit = function(username, repo, commitMessage) {
   exec('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"', function (error, stdout, stderr) {
     sys.print('stdout: ' + stdout);
   });
