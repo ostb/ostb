@@ -28,7 +28,7 @@ share.server.attach(app, options);
 //   console.log('error: ', err);
 // });
 
-shell.init('alejandro sanchez', 'intro_biology')
+shell.init('alejandro sanchez', 'intro biology')
 .then(function(stdout) {
   console.log('stdout: ' + stdout);
 })
