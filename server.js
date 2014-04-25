@@ -1,11 +1,11 @@
 var express = require('express');
 var share   = require('share');
 var Promise = require('bluebird');
-var shell = require('./server/shell_commands');
+var shell = require('./server_modules/shell_commands');
 
 var app = express();
 
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/client/views');
 app.set('view engine', 'ejs');
 // app.use(express.static(__dirname + '/views'));
 
@@ -20,27 +20,12 @@ share.server.attach(app, options);
 var sys = require('sys')
 var exec = require('child_process').exec;
 var child;
- 
-// executes `pwd`
-// child = exec("pwd", function (error, stdout, stderr) {
-//   sys.print('stdout: ' + stdout);
-//   sys.print('stderr: ' + stderr);
-//   if (error !== null) {
-//     console.log('exec error: ' + error);
-//   }
-// });
-
-// exec("git init ~/users/" + "alejandro" + "/" + "intro_biology", function (error, stdout, stderr) {
-//   sys.print('stdout: ' + stdout);
-// });
-
-// exec("cd ~/users/" + "alejandro" + "/" + "intro_biology" + "&& git add --all && git commit", function (error, stdout, stderr) {
-//   sys.print('stdout: ' + stdout);
-// });
 
 // shell.init('alejandro', 'intro_biology');
 // shell.createUser('elliott');
-shell.commit('alejandro', 'intro_biology', 'test commit');
+// shell.commit('alejandro', 'intro_biology', 'test commit');
+
+// var walk = require('./server_modules/walk');
 
 app.get('/', function(req, res) {
   console.log('received request');
