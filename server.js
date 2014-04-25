@@ -20,7 +20,6 @@ share.server.attach(app, options);
 // var example = require('git-node/examples/create');
 // var example = require('git-node/examples/read');
 
-
 // shell.createUser('aria')
 // .then(function(stdout) {
 //   console.log('stdout: ' + stdout);
@@ -28,7 +27,15 @@ share.server.attach(app, options);
 // .catch(function(err){
 //   console.log('error: ', err);
 // });
-// shell.init('alejandro', 'intro_biology');
+
+// shell.init('alejandro', 'intro_biology')
+// .then(function(stdout) {
+//   console.log('stdout: ' + stdout);
+// })
+// .catch(function(err){
+//   console.log('error: ', err);
+// });
+
 // shell.commit('alejandro', 'intro_biology', 'test commit');
 // shell.log('alejandro', 'intro_biology');
 

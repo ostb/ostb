@@ -14,22 +14,20 @@ describe('repo & user testing', function() {
     app = express();
     app.listen(3000);
 
-    fs.mkdirSync('testUsers/');
-
   });
 
   after(function() {
-    fs.rmdir('testUsers/');
+    fs.rmdir('/Users/ethoreby/users/alejandroTest');
   })
 
-  it('should return null for a non-existent repo', function(done) {
-    gitteh.openRepository('./users/alejandroFAKE/', function(error, repo) {
-      (typeof repo).should.equal('undefined');
+  it('should create a user directory', function(done) {
+    shell.createUser('alejandroTest').then(function() {
+      (fs.existsSync('/Users/ethoreby/users/alejandroTest')).should.equal(true);
       done();
     });
   });
 
-  it('should retrieve a created repo', function(done) {
+  it('should retrieve a created repo', function() {
     gitteh.openRepository('./users/alejandroREAL/', function(error, repo) {
       (typeof repo).should.equal('object');
       done();

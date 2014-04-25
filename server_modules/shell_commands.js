@@ -12,9 +12,11 @@ exports.createUser = function(username) {
 }
 
 exports.init = function(username, repo) {
-  exec('git init ~/users/' + username + '/' + repo, function (error, stdout, stderr) {
-    sys.print('stdout: ' + stdout);
-  });
+  // exec('git init ~/users/' + username + '/' + repo, function (error, stdout, stderr) {
+  //   sys.print('stdout: ' + stdout);
+  // });
+  
+  return execute('git init ~/users/' + username + '/' + repo);
 }
 
 exports.commit = function(username, repo, commitMessage) {
