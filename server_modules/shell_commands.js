@@ -5,6 +5,13 @@ var Promise = require('bluebird');
 var execute = Promise.promisify(exec);
 
 exports.createUser = function(username) {
+  if(!isLegalName(username)) {
+    throw 'Illegal character in username. Please use only alphanumberic characters and spaces.';
+  }
+  if(fs.existsSync('/Users/ethoreby/users/' + username)) {
+    throw 'A user with that name already exists.'
+  }
+
   return execute('mkdir ~/users/' + sanitizeSpaces(username));
 }
 
@@ -12,9 +19,9 @@ exports.init = function(username, repo) {
   // return execute('git init ~/users/' + username + '/' + repo);
   return execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
   .then(function() {
-    console.log('path: ', '/Users/ethoreby/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + '/')
     fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
-  }).then(function() {
+  })
+  .then(function() {
     return commit(username, repo, 'Created new project: ' + repo);
   })
 }

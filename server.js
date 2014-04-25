@@ -20,21 +20,23 @@ share.server.attach(app, options);
 // var example = require('git-node/examples/create');
 // var example = require('git-node/examples/read');
 
-// shell.createUser('alejandro sanchez')
+var promise = Promise.promisify(shell.createUser);
+//what is promise at this point
+promise('elliott thoreby')
+.then(function(stdout) {
+  console.log(arguments);
+})
+.catch(function(err){
+  console.log(err);
+})
+
+// shell.init('alejandro sanchez', 'intro biology')
 // .then(function(stdout) {
 //   console.log('stdout: ' + stdout);
 // })
 // .catch(function(err){
 //   console.log('error: ', err);
 // });
-
-shell.init('alejandro sanchez', 'intro biology')
-.then(function(stdout) {
-  console.log('stdout: ' + stdout);
-})
-.catch(function(err){
-  console.log('error: ', err);
-});
 
 // shell.deleteRepo('alejandro', 'intro_biology')
 // .then(function(stdout) {
