@@ -29,7 +29,8 @@ exports.init = function(username, repo, next) {
   .then(function() {
     var cmt = Promise.promisify(commit);
     return cmt(username, repo, 'Created new project ' + repo);
-  }).then(function() {
+  })
+  .then(function() {
     next();
   })
 }
@@ -40,8 +41,12 @@ var commit = exports.commit = function(username, repo, commitMessage, next) {
   }
   execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {
-    next();
-    // return getCommitHash(username, repo);
+    //next();
+    return getCommitHash(username, repo);
+  })
+  .then(function(hash) {
+    console.log('HASH: ', hash);
+    next(null, hash[0]);
   })
 }
 
