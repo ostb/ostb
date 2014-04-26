@@ -53,10 +53,9 @@ var getCommitHash = exports.getCommitHash = function(username, repo) {
   return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git rev-parse HEAD');
 }
 
-// exports.checkout = function(username, repo, hash) {
-
-// }
-
+exports.checkout = function(username, repo, hash) {
+  return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git checkout ' + hash);
+}
 
 // exports.fork = 
 

@@ -60,6 +60,7 @@ describe('repo & user testing', function() {
     shell.getCommitHash('alejandroTest', 'test_repo')
     .then(function(hash) {
       (hash.length > 0).should.equal(true);
+      origHash = hash;
       done();
     })
     .catch(function(err){
@@ -103,6 +104,19 @@ describe('repo & user testing', function() {
       (typeof err).should.not.equal('undefined');
       done();
     })
+  });
+
+  it('should checkout a previous version', function(done) {
+    shell.checkout('alejandroTest', 'test_repo', origHash)
+    .then(function() {
+      var contents = fs.readFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt');
+      contents.should.equal('Welcome. This is the first version of your new project.');
+      done();
+    })
+    .catch(function(err){
+      (typeof err).should.not.equal('undefined');
+      done();
+    });
   });
 });
 
