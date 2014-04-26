@@ -61,6 +61,9 @@ describe('repo & user testing', function() {
       (hash.length > 0).should.equal(true);
       done();
     })
+    .catch(function(err){
+      console.log(err);
+    })
   });
 
   it('should commit file changes', function(done) {
@@ -70,7 +73,10 @@ describe('repo & user testing', function() {
     .then(function(hash) {
       (hash.length > 0).should.equal(true);
       done();
-    });
+    })
+    .catch(function(err){
+      console.log(err);
+    })
   });
 
   it('should sanitize white space in inputs', function(done) {
