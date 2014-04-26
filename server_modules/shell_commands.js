@@ -27,24 +27,22 @@ exports.init = function(username, repo, next) {
     fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
   })
   .then(function() {
-    return commit(username, repo, 'Created new project: ' + repo);
+    var cmt = Promise.promisify(commit);
+    return cmt(username, repo, 'Created new project ' + repo);
   }).then(function() {
     next();
   })
 }
 
-var commit = exports.commit = function(username, repo, commitMessage) {
-  // exec('cd ~/users/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"', function (error, stdout, stderr) {
-  //   sys.print('stdout: ' + stdout);
-  // });
-
-  return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
+var commit = exports.commit = function(username, repo, commitMessage, next) {
+  if(!isLegalName(commitMessage)) {
+    throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
+  }
+  execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {
-    return getCommitHash(username, repo);
+    next();
+    // return getCommitHash(username, repo);
   })
-  // .then(function(hash) {
-  //   console.log('commit hash: ', hash);
-  // });
 }
 
 var getCommitHash = exports.getCommitHash = function(username, repo) {
