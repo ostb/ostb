@@ -63,6 +63,18 @@ describe('repo & user testing', function() {
     })
   });
 
+  it('should commit file changes', function(done) {
+    fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt', 'Changes to the file.');
+    shell.commit('alejandroTest', 'test_repo', 'second commit')
+    .then(function() {
+      shell.getCommitHash('alejandroTest', 'test_repo')
+      .then(function(hash) {
+        (hash[0].length > 0).should.equal(true);
+        done();
+      })
+    });
+  });
+
   it('should sanitize white space in inputs', function(done) {
     var newRepo = Promise.promisify(shell.init);
     newRepo('alejandroTest', ' test repo ')
@@ -79,7 +91,7 @@ describe('repo & user testing', function() {
     var newRepo = Promise.promisify(shell.init);
     newRepo('alejandroTest', 'test repo !!!OMG!?@$!')
     .then(function() {
-      (true).should.equal(false);
+      (true).should.equal(false);     //should not execute .then
       done();
     })
     .catch(function(err){
