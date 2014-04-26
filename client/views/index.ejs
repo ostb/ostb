@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html ng-app="angularApp">
+<!-- <html ng-app="angularApp"> -->
+<html style="width: 100%; height: 100%;">
 	<head>
 		<title>Hello World</title>
 		<meta charset="utf-8">
@@ -8,47 +9,58 @@
 				font-size: 1em;
 			}
 		</style>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-        <script type="text/javascript" src="/js/app.js"></script>
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>-->
+        <!--<script type="text/javascript" src="/js/app.js"></script>-->
 	</head>
 
-	<body>
-		<h2>Open Source Textbook</h2>
+	<body style="width: 100%; height: 100%;">
+<!-- 		<h2>Open Source Textbook</h2>
 		<p>This is our index.ejs page</p>
 		<div id="header">
 			<div id="htext">
-				Editing <b>hello</b></input>
+				<input>Editing <b>hello</b></input>
 			</div>
-		</div>
+		</div> -->
+		<!-- </div>
 		<textarea id="editor" disabled>Loading...</textarea>
+ -->
+		<div id="editor" style="width: 100%; height: 100%;"></div>
 
-		<div id="editor"></div>
 
-
-        <button ng-click="goPost()"> button yo!! </button>
+        <!-- <button ng-click="goPost()"> button yo!! </button> -->
 
 <!-- 		<div>
           <input type="text" ng-model="yourName" placeholder="Enter a name here">
           <h1>Hello, {{ yourName }}!<h1>
 		</div>
  -->		
-		<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>  
+        
+		<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
+		<!--<script src="/lib/ace/ace.js" type="text/javascript" charset="utf-8"></script>-->
 	    <script src="/channel/bcsocket.js"></script> 
-		<script src="/share/share.uncompressed.js"></script>
+		<!--<script src="/share/share.uncompressed.js"></script>-->
 		<script src="/share/share.js"></script>
-		<script src="/share/textarea.js"></script>
+		<script src="/share/ace.js"></script>
+		<!--<script src="/share/textarea.js"></script>-->
 		<script>
-			var elem = document.getElementById('editor');
+		var editor = ace.edit("editor");
+		
+		sharejs.open('hello', 'text', function(error, doc) {
+			doc.attach_ace(editor);
+		});
 
-			sharejs.open('hello', 'text', function(error, doc) {
-				window.doc = doc;
-				if (error) {
-					console.log(error);
-				} else {
-					elem.disabled = false;
-					doc.attach_textarea(elem);
-				}
-			});
+			// var elem = document.getElementById('editor');
+
+			// sharejs.open('hello', 'text', function(error, doc) {
+			// 	debugger;
+			// 	window.doc = doc;
+			// 	if (error) {
+			// 		console.log(error);
+			// 	} else {
+			// 		elem.disabled = false;
+			// 		doc.attach_textarea(elem);
+			// 	}
+			// });
 		</script>
 	</body>
 </html>	
