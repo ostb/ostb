@@ -21,7 +21,6 @@ exports.init = function(username, repo, next) {
   if(!isLegalName(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
-  // return execute('git init ~/users/' + username + '/' + repo);
   execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
   .then(function() {
     fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
@@ -41,7 +40,6 @@ var commit = exports.commit = function(username, repo, commitMessage, next) {
   }
   execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {
-    //next();
     return getCommitHash(username, repo);
   })
   .then(function(hash) {
