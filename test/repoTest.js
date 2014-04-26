@@ -61,7 +61,7 @@ describe('repo & user testing', function() {
       (hash[0].length > 0).should.equal(true);
       done();
     })
-  })
+  });
 
   it('should sanitize white space in inputs', function(done) {
     var newRepo = Promise.promisify(shell.init);
@@ -73,7 +73,20 @@ describe('repo & user testing', function() {
     .catch(function(err){
       console.log(err);
     })
-  })
+  });
+
+  it('should throw an error for inputs with illegal characters', function(done) {
+    var newRepo = Promise.promisify(shell.init);
+    newRepo('alejandroTest', 'test repo !!!OMG!?@$!')
+    .then(function() {
+      (true).should.equal(false);
+      done();
+    })
+    .catch(function(err){
+      (typeof err).should.not.equal('undefined');
+      done();
+    })
+  });
 });
 
 
