@@ -114,7 +114,7 @@ describe('repo & user testing', function() {
       done();
     })
     .catch(function(err){
-      (typeof err).should.not.equal('undefined');
+      // console.log(err);    //detached HEAD warning proceeds here.
       done();
     });
   });
