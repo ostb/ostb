@@ -17,12 +17,9 @@ describe('repo & user testing', function() {
   });
 
   after(function(done) {
-    shell.deleteRepo('alejandroTest', 'test_repo')
+    shell.deleteUser('alejandroTest')
     .then(function() {
-      return shell.deleteRepo('alejandroTest', 'test repo')
-    })
-    .then(function(stdout) {
-      return shell.deleteUser('alejandroTest');
+      return shell.deleteUser('elliottTest');
     })
     .then(function() {
       done();
@@ -117,6 +114,21 @@ describe('repo & user testing', function() {
       // console.log(err);    //detached HEAD warning proceeds here.
       done();
     });
+  });
+
+  it('should clone a project to another user directory', function(done) {
+    var newUser = Promise.promisify(shell.createUser);
+    newUser('elliottTest')
+    .then(function() {
+      return shell.clone('elliottTest', 'alejandroTest', 'test repo')
+    })
+    .then(function() {
+      (fs.existsSync('/Users/ethoreby/users/elliottTest/test repo')).should.equal(true);
+      done();
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
   });
 });
 

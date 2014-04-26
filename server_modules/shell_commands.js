@@ -54,10 +54,13 @@ var getCommitHash = exports.getCommitHash = function(username, repo) {
 }
 
 exports.checkout = function(username, repo, hash) {
+  hash = hash || 'master';
   return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git checkout ' + hash);
 }
 
-// exports.fork = 
+exports.clone = function(username, owner, repo) {
+  return execute('cd ~/users/' + sanitizeSpaces(username) + ' && ' + 'git clone ~/users/' + sanitizeSpaces(owner) + '/' + sanitizeSpaces(repo));
+}
 
 exports.deleteRepo = function(username, repo) {
   return execute('rm -rf  ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo));
