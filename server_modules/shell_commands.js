@@ -45,7 +45,6 @@ var commit = exports.commit = function(username, repo, commitMessage, next) {
     return getCommitHash(username, repo);
   })
   .then(function(hash) {
-    console.log('HASH: ', hash);
     next(null, hash[0]);
   })
 }

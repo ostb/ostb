@@ -58,48 +58,45 @@ describe('repo & user testing', function() {
   it('should create an initial commit', function(done) {
     shell.getCommitHash('alejandroTest', 'test_repo')
     .then(function(hash) {
-      (hash[0].length > 0).should.equal(true);
+      (hash.length > 0).should.equal(true);
       done();
     })
   });
 
-  // it('should commit file changes', function(done) {
-  //   fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt', 'Changes to the file.');
-    
-  //   shell.commit('alejandroTest', 'test_repo', 'second commit')
-  //   .then(function() {
-  //     shell.getCommitHash('alejandroTest', 'test_repo')
-  //     .then(function(hash) {
-  //       (hash[0].length > 0).should.equal(true);
-  //       done();
-  //     })
-  //   });
-  // });
+  it('should commit file changes', function(done) {
+    fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt', 'Changes to the file.');
+    var cmt = Promise.promisify(shell.commit);
+    cmt('alejandroTest', 'test_repo', 'second commit')
+    .then(function(hash) {
+      (hash.length > 0).should.equal(true);
+      done();
+    });
+  });
 
-  // it('should sanitize white space in inputs', function(done) {
-  //   var newRepo = Promise.promisify(shell.init);
-  //   newRepo('alejandroTest', ' test repo ')
-  //   .then(function() {
-  //     (fs.existsSync('/Users/ethoreby/users/alejandroTest/test\ repo')).should.equal(true);
-  //     done();
-  //   })
-  //   .catch(function(err){
-  //     console.log(err);
-  //   })
-  // });
+  it('should sanitize white space in inputs', function(done) {
+    var newRepo = Promise.promisify(shell.init);
+    newRepo('alejandroTest', ' test repo ')
+    .then(function() {
+      (fs.existsSync('/Users/ethoreby/users/alejandroTest/test\ repo')).should.equal(true);
+      done();
+    })
+    .catch(function(err){
+      console.log(err);
+    })
+  });
 
-  // it('should throw an error for inputs with illegal characters', function(done) {
-  //   var newRepo = Promise.promisify(shell.init);
-  //   newRepo('alejandroTest', 'test repo !!!OMG!?@$!')
-  //   .then(function() {
-  //     (true).should.equal(false);     //should not execute .then
-  //     done();
-  //   })
-  //   .catch(function(err){
-  //     (typeof err).should.not.equal('undefined');
-  //     done();
-  //   })
-  // });
+  it('should throw an error for inputs with illegal characters', function(done) {
+    var newRepo = Promise.promisify(shell.init);
+    newRepo('alejandroTest', 'test repo !!!OMG!?@$!')
+    .then(function() {
+      (true).should.equal(false);     //should not execute .then
+      done();
+    })
+    .catch(function(err){
+      (typeof err).should.not.equal('undefined');
+      done();
+    })
+  });
 });
 
 
