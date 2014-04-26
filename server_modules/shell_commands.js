@@ -45,7 +45,7 @@ var commit = exports.commit = function(username, repo, commitMessage, next) {
     return getCommitHash(username, repo);
   })
   .then(function(hash) {
-    next(null, hash[0]);
+    next(null, hash[0].trim());
   })
 }
 
@@ -53,8 +53,12 @@ var getCommitHash = exports.getCommitHash = function(username, repo) {
   return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git rev-parse HEAD');
 }
 
+// exports.checkout = function(username, repo, hash) {
+
+// }
+
+
 // exports.fork = 
-// exports.checkout = 
 
 exports.deleteRepo = function(username, repo) {
   return execute('rm -rf  ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo));

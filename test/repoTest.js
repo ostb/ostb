@@ -7,6 +7,7 @@ var express = require('express');
 var shell = require('../server_modules/shell_commands');
 
 var app;
+var origHash;
 
 describe('repo & user testing', function() {
 
@@ -27,7 +28,7 @@ describe('repo & user testing', function() {
       done();
     })
     .catch(function(err){
-      console.log('error: ', err);
+      console.log(err);
     });
   })
 
