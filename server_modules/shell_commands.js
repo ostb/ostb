@@ -4,25 +4,32 @@ var fs = require('fs');
 var Promise = require('bluebird');
 var execute = Promise.promisify(exec);
 
-exports.createUser = function(username) {
+exports.createUser = function(username, next) {
   if(!isLegalName(username)) {
     throw 'Illegal character in username. Please use only alphanumberic characters and spaces.';
   }
   if(fs.existsSync('/Users/ethoreby/users/' + username)) {
     throw 'A user with that name already exists.'
   }
-
-  return execute('mkdir ~/users/' + sanitizeSpaces(username));
+  execute('mkdir ~/users/' + sanitizeSpaces(username))
+  .then(function() {
+    next();
+  });
 }
 
-exports.init = function(username, repo) {
+exports.init = function(username, repo, next) {
+  if(!isLegalName(repo)) {
+    throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
+  }
   // return execute('git init ~/users/' + username + '/' + repo);
-  return execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
+  execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
   .then(function() {
-    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
+    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
   })
   .then(function() {
     return commit(username, repo, 'Created new project: ' + repo);
+  }).then(function() {
+    next();
   })
 }
 
@@ -44,18 +51,11 @@ var getCommitHash = exports.getCommitHash = function(username, repo) {
   return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git rev-parse HEAD');
 }
 
-// exports.deleteUser = 
 // exports.fork = 
 // exports.checkout = 
 
-exports.log = function(username, repo) {
-  exec('cd ~/users/' + username + '/' + repo + ' && ' + 'git log', function (error, stdout, stderr) {
-    sys.print('stdout: ' + stdout + stderr);
-  });
-}
-
 exports.deleteRepo = function(username, repo) {
-  return execute('rm -rf  ~/users/' + username + '/' + repo);
+  return execute('rm -rf  ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo));
 }
 
 exports.deleteUser = function(username) {

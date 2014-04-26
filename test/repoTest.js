@@ -21,7 +21,9 @@ describe('repo & user testing', function() {
       return shell.deleteRepo('alejandroTest', 'test repo')
     })
     .then(function(stdout) {
-      fs.rmdirSync('/Users/ethoreby/users/alejandroTest');
+      return shell.deleteUser('alejandroTest');
+    })
+    .then(function() {
       done();
     })
     .catch(function(err){
@@ -30,17 +32,26 @@ describe('repo & user testing', function() {
   })
 
   it('should create a user directory', function(done) {
-    shell.createUser('alejandroTest').then(function() {
+    var newUser = Promise.promisify(shell.createUser);
+    newUser('alejandroTEST')
+    .then(function(stdout) {
       (fs.existsSync('/Users/ethoreby/users/alejandroTest')).should.equal(true);
       done();
-    });
+    })
+    .catch(function(err){
+      console.log(err);
+    })
   });
 
   it('should initialize a repo', function(done) {
-    shell.init('alejandroTest', 'test_repo')
+    var newRepo = Promise.promisify(shell.init);
+    newRepo('alejandroTest', 'test_repo')
     .then(function() {
       (fs.existsSync('/Users/ethoreby/users/alejandroTest/test_repo')).should.equal(true);
       done();
+    })
+    .catch(function(err){
+      console.log(err);
     })
   });
 
@@ -53,10 +64,14 @@ describe('repo & user testing', function() {
   })
 
   it('should sanitize white space in inputs', function(done) {
-    shell.init('alejandroTest', ' test repo ')
+    var newRepo = Promise.promisify(shell.init);
+    newRepo('alejandroTest', ' test repo ')
     .then(function() {
       (fs.existsSync('/Users/ethoreby/users/alejandroTest/test\ repo')).should.equal(true);
       done();
+    })
+    .catch(function(err){
+      console.log(err);
     })
   })
 });

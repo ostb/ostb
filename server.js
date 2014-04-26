@@ -17,20 +17,17 @@ var options = {
 }
 share.server.attach(app, options);
 
-// var example = require('git-node/examples/create');
-// var example = require('git-node/examples/read');
-
 var newUser = Promise.promisify(shell.createUser);
-shell.deleteUser('alejandro sanchez')
-.then(function() {
+// shell.deleteUser('alejandro sanchez')
+// .then(function() {
   newUser('alejandro sanchez')
-  .then(function(stdout) {
-    console.log(arguments);
+  .then(function() {
+    console.log('created a user')
   })
   .catch(function(err){
     console.log(err);
   })
-})
+// })
 
 // shell.init('alejandro sanchez', 'intro biology')
 // .then(function(stdout) {
