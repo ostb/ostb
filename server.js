@@ -2,7 +2,6 @@ var express = require('express');
 var share = require('share');
 //adrian
 var showdown = require('showdown');
-// var hat = require('hat');
 var app = express();
 
 //adrian
@@ -80,11 +79,5 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-// app.get('/lib/ace/ace.js', function(req, res) {
-//   // // res.set('Content-Type', 'text/javascript');
-//   // // res.sendfile('/lib/ace/ace');
-//   // res.sendfile('index');
-//   res.send('ace');
-// });
 
 app.listen(3000);
