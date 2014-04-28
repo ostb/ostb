@@ -1,0 +1,8 @@
+{
+  "name": "ostb",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.2.16",
+    "angular-ui-router": "~0.2.8"
+  }
+}
