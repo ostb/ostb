@@ -1,28 +1,38 @@
+angular.module('ostb', [
+  'ui.router'
+])
 
-angular.module('angularApp', [])
-
-  .run(function($rootScope, postSomething) {
-    console.log('inside app js hit');
-    
-    $rootScope.goPost = function(){
-      postSomething.post('/ostb', null, function(data) {      
-        console.log('hit');
-      });
-    };
-
+.config( function($stateProvider) {
+  console.log($stateProvider);
+  $stateProvider
+  .state('example', {
+    url: "/example",
+    views: {
+      'content': {
+        template: '<h1>Hey look at this content!</h1>',
+        controller: 'Example'
+      }
+    }
   })
-  .factory('postSomething', ['$http', function($http) {
-    return  {
-      post: function(url, data, cb) {
-        var postData = $http.post(url, data);
-        postData.success(function(data) {
-          cb(data);
-        });
-        postData.error(function(error) {
-          console.log(error);
-        });
-      },
-    };
-}]);
+  .state('/', {
+    url: "/",
+    views: {
+      'content': {
+        template: '<h1>Hey look at this content!</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+})
 
-  
+.controller('Example', function($scope) {
+  console.log('Example controller');
+})
+
+// .run(function($rootScope, $state, $stateParams) {
+//   console.log('Run');
+
+//   $rootScope.$state = $state;
+//   $rootScope.$stateParams = $stateParams;
+
+// })

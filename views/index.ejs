@@ -1,14 +1,21 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="ostb">
+
   <head>
     <title>Index</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.7/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="app.js"></script>
   </head>
 
-  <body>
+  <body ng-controller="Example">
 
     <h1>This is our index</h1>
+
+    <h3>State: {{a}}</h3>
+
     <a href="/edit">Editor</a>
+    <a href="" ui-sref="example">Example</a>
 
     <p>Your content is served below in ui-view="content"</p>
     <div ui-view="content"></div>
