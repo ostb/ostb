@@ -4,5 +4,6 @@
   "dependencies": {
     "angular": "~1.2.16",
     "angular-ui-router": "~0.2.8"
-  }
+  },
+  "directory" : "public/bower_components"
 }

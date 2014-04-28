@@ -76,16 +76,16 @@ var options = {
 share.server.attach(app, options);
 
 
-var newUser = Promise.promisify(shell.createUser);
+// var newUser = Promise.promisify(shell.createUser);
 // shell.deleteUser('alejandro sanchez')
 // .then(function() {
-  newUser('alejandro sanchez')
-  .then(function() {
-    console.log('created a user')
-  })
-  .catch(function(err){
-    console.log(err);
-  })
+  // newUser('alejandro sanchez')
+  // .then(function() {
+  //   console.log('created a user')
+  // })
+  // .catch(function(err){
+  //   console.log(err);
+  // })
 // })
 
 // shell.init('alejandro sanchez', 'intro biology')
