@@ -10,11 +10,15 @@ body {
 }
 
 .editNav {
-	
+	color: white;
 }
 
 .editButton {
-	display: inline;
+	display: inline-block;
+	border: 1px solid gray;
+	height: 30px;
+	width: 30px;
+	padding: 10px 0 0 10px;
 }
 
 #header {
