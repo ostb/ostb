@@ -9,11 +9,19 @@ body {
 	height: 100%;
 }
 
+.editNav {
+	
+}
+
+.editButton {
+	display: inline;
+}
+
 #header {
 	position: fixed;
 	top: 0;
 	right: 0;
-	height: 30px;
+	height: 100px;
 	width: 100%;
 	background-color: black;
 }
@@ -33,7 +41,7 @@ body {
 	overflow: scroll;
 	float: right;
 	background-color: #E8F2FD;
-	top: 30px;
+	top: 100px;
 	bottom: 0;
 	right: 0;
 	left: 50%;
@@ -49,7 +57,7 @@ body {
 #editor { 
 	margin: 0;
 	position: fixed;
-	top: 30px;
+	top: 100px;
 	bottom: 0;
 	right: 50%;
 	left: 0;
