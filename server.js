@@ -1,7 +1,8 @@
 var express = require('express');
 var share = require('share');
-//adrian
 var showdown = require('showdown');
+var Promise = require('bluebird');
+var shell = require('./server_modules/shell_commands');
 var app = express();
 
 //adrian
@@ -73,6 +74,7 @@ var options = {
   // auth: function(client, action) {}
 }
 share.server.attach(app, options);
+
 
 var newUser = Promise.promisify(shell.createUser);
 // shell.deleteUser('alejandro sanchez')
