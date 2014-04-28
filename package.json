@@ -7,7 +7,9 @@
   "dependencies": {
     "express": "4.0.0",
     "share": "^0.6.3",
-    "ejs": "^0.8.8",
+    "ejs": "~0.8.5",
+    "mustache": "^0.8.1",
+    "showdown": "^0.3.1",
     "mocha": "^1.18.2",
     "should": "^3.3.1",
     "bluebird": "^1.2.3"
