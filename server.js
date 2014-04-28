@@ -115,9 +115,11 @@ var newUser = Promise.promisify(shell.createUser);
 
 
 app.get('/', function(req, res) {
-  console.log('received request');
   res.render('index');
 });
 
+app.get('/edit', function(req, res) {
+  res.render('edit');
+});
 
 app.listen(3000);

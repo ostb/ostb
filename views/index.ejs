@@ -1,81 +1,18 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Mark down working</title>
-    <!-- <link href="style.css" rel="/" type="text/css"> -->
-    <link rel="stylesheet" type="text/css" href="/style.css">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <title>Index</title>
+
   </head>
 
   <body>
 
-  	<h1>AAAAAAAAA</h1>
+    <h1>This is our index</h1>
+    <a href="/edit">Editor</a>
 
-    <div id="header">
-      <div id="htext">Project Name <strong>Navbar</strong>
-      </div>
-      <span style="float: left;"><ul class="editNav">
-				<li class="editButton"><i class="fa fa-bold fa-fw"></i></li>
-				<li class="editButton"><i class="fa fa-italic fa-fw"></i></li>
-				<li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
-				<li class="editButton"><i class="fa fa-indent fa-fw"></i></li>
-				<li class="editButton"><i class="fa fa-picture-o fa-fw"></i></li>
-			</ul></span>
+    <p>Your content is served below in ui-view="content"</p>
+    <div ui-view="content"></div>
 
-			<span style="float: right;"><ul class="editNav" style="float: left; -webkit-margin-end: 1em">
-				<li class="editButton" title="Save Version"><i class="fa fa-floppy-o fa-fw"></i></li>
-			</ul></span>
-      
-      <ul class="editNav">
-				<li class="editButton"><i class="fa fa-bold fa-fw"></i></li>
-				<li class="editButton"><i class="fa fa-italic fa-fw"></i></li>
-			</ul>
-
-    </div>
-    <div id="right">
-      <div id="view" class="content">{{{markdown}}}</div>
-    </div>
-    <div id="editor">{{{content}}}</div>
-    <script src="/lib/showdown.js" type="text/javascript"></script>
-    <script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
-    <script src="/channel/bcsocket.js"></script>
-    <script src="/share/share.uncompressed.js"></script>
-    <script src="/share/ace.js"></script>
-    <script>
-window.onload = function() {
-  var converter = new Showdown.converter();
-  var view = document.getElementById('view');
-
-      var editor = ace.edit("editor");
-  editor.setReadOnly(true);
-  editor.session.setUseWrapMode(true);
-  editor.setShowPrintMargin(false);
-
-  // This could instead be written simply as:
-  // sharejs.open('{{{docName}}}', function(doc, error) {
-  //   ...
-
-  var connection = new sharejs.Connection('/channel');
-
-  connection.open('{{{docName}}}', function(error, doc) {
-    if (error) {
-      console.error(error);
-      return;
-    }
-    doc.attach_ace(editor);
-    editor.setReadOnly(false);
-
-    var render = function() {
-      view.innerHTML = converter.makeHtml(doc.snapshot);
-    };
-
-    window.doc = doc;
-
-    render();
-    doc.on('change', render);
-  });
-};
-    </script>
   </body>
 </html>
 
