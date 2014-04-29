@@ -1,6 +1,6 @@
 angular.module('ostb', [
   'ui.router',
-  'services.users'
+  'factories.users'
 ])
 
 .config( function($stateProvider) {
@@ -87,21 +87,30 @@ angular.module('ostb', [
   };
 })
 
-.controller('UserCreateController', function($scope, UsersFactory) {
-  console.log('UserCreateController');
+.controller('UserController', function($scope, UsersFactory) {
+  console.log('UserController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
 
   $scope.createUser = function(user) {
-    console.log('user: ', user);
     UsersFactory.create(user)
     .then(function() {
       console.log('success');
     })
     .catch(function(err) {
-      console.log(JSON.stringify(err));
+      $scope.error = err;
+    });
+  };
+
+  $scope.deleteUser = function(user) {
+    console.log('user: ', user);
+    UsersFactory.delete(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
       $scope.error = err;
     });
   };

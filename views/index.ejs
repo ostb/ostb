@@ -6,7 +6,7 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app.js"></script>
-    <script src="services/users.js"></script>
+    <script src="factories/usersFactory.js"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
 
   </head>
@@ -36,8 +36,10 @@
     </form>
   </modal-dialog>
 </div>
+<br>
+<br>
 
-<div ng-controller='UserCreateController'>
+<div ng-controller='UserController'>
   <button ng-click='toggleModal()'>Create New User</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>New User // to be removed //</h3>
@@ -50,6 +52,22 @@
     <div style="color:red;">{{error}}</div>
   </modal-dialog>
 </div>
+
+<div ng-controller='UserController'>
+  <button ng-click='toggleModal()'>Delete User</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>Delete User // to be removed //</h3>
+    <form ng-submit='deleteUser(user)'>
+      Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Username" ng-model="user.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
+<br>
+<br>
 
 <div ng-controller='ProjectCreateController'>
   <button ng-click='toggleModal()'>Save Version</button>

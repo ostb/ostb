@@ -134,6 +134,17 @@ app.route('/api/users')
   .catch(function(err){
     res.send(400, err.toString());
   })
+})
+.delete(function(req, res) {
+  shell.deleteUser(req.query.username)
+  .then(function() {
+    console.log('successful delete ', req.query.username);
+    res.send(204);
+  })
+  .catch(function(err){
+    console.log(err);
+    res.send(400, err.toString());
+  });
 });
 
 app.listen(3000);
