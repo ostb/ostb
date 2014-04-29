@@ -1,11 +1,14 @@
 angular.module('services.users', [])
 
-.factory('ProjectsFactory', function($http, $q) {
+.factory('UsersFactory', function($http, $q) {
 
   return {
-    create: function(project) {
+    create: function(user) {
+
+      console.log('create factory', user)
+
       var dfd = $q.defer();
-      $http.post('localhost:3000' + '/api/users', project)
+      $http.post('/api/users', user)
       .success(function(data, status, headers, config) {
         dfd.resolve();
       })
@@ -15,4 +18,5 @@ angular.module('services.users', [])
       });
       return dfd.promise;
     }
+  }
 });

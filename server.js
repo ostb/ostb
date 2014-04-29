@@ -113,22 +113,17 @@ share.server.attach(app, options);
 // });
 
 
-
-
-app.get('/documents', function(req, res) {
-  res.render('documents');
-});
-
-app.get('/example', function(req, res) {
-  res.render('example');
-});
-
 app.get('/editor', function(req, res) {
   res.render('editor');
 });
 
 app.get('/', function(req, res) {
   res.render('index');
+});
+
+app.route('/api/users')
+.post(function(req, res) {
+  console.log('request!');
 });
 
 app.listen(3000);

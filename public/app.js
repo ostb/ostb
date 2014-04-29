@@ -1,5 +1,6 @@
 angular.module('ostb', [
-  'ui.router'
+  'ui.router',
+  'services.users'
 ])
 
 .config( function($stateProvider) {
@@ -86,7 +87,7 @@ angular.module('ostb', [
   };
 })
 
-.controller('UserCreateController', function($scope) {
+.controller('UserCreateController', function($scope, UsersFactory) {
   console.log('UserCreateController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
@@ -95,11 +96,16 @@ angular.module('ostb', [
 
   $scope.createUser = function(user) {
     console.log('user: ', user);
+    UsersFactory.create(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      console.log('error:', err);
+    });
   };
 })
 
-
-// })
 
 // This is test data.
 window.documentsData = {
