@@ -6,3 +6,6 @@ bower_components/
 
 .DS_Store
 ._.DS_Store
+
+.*~
+.swp
