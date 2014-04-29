@@ -26,6 +26,19 @@ angular.module('factories.projects', [])
         dfd.reject(data);
       });
       return dfd.promise;
+    },
+
+    clone: function(project) {
+      var dfd = $q.defer();
+      $http.post('/api/projects/clone?username=' + project.username + '&repo=' + project.repo + '&owner=' + project.owner)
+      .success(function(data, status, headers, config) {
+        dfd.resolve();
+      })
+      .error(function(data, status, headers, config) {
+        console.log('fail', arguments);
+        dfd.reject(data);
+      });
+      return dfd.promise;
     }
   }
 });

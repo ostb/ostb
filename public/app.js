@@ -77,14 +77,12 @@ angular.module('ostb', [
 })
 
 .controller('ProjectsController', function($scope, ProjectsFactory) {
-  console.log('ProjectsController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
 
   $scope.createProject = function(project) {
-    console.log('project: ', project);
     ProjectsFactory.create(project)
     .then(function() {
       console.log('success');
@@ -94,8 +92,17 @@ angular.module('ostb', [
     });
   };
 
+  $scope.cloneProject = function(project) {
+    ProjectsFactory.clone(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
   $scope.deleteProject = function(project) {
-    console.log('project: ', project);
     ProjectsFactory.delete(project)
     .then(function() {
       console.log('success');
@@ -107,7 +114,6 @@ angular.module('ostb', [
 })
 
 .controller('UsersController', function($scope, UsersFactory) {
-  console.log('UsersController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;

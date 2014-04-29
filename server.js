@@ -115,6 +115,9 @@ app.route('/api/projects')
 .post(projects.create)
 .delete(projects.delete);
 
+app.route('/api/projects/clone')
+.post(projects.clone);
+
 app.listen(3000);
 
 
