@@ -47,7 +47,6 @@ angular.module('ostb', [
       commitMsg: 'bar'
     }
   }
-
 })
 
 .controller('Example', function($scope) {
