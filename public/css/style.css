@@ -18,7 +18,8 @@ body {
 	right: 0;
 	height: 53px;
 	width: 100%;
-	background-color: black;
+	background-color: grey;
+  border: 1px solid black;
 }
 
 #navText {
