@@ -12,28 +12,6 @@ body {
   padding: 0;
 }
 
-.editNav {
-	color: white;
-  margin: 0;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 0px;
-}
-
-.editButton {
-	display: inline-block;
-	border: 1px solid grey;
-	height: 30px;
-	width: 30px;
-	padding: 10px 0 0 10px;
-}
-
-.editButton:hover {
-	border: 1px solid cyan;
-	cursor: pointer;
-}
-
 #navbar {
 	position: fixed;
 	top: 0;
@@ -60,7 +38,40 @@ body {
 	font-family: baskerville, palatino, 'palatino linotype', georgia,serif; 
 }
 
-#right {
+.editNav {
+	color: white;
+  margin: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 0px;
+}
+
+.editButton {
+	display: inline-block;
+	border: 1px solid grey;
+	height: 30px;
+	width: 30px;
+	padding: 10px 0 0 10px;
+}
+
+.editButton:hover {
+	border: 1px solid cyan;
+	cursor: pointer;
+}
+
+#editor-left { 
+	margin: 0;
+	position: fixed;
+	top: 100px;
+	bottom: 0;
+	right: 50%;
+	left: 0;
+	width: 50%;
+	height: 100%;
+}
+
+#editor-right {
 	margin: 0;
 	position: fixed;
 	overflow: scroll;
@@ -71,23 +82,12 @@ body {
 	right: 0;
 	left: 50%;
 	width: 50%;
-	height: 100%;"
+	height: 100%;
 }
 
 #view {
 	padding-left: 30px;
 	padding-right: 30px;
-}
-
-#editor { 
-	margin: 0;
-	position: fixed;
-	top: 100px;
-	bottom: 0;
-	right: 50%;
-	left: 0;
-	width: 50%;
-	height: 100%;
 }
 
 .ng-modal-overlay {
