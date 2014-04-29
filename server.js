@@ -102,6 +102,10 @@ app.get('/editor', function(req, res) {
   res.render('editor');
 });
 
+app.get('/navbar', function(req, res) {
+  res.render('navbar');
+});
+
 app.get('/', function(req, res) {
   res.render('index');
 });
