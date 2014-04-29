@@ -130,7 +130,6 @@ angular.module('ostb', [
   };
 
   $scope.deleteUser = function(user) {
-    console.log('user: ', user);
     UsersFactory.delete(user)
     .then(function() {
       console.log('success');

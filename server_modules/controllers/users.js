@@ -17,7 +17,7 @@ exports.create = function(req, res) {
 exports.delete = function(req, res) {
   shell.deleteUser(req.query.username)
   .then(function() {
-    console.log('successful delete ', req.query.username);
+    console.log('deleted user ', req.query.username);
     res.send(204);
   })
   .catch(function(err){

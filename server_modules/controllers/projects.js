@@ -26,7 +26,6 @@ exports.delete = function(req, res) {
 }
 
 exports.clone = function(req, res) {
-
   shell.clone(req.query.username, req.query.owner, req.query.repo)
   .then(function() {
     console.log('cloned repo ' + req.query.repo + ' into ' + req.query.username);
