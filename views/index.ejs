@@ -72,6 +72,23 @@
     <div style="color:red;">{{error}}</div>
   </modal-dialog>
 </div>
+
+<div ng-controller='ProjectsController'>
+  <button ng-click='toggleModal()'>Delete Project</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>Delete Project // to be removed //</h3>
+    <form ng-submit='deleteProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      Username: // to be removed //
+      <br>
+      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
 <br>
 
 <div ng-controller='ProjectsController'>

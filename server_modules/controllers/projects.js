@@ -13,3 +13,7 @@ exports.create = function(req, res) {
     res.send(400, err.toString());
   })
 }
+
+exports.delete = function(req, res) {
+  res.send(204);
+}

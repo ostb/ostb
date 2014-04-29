@@ -93,6 +93,17 @@ angular.module('ostb', [
       $scope.error = err;
     });
   };
+
+  $scope.deleteProject = function(project) {
+    console.log('project: ', project);
+    ProjectsFactory.delete(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 })
 
 .controller('UserController', function($scope, UsersFactory) {
