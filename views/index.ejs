@@ -6,9 +6,11 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    
   </head>
 
-  <body ng-controller="Example">
+  <body ng-controller="MyCtrl">
 
     <h1>This is our index</h1>
 
@@ -16,6 +18,15 @@
 
     <a href="/edit">Editor</a>
     <a href="" ui-sref="example">Example</a>
+
+
+<div ng-controller='MyCtrl'>
+  <button ng-click='toggleModal()'>Open Modal Dialog</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <p>Modal Content Goes here<p>
+  </modal-dialog>
+</div>
+
 
     <p>Your content is served below in ui-view="content"</p>
     <div ui-view="content"></div>
