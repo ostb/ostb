@@ -1,6 +1,7 @@
 angular.module('ostb', [
   'ui.router',
-  'factories.users'
+  'factories.users',
+  'factories.projects'
 ])
 
 .config( function($stateProvider) {
@@ -75,8 +76,8 @@ angular.module('ostb', [
   };
 })
 
-.controller('ProjectCreateController', function($scope) {
-  console.log('ProjectCreateController');
+.controller('ProjectsController', function($scope, ProjectsFactory) {
+  console.log('ProjectsController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -84,6 +85,13 @@ angular.module('ostb', [
 
   $scope.createProject = function(project) {
     console.log('project: ', project);
+    ProjectsFactory.create(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
   };
 })
 

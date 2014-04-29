@@ -7,7 +7,7 @@
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app.js"></script>
     <script src="factories/usersFactory.js"></script>
-    <script src="factories/usersFactory.js"></script>
+    <script src="factories/projectsFactory.js"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
 
   </head>
@@ -22,23 +22,6 @@
     <a ui-sref="example">Example</a>
     <a ui-sref="versions">versions</a>
 
-<div ng-controller='ProjectCreateController'>
-  <button ng-click='toggleModal()'>Create New Project</button>
-  <modal-dialog show='modalShown' width='400px' height='60%'>
-    <h3>New Project</h3>
-    <form ng-submit='createProject(project)'>
-      Project Name:
-      <br>
-      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
-      Username: // to be removed //
-      <br>
-      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
-      <div><input type="submit" value="Submit"></div>
-    </form>
-  </modal-dialog>
-</div>
-<br>
-<br>
 
 <div ng-controller='UserController'>
   <button ng-click='toggleModal()'>Create New User</button>
@@ -70,7 +53,26 @@
 <br>
 <br>
 
-<div ng-controller='ProjectCreateController'>
+<div ng-controller='ProjectsController'>
+  <button ng-click='toggleModal()'>Create New Project</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>New Project</h3>
+    <form ng-submit='createProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      Username: // to be removed //
+      <br>
+      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
+<br>
+<br>
+
+<div ng-controller='ProjectsController'>
   <button ng-click='toggleModal()'>Save Version</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>Save New Version</h3>

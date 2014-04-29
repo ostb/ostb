@@ -6,6 +6,7 @@ var shell = require('./server_modules/shell_commands');
 var bodyParser = require('body-parser');
 
 var users = require('./server_modules/controllers/users');
+var projects = require('./server_modules/controllers/projects');
 
 var app = express();
 
@@ -117,7 +118,8 @@ share.server.attach(app, options);
 //   console.log('commit hash: ', hash[0]);
 // });
 
-
+// ------ ROUTING -----
+// ----- webpage requests -----
 app.get('/editor', function(req, res) {
   res.render('editor');
 });
@@ -126,9 +128,14 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
+// ----- api requests -----
 app.route('/api/users')
 .post(users.create)
 .delete(users.delete);
+
+app.route('/api/projects')
+.post(projects.create)
+// .delete(projects.delete);
 
 app.listen(3000);
 
