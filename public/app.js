@@ -14,15 +14,27 @@ angular.module('ostb', [
       }
     }
   })
-  .state('/', {
-    url: "/",
+
+  .state('documents', {
+    url: "/documents",
     views: {
       'content': {
-        template: '<h1>Hey look at this content!</h1>',
+        template: '../views/documents.ejs',
         controller: 'Example'
       }
     }
   })
+
+  .state('/', {
+    url: "/",
+    views: {
+      'content': {
+        templateURL: '<h1>Hey look at this content!</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+
 })
 
 .controller('Example', function($scope) {

@@ -15,31 +15,42 @@
     <h3>State: {{a}}</h3>
 
     <a href="/edit">Editor</a>
-    <a href="" ui-sref="example">Example</a>
+    <a ui-sref="example">Example</a>
 
     <p>Your content is served below in ui-view="content"</p>
     <div ui-view="content"></div>
 
+  <!-- Nav bar -->
   <nav class="{{active}}" ng-click="$event.preventDefault()">
 
     <!-- When a link in the menu is clicked, we set the active variable -->
 
     <a href="#" class="documents" ng-click="active='documents'">Documents</a>
-    <a href="#" class="projects" ng-click="active='projects'">Projects</a>
-    <a href="#" class="services" ng-click="active='services'">Services</a>
-    <a href="#" class="contact" ng-click="active='contact'">Contact</a>
+    <a href="#" class="editor" ng-click="active='editor'">Editor</a>
+    <a href="#" class="example" ng-click="active='example'">Example</a>
   </nav>
-
-  <!-- ng-show will show an element if the value in the quotes is truthful,
-     while ng-hide does the opposite. Because the active variable is not set
-     initially, this will cause the first paragraph to be visible. -->
 
   <p ng-hide="active">Please click a menu item</p>
   <p ng-show="active">You chose <b>{{active}}</b></p>
 
+  <!-- Content Display -->
   <div ng-switch on="active">
     <div ng-switch-when="documents">
-      <h1>hi</h1>
+      <ng-include 
+        src="'documents'">
+      </ng-include>
+    </div>
+
+    <div ng-switch-when="editor">
+      <ng-include 
+        src="'editor'">
+      </ng-include>
+    </div>
+
+    <div ng-switch-when="example">
+      <ng-include 
+        src="'example'">
+      </ng-include>
     </div>
   </div>
 
