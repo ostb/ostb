@@ -14,7 +14,7 @@ angular.module('services.users', [])
       })
       .error(function(data, status, headers, config) {
         console.log('fail', arguments);
-        dfd.reject();
+        dfd.reject(data);
       });
       return dfd.promise;
     }

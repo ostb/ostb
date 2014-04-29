@@ -133,7 +133,7 @@ app.route('/api/users')
   })
   .catch(function(err){
     console.log(err);
-    res.send(400, 'A user with that name already exists');
+    res.send(400, 'A user with that name already exists!');
   })
 });
 
