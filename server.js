@@ -128,10 +128,12 @@ app.route('/api/users')
   var newUser = Promise.promisify(shell.createUser);
   newUser(req.body.username)
   .then(function() {
-    console.log('created user ', req.body.username)
+    console.log('created user ', req.body.username);
+    res.send(201);
   })
   .catch(function(err){
     console.log(err);
+    res.send(400, 'A user with that name already exists');
   })
 });
 
