@@ -8,10 +8,10 @@ exports.createUser = function(username, next) {
   if(!isLegalName(username)) {
     throw 'Illegal character in username. Please use only alphanumberic characters and spaces.';
   }
-  if(fs.existsSync('/Users/ethoreby/users/' + username)) {
+  if(fs.existsSync('user_data/' + username)) {
     throw 'A user with that name already exists.'
   }
-  execute('mkdir ~/users/' + sanitizeSpaces(username))
+  execute('mkdir user_data/' + sanitizeSpaces(username))
   .then(function() {
     next();
   });
@@ -21,14 +21,14 @@ exports.init = function(username, repo, next) {
   if(!isLegalName(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
-  if(fs.existsSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/')) {
+  if(fs.existsSync('user_data/' + username + '/' + repo.trim() + '/')) {
     throw 'You already have a project named ' + repo.trim() + '!';
   }
-  execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
+  execute('git init user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
   .then(function() {
-    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'content.md', '#Welcome\nThis is the first version of your new project.');
-    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'index.html', '');
-    fs.mkdirSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'js');
+    fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'content.md', '#Welcome\nThis is the first version of your new project.');
+    fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'index.html', '');
+    fs.mkdirSync('user_data/' + username + '/' + repo.trim() + '/' + 'js');
   })
   .then(function() {
     var cmt = Promise.promisify(commit);
@@ -43,7 +43,7 @@ var commit = exports.commit = function(username, repo, commitMessage, next) {
   if(!isLegalName(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
-  execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
+  execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {
     return getCommitHash(username, repo);
   })
@@ -53,24 +53,24 @@ var commit = exports.commit = function(username, repo, commitMessage, next) {
 }
 
 var getCommitHash = exports.getCommitHash = function(username, repo) {
-  return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git rev-parse HEAD');
+  return execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git rev-parse HEAD');
 }
 
 exports.checkout = function(username, repo, hash) {
   hash = hash || 'master';
-  return execute('cd ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git checkout ' + hash);
+  return execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git checkout ' + hash);
 }
 
 exports.clone = function(username, owner, repo) {
-  return execute('cd ~/users/' + sanitizeSpaces(username) + ' && ' + 'git clone ~/users/' + sanitizeSpaces(owner) + '/' + sanitizeSpaces(repo));
+  return execute('cd user_data/' + sanitizeSpaces(username) + ' && ' + 'git clone ../' + sanitizeSpaces(owner) + '/' + sanitizeSpaces(repo));
 }
 
 exports.deleteRepo = function(username, repo) {
-  return execute('rm -rf  ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo));
+  return execute('rm -rf  user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo));
 }
 
 exports.deleteUser = function(username) {
-  return execute('rm -rf  ~/users/' + sanitizeSpaces(username));
+  return execute('rm -rf  user_data/' + sanitizeSpaces(username));
 }
 
 var sanitizeSpaces = function(input) {
