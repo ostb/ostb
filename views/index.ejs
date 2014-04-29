@@ -7,7 +7,7 @@
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
-    
+
   </head>
 
   <body ng-controller="MyCtrl">
@@ -21,9 +21,15 @@
 
 
 <div ng-controller='MyCtrl'>
-  <button ng-click='toggleModal()'>Open Modal Dialog</button>
+  <button ng-click='toggleModal()'>Open Save Modal</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
-    <p>Modal Content Goes here<p>
+    <h3>Save Version</h3>
+    <form>
+      Version name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="use a name that describes your changes..."><br>
+      <input type="submit" value="Submit">
+    </form>
   </modal-dialog>
 </div>
 
