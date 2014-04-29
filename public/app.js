@@ -74,13 +74,29 @@ angular.module('ostb', [
   };
 })
 
-.controller('MyCtrl', ['$scope', function($scope) {
+.controller('ProjectCreateController', function($scope) {
+  console.log('ProjectCreateController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
-}]);
 
+  $scope.createProject = function(project) {
+    console.log('project: ', project);
+  };
+})
+
+.controller('UserCreateController', function($scope) {
+  console.log('UserCreateController');
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  $scope.createUser = function(user) {
+    console.log('user: ', user);
+  };
+})
 
 
 // })
