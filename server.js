@@ -3,6 +3,7 @@ var share = require('share');
 var showdown = require('showdown');
 var Promise = require('bluebird');
 var shell = require('./server_modules/shell_commands');
+var bodyParser = require('body-parser');
 var app = express();
 
 var converter = new showdown.converter();
@@ -67,6 +68,7 @@ module.exports = function(docName, model, res) {
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser());
 
 var options = {
   db: {type: 'none'}
@@ -123,7 +125,14 @@ app.get('/', function(req, res) {
 
 app.route('/api/users')
 .post(function(req, res) {
-  console.log('request!');
+  var newUser = Promise.promisify(shell.createUser);
+  newUser(req.body.username)
+  .then(function() {
+    console.log('created user ', req.body.username)
+  })
+  .catch(function(err){
+    console.log(err);
+  })
 });
 
 app.listen(3000);
