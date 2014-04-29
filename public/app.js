@@ -106,8 +106,8 @@ angular.module('ostb', [
   };
 })
 
-.controller('UserController', function($scope, UsersFactory) {
-  console.log('UserController');
+.controller('UsersController', function($scope, UsersFactory) {
+  console.log('UsersController');
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;

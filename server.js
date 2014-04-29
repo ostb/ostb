@@ -87,34 +87,6 @@ var options = {
 share.server.attach(app, options);
 
 
-// var newUser = Promise.promisify(shell.createUser);
-// shell.deleteUser('alejandro sanchez')
-// .then(function() {
-  // newUser('alejandro sanchez')
-  // .then(function() {
-  //   console.log('created a user')
-  // })
-  // .catch(function(err){
-  //   console.log(err);
-  // })
-// })
-
-// shell.init('alejandro sanchez', 'intro biology')
-// .then(function(stdout) {
-//   console.log('stdout: ' + stdout);
-// })
-// .catch(function(err){
-//   console.log('error: ', err);
-// });
-
-// shell.deleteRepo('alejandro', 'intro_biology')
-// .then(function(stdout) {
-//   console.log('stdout: ' + stdout);
-// })
-// .catch(function(err){
-//   console.log('error: ', err);
-// });
-
 // shell.commit('alejandro', 'intro_biology', 'test commit');
 
 // shell.log('alejandro', 'intro_biology');
@@ -124,7 +96,7 @@ share.server.attach(app, options);
 //   console.log('commit hash: ', hash[0]);
 // });
 
-// ------ ROUTING -----
+// ----- ROUTING -----
 // ----- webpage requests -----
 app.get('/editor', function(req, res) {
   res.render('editor');
@@ -141,7 +113,7 @@ app.route('/api/users')
 
 app.route('/api/projects')
 .post(projects.create)
-// .delete(projects.delete);
+.delete(projects.delete);
 
 app.listen(3000);
 

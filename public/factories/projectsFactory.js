@@ -13,6 +13,19 @@ angular.module('factories.projects', [])
         dfd.reject(data);
       });
       return dfd.promise;
+    },
+
+    delete: function(project) {
+      var dfd = $q.defer();
+      $http.delete('/api/projects?username=' + project.username + '&repo=' + project.repo)
+      .success(function(data, status, headers, config) {
+        dfd.resolve();
+      })
+      .error(function(data, status, headers, config) {
+        console.log('fail', arguments);
+        dfd.reject(data);
+      });
+      return dfd.promise;
     }
   }
 });

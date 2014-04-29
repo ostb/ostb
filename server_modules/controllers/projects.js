@@ -15,5 +15,12 @@ exports.create = function(req, res) {
 }
 
 exports.delete = function(req, res) {
-  res.send(204);
+  shell.deleteRepo(req.query.username, req.query.repo)
+  .then(function(stdout) {
+    console.log('deleted repo ', req.query.repo);
+    res.send(204);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  });
 }

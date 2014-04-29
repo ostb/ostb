@@ -27,7 +27,7 @@
 
 <p>Project CRUD tests:</p>
 <p>Your express instance will create a user_data dir witin the repo dir. This is where repo information will be stored. These modals will throw errors for which there are valid workflows to the error. (ie. there will never be a situation where you create a project w/o knowing the user.)</p>
-<div ng-controller='UserController'>
+<div ng-controller='UsersController'>
   <button ng-click='toggleModal()'>Create New User</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>New User // to be removed //</h3>
@@ -41,7 +41,7 @@
   </modal-dialog>
 </div>
 
-<div ng-controller='UserController'>
+<div ng-controller='UsersController'>
   <button ng-click='toggleModal()'>Delete User</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>Delete User // to be removed //</h3>
