@@ -101,6 +101,7 @@ angular.module('ostb', [
       console.log('success');
     })
     .catch(function(err) {
+      console.log(JSON.stringify(err));
       $scope.error = err;
     });
   };
