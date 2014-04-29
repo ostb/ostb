@@ -14,7 +14,6 @@ angular.module('ostb', [
       }
     }
   })
-
   .state('documents', {
     url: "/documents",
     views: {
