@@ -124,8 +124,8 @@ app.get('/example', function(req, res) {
   res.render('example');
 });
 
-app.get('/edit', function(req, res) {
-  res.render('edit');
+app.get('/editor', function(req, res) {
+  res.render('editor');
 });
 
 app.get('/', function(req, res) {
