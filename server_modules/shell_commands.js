@@ -21,6 +21,9 @@ exports.init = function(username, repo, next) {
   if(!isLegalName(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
+  if(fs.existsSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/')) {
+    throw 'You already have a project named ' + repo.trim() + '!';
+  }
   execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
   .then(function() {
     fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
