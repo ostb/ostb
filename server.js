@@ -114,12 +114,22 @@ share.server.attach(app, options);
 // });
 
 
-app.get('/', function(req, res) {
-  res.render('index');
+
+
+app.get('/documents', function(req, res) {
+  res.render('documents');
 });
 
-app.get('/edit', function(req, res) {
-  res.render('edit');
+app.get('/example', function(req, res) {
+  res.render('example');
+});
+
+app.get('/editor', function(req, res) {
+  res.render('editor');
+});
+
+app.get('/', function(req, res) {
+  res.render('index');
 });
 
 app.listen(3000);

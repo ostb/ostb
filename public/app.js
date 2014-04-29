@@ -14,15 +14,27 @@ angular.module('ostb', [
       }
     }
   })
-  .state('/', {
-    url: "/",
+
+  .state('documents', {
+    url: "/documents",
     views: {
       'content': {
-        template: '<h1>Hey look at this content!</h1>',
+        template: '../views/documents.ejs',
         controller: 'Example'
       }
     }
   })
+
+  .state('/', {
+    url: "/",
+    views: {
+      'content': {
+        templateURL: '<h1>Hey look at this content!</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+
 })
 
 .controller('Example', function($scope) {
@@ -36,3 +48,21 @@ angular.module('ostb', [
 //   $rootScope.$stateParams = $stateParams;
 
 // })
+
+// This is test data.
+window.documentsData = {
+  pages: {
+    1: {
+      name: "Mental Disorders of Coal Miners in Pre-Unification East Germany"
+    }
+  },
+  books: {
+    1: {
+      name: "Mining Coal Miners: Spelunking the Depths of The Coal Miner Psyche",
+      pages: {
+
+      }
+    }
+  }
+};
+console.log(window.documentsData);

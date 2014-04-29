@@ -15,10 +15,45 @@
     <h3>State: {{a}}</h3>
 
     <a href="/edit">Editor</a>
-    <a href="" ui-sref="example">Example</a>
+    <a ui-sref="example">Example</a>
 
     <p>Your content is served below in ui-view="content"</p>
     <div ui-view="content"></div>
+
+  <!-- Nav bar -->
+  <nav class="{{active}}" ng-click="$event.preventDefault()">
+
+    <!-- When a link in the menu is clicked, we set the active variable -->
+
+    <a href="#" class="documents" ng-click="active='documents'">Documents</a>
+    <a href="#" class="editor" ng-click="active='editor'">Editor</a>
+    <a href="#" class="example" ng-click="active='example'">Example</a>
+  </nav>
+
+  <p ng-hide="active">Please click a menu item</p>
+  <p ng-show="active">You chose <b>{{active}}</b></p>
+
+  <!-- Content Display -->
+  <div ng-switch on="active">
+    <div ng-switch-when="documents">
+      <ng-include 
+        src="'documents'">
+      </ng-include>
+    </div>
+
+    <div ng-switch-when="editor">
+      <ng-include 
+        src="'editor'">
+      </ng-include>
+    </div>
+
+    <div ng-switch-when="example">
+      <ng-include 
+        src="'example'">
+      </ng-include>
+    </div>
+  </div>
+
 
   </body>
 </html>
