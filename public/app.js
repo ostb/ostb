@@ -1,5 +1,7 @@
 angular.module('ostb', [
-  'ui.router'
+  'ui.router',
+  'factories.users',
+  'factories.projects'
 ])
 
 .config( function($stateProvider) {
@@ -74,16 +76,70 @@ angular.module('ostb', [
   };
 })
 
-.controller('MyCtrl', ['$scope', function($scope) {
+.controller('ProjectsController', function($scope, ProjectsFactory) {
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
-}]);
 
+  $scope.createProject = function(project) {
+    ProjectsFactory.create(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 
+  $scope.cloneProject = function(project) {
+    ProjectsFactory.clone(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 
-// })
+  $scope.deleteProject = function(project) {
+    ProjectsFactory.delete(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+})
+
+.controller('UsersController', function($scope, UsersFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  $scope.createUser = function(user) {
+    UsersFactory.create(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.deleteUser = function(user) {
+    UsersFactory.delete(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+})
+
 
 // This is test data.
 window.documentsData = {

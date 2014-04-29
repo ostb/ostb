@@ -6,6 +6,8 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app.js"></script>
+    <script src="factories/usersFactory.js"></script>
+    <script src="factories/projectsFactory.js"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
 
   </head>
@@ -19,21 +21,96 @@
     <a href="/editor">Editor</a>
     <a ui-sref="example">Example</a>
     <a ui-sref="versions">versions</a>
+<br>
+<br>
 
-<div ng-controller='MyCtrl'>
-  <button ng-click='toggleModal()'>Create New Project</button>
+<p>Project CRUD tests:</p>
+<p>Your express instance will create a user_data dir witin the repo dir. This is where repo information will be stored. These modals will throw errors for which should be valid workflows to the error. (ie. there will never be a situation where you create a project w/o knowing the user.)</p>
+<div ng-controller='UsersController'>
+  <button ng-click='toggleModal()'>Create New User</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
-    <h3>New Project</h3>
-    <form>
-      Project Name:
+    <h3>New User</h3>
+    <form ng-submit='createUser(user)'>
+      Username:
       <br>
-      <input style="width: 300px;" type="text" placeholder="Your Project"><br>
-      <input type="submit" value="Submit">
+      <input style="width: 300px;" type="text" placeholder="Your Username" ng-model="user.username"><br>
+      <div><input type="submit" value="Submit"></div>
     </form>
+    <div style="color:red;">{{error}}</div>
   </modal-dialog>
 </div>
 
-<div ng-controller='MyCtrl'>
+<div ng-controller='UsersController'>
+  <button ng-click='toggleModal()'>Delete User</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>Delete User</h3>
+    <form ng-submit='deleteUser(user)'>
+      Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Username" ng-model="user.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
+<br>
+
+<div ng-controller='ProjectsController'>
+  <button ng-click='toggleModal()'>Create New Project</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>New Project</h3>
+    <form ng-submit='createProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
+
+<div ng-controller='ProjectsController'>
+  <button ng-click='toggleModal()'>Clone Project</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>Clone Project</h3>
+    <form ng-submit='cloneProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Project Name" ng-model="project.repo"><br>
+      Clone to Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="clone to USERNAME" ng-model="project.username"><br>
+      Clone from Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="clone from USERNAME" ng-model="project.owner"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
+
+<div ng-controller='ProjectsController'>
+  <button ng-click='toggleModal()'>Delete Project</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>Delete Project</h3>
+    <form ng-submit='deleteProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
+<br>
+
+<div ng-controller='ProjectsController'>
   <button ng-click='toggleModal()'>Save Version</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>Save New Version</h3>

@@ -14,6 +14,11 @@ describe('repo & user testing', function() {
   before(function() {
     app = express();
     app.listen(3000);
+    fs.exists('user_data/', function(exists) {
+      if(!exists) {
+        fs.mkdirSync('user_data');
+      }
+    });
   });
 
   after(function(done) {
@@ -33,7 +38,7 @@ describe('repo & user testing', function() {
     var newUser = Promise.promisify(shell.createUser);
     newUser('alejandroTEST')
     .then(function(stdout) {
-      (fs.existsSync('/Users/ethoreby/users/alejandroTest')).should.equal(true);
+      (fs.existsSync('user_data/alejandroTest')).should.equal(true);
       done();
     })
     .catch(function(err){
@@ -45,7 +50,7 @@ describe('repo & user testing', function() {
     var newRepo = Promise.promisify(shell.init);
     newRepo('alejandroTest', 'test_repo')
     .then(function() {
-      (fs.existsSync('/Users/ethoreby/users/alejandroTest/test_repo')).should.equal(true);
+      (fs.existsSync('user_data/alejandroTest/test_repo')).should.equal(true);
       done();
     })
     .catch(function(err){
@@ -66,10 +71,10 @@ describe('repo & user testing', function() {
   });
 
   it('should commit file changes', function(done) {
-    fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt', 'Changes to the file.');
+    fs.writeFileSync('user_data/alejandroTest/test_repo/content.md', 'Changes to the file.');
     var cmt = Promise.promisify(shell.commit);
     cmt('alejandroTest', 'test_repo', 'second commit')
-    .then(function(hash) {
+    .then(function(hash){
       (hash.length > 0).should.equal(true);
       done();
     })
@@ -82,7 +87,7 @@ describe('repo & user testing', function() {
     var newRepo = Promise.promisify(shell.init);
     newRepo('alejandroTest', ' test repo ')
     .then(function() {
-      (fs.existsSync('/Users/ethoreby/users/alejandroTest/test\ repo')).should.equal(true);
+      (fs.existsSync('user_data/alejandroTest/test\ repo')).should.equal(true);
       done();
     })
     .catch(function(err){
@@ -106,8 +111,8 @@ describe('repo & user testing', function() {
   it('should checkout a previous version', function(done) {
     shell.checkout('alejandroTest', 'test_repo', origHash)
     .then(function() {
-      var contents = fs.readFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt');
-      contents.should.equal('Welcome. This is the first version of your new project.');
+      var contents = fs.readFileSync('user_data/alejandroTest/test_repo/content.md');
+      contents.should.equal('#Welcome\nThis is the first version of your new project.');
       done();
     })
     .catch(function(err){
@@ -123,7 +128,7 @@ describe('repo & user testing', function() {
       return shell.clone('elliottTest', 'alejandroTest', 'test repo')
     })
     .then(function() {
-      (fs.existsSync('/Users/ethoreby/users/elliottTest/test repo')).should.equal(true);
+      (fs.existsSync('user_data/elliottTest/test repo')).should.equal(true);
       done();
     })
     .catch(function(err) {

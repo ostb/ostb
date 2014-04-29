@@ -3,6 +3,12 @@ var share = require('share');
 var showdown = require('showdown');
 var Promise = require('bluebird');
 var shell = require('./server_modules/shell_commands');
+var bodyParser = require('body-parser');
+var fs = require('fs');
+
+var users = require('./server_modules/controllers/users');
+var projects = require('./server_modules/controllers/projects');
+
 var app = express();
 
 var converter = new showdown.converter();
@@ -62,11 +68,17 @@ module.exports = function(docName, model, res) {
   });
 };
 
-
+//initialize users dir
+fs.exists('user_data/', function(exists) {
+  if(!exists) {
+    fs.mkdirSync('user_data');
+  }
+})
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser());
 
 var options = {
   db: {type: 'none'}
@@ -74,34 +86,6 @@ var options = {
 }
 share.server.attach(app, options);
 
-
-// var newUser = Promise.promisify(shell.createUser);
-// shell.deleteUser('alejandro sanchez')
-// .then(function() {
-  // newUser('alejandro sanchez')
-  // .then(function() {
-  //   console.log('created a user')
-  // })
-  // .catch(function(err){
-  //   console.log(err);
-  // })
-// })
-
-// shell.init('alejandro sanchez', 'intro biology')
-// .then(function(stdout) {
-//   console.log('stdout: ' + stdout);
-// })
-// .catch(function(err){
-//   console.log('error: ', err);
-// });
-
-// shell.deleteRepo('alejandro', 'intro_biology')
-// .then(function(stdout) {
-//   console.log('stdout: ' + stdout);
-// })
-// .catch(function(err){
-//   console.log('error: ', err);
-// });
 
 // shell.commit('alejandro', 'intro_biology', 'test commit');
 
@@ -112,17 +96,8 @@ share.server.attach(app, options);
 //   console.log('commit hash: ', hash[0]);
 // });
 
-
-
-
-app.get('/documents', function(req, res) {
-  res.render('documents');
-});
-
-app.get('/example', function(req, res) {
-  res.render('example');
-});
-
+// ----- ROUTING -----
+// ----- webpage requests -----
 app.get('/editor', function(req, res) {
   res.render('editor');
 });
@@ -130,6 +105,18 @@ app.get('/editor', function(req, res) {
 app.get('/', function(req, res) {
   res.render('index');
 });
+
+// ----- api requests -----
+app.route('/api/users')
+.post(users.create)
+.delete(users.delete);
+
+app.route('/api/projects')
+.post(projects.create)
+.delete(projects.delete);
+
+app.route('/api/projects/clone')
+.post(projects.clone);
 
 app.listen(3000);
 
