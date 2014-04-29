@@ -4,6 +4,7 @@ var showdown = require('showdown');
 var Promise = require('bluebird');
 var shell = require('./server_modules/shell_commands');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
 var users = require('./server_modules/controllers/users');
 var projects = require('./server_modules/controllers/projects');
@@ -67,7 +68,12 @@ module.exports = function(docName, model, res) {
   });
 };
 
-
+//initialize users dir
+fs.exists('user_data/', function(exists) {
+  if(!exists) {
+    fs.mkdirSync('user_data');
+  }
+})
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

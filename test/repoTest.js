@@ -69,7 +69,8 @@ describe('repo & user testing', function() {
     fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/content.md', 'Changes to the file.');
     var cmt = Promise.promisify(shell.commit);
     cmt('alejandroTest', 'test_repo', 'second commit')
-    .then(function(hash) txt      (hash.length > 0).should.equal(true);
+    .then(function(hash){
+      (hash.length > 0).should.equal(true);
       done();
     })
     .catch(function(err){
