@@ -26,7 +26,9 @@ exports.init = function(username, repo, next) {
   }
   execute('git init ~/users/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
   .then(function() {
-    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'p1.txt', 'Welcome. This is the first version of your new project.');
+    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'content.md', '#Welcome\nThis is the first version of your new project.');
+    fs.writeFileSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'index.html', '');
+    fs.mkdirSync('/Users/ethoreby/users/' + username + '/' + repo.trim() + '/' + 'js');
   })
   .then(function() {
     var cmt = Promise.promisify(commit);

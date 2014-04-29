@@ -66,11 +66,10 @@ describe('repo & user testing', function() {
   });
 
   it('should commit file changes', function(done) {
-    fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt', 'Changes to the file.');
+    fs.writeFileSync('/Users/ethoreby/users/alejandroTest/test_repo/content.md', 'Changes to the file.');
     var cmt = Promise.promisify(shell.commit);
     cmt('alejandroTest', 'test_repo', 'second commit')
-    .then(function(hash) {
-      (hash.length > 0).should.equal(true);
+    .then(function(hash) txt      (hash.length > 0).should.equal(true);
       done();
     })
     .catch(function(err){
@@ -106,8 +105,8 @@ describe('repo & user testing', function() {
   it('should checkout a previous version', function(done) {
     shell.checkout('alejandroTest', 'test_repo', origHash)
     .then(function() {
-      var contents = fs.readFileSync('/Users/ethoreby/users/alejandroTest/test_repo/p1.txt');
-      contents.should.equal('Welcome. This is the first version of your new project.');
+      var contents = fs.readFileSync('/Users/ethoreby/users/alejandroTest/test_repo/content.md');
+      contents.should.equal('#Welcome\nThis is the first version of your new project.');
       done();
     })
     .catch(function(err){
