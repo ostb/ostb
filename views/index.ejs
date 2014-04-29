@@ -10,7 +10,7 @@
 
   </head>
 
-  <body ng-controller="MyCtrl">
+  <body>
 
     <h1>This is our index</h1>
 
@@ -20,9 +20,21 @@
     <a href="" ui-sref="example">Example</a>
     <a href="" ui-sref="versions">versions</a>
 
+<div ng-controller='MyCtrl'>
+  <button ng-click='toggleModal()'>Create New Project</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>New Project</h3>
+    <form>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project"><br>
+      <input type="submit" value="Submit">
+    </form>
+  </modal-dialog>
+</div>
 
 <div ng-controller='MyCtrl'>
-  <button ng-click='toggleModal()'>Open Save Modal</button>
+  <button ng-click='toggleModal()'>Save Version</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>Save New Version</h3>
     <form>
