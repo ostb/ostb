@@ -18,14 +18,15 @@
 
     <a href="/edit">Editor</a>
     <a href="" ui-sref="example">Example</a>
+    <a href="" ui-sref="versions">versions</a>
 
 
 <div ng-controller='MyCtrl'>
   <button ng-click='toggleModal()'>Open Save Modal</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
-    <h3>Save Version</h3>
+    <h3>Save New Version</h3>
     <form>
-      Version name:
+      Version Name:
       <br>
       <input style="width: 300px;" type="text" placeholder="use a name that describes your changes..."><br>
       <input type="submit" value="Submit">

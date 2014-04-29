@@ -14,15 +14,29 @@ angular.module('ostb', [
       }
     }
   })
-  .state('/', {
-    url: "/",
+  .state('versions', {
+    url: "/versions",
     views: {
       'content': {
-        template: '<h1>Hey look at this content!</h1>',
-        controller: 'Example'
+        templateUrl: '/partials/versions.html',
+        controller: 'VersionsController'
       }
     }
   })
+})
+
+.controller('VersionsController', function($scope) {
+  console.log('Versions controller');
+
+  $scope.versions = {
+    a: {
+      commitMsg: 'foo'
+    },
+    b: {
+      commitMsg: 'bar'
+    }
+  }
+
 })
 
 .controller('Example', function($scope) {
