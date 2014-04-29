@@ -4,6 +4,9 @@ var showdown = require('showdown');
 var Promise = require('bluebird');
 var shell = require('./server_modules/shell_commands');
 var bodyParser = require('body-parser');
+
+var users = require('./server_modules/controllers/users');
+
 var app = express();
 
 var converter = new showdown.converter();
@@ -124,28 +127,8 @@ app.get('/', function(req, res) {
 });
 
 app.route('/api/users')
-.post(function(req, res) {
-  var newUser = Promise.promisify(shell.createUser);
-  newUser(req.body.username)
-  .then(function() {
-    console.log('created user ', req.body.username);
-    res.send(201);
-  })
-  .catch(function(err){
-    res.send(400, err.toString());
-  })
-})
-.delete(function(req, res) {
-  shell.deleteUser(req.query.username)
-  .then(function() {
-    console.log('successful delete ', req.query.username);
-    res.send(204);
-  })
-  .catch(function(err){
-    console.log(err);
-    res.send(400, err.toString());
-  });
-});
+.post(users.create)
+.delete(users.delete);
 
 app.listen(3000);
 
