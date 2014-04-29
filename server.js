@@ -5,7 +5,6 @@ var Promise = require('bluebird');
 var shell = require('./server_modules/shell_commands');
 var app = express();
 
-//adrian
 var converter = new showdown.converter();
 
 var Mustache = (function() {
@@ -133,3 +132,9 @@ app.get('/', function(req, res) {
 });
 
 app.listen(3000);
+
+
+
+
+
+
