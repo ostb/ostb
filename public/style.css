@@ -15,10 +15,15 @@ body {
 
 .editButton {
 	display: inline-block;
-	border: 1px solid gray;
+	border: 1px solid black;
 	height: 30px;
 	width: 30px;
 	padding: 10px 0 0 10px;
+}
+
+.editButton:hover {
+	border: 1px solid cyan;
+	cursor: pointer;
 }
 
 #header {
