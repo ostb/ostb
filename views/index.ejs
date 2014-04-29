@@ -57,19 +57,35 @@
 <div ng-controller='ProjectsController'>
 <!-- 
     <div ng-controller="MyCtrl" style="height: 100%; width: 100%;">
-      <!-- top navbar area --> 
-      <div style="height:8.9%; width: 100%;"> 
-        <!-- Navbar is included on every page -->
-        <ng-include src="'navbar'"></ng-include>
+      <div ng-controller="IndexContent">
+        <!-- top navbar area --> 
+        <div style="height:8.9%; width: 100%;"> 
+          <!-- Navbar is included on every page -->
+          <div id="navbar">
+            <!-- Left Buttons --> 
+            <span style="float: left;"><ul class="editNav">
+              <div id="navText"><strong>OSTB</strong></div>
+              <li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
+            </ul></span>
+            <!-- Right Buttons --> 
+            <span style="float: right;"><ul class="editNav">
+              <li class="editButton"></li>
+              <li class="editButton"><a ui-sref="example">Example</a></li>
+              <li class="editButton" title="Save Version"><a ui-sref="logout">Logout</a></li>
+            </ul></span>
+          </div>
+        </div>
+        <!-- content --> 
+        <div style="height: 91.1%; width: 100%; margin-top: 100px;"> 
+          <div ui-view="content"></div>
+        <div>
       </div>
       <div style="height: 91.1%; width: 100%;"> 
         <ng-include src="'editor'"></ng-include>
       <div>
--->
     </div>
   </body>
 </html>
-<!--
   <button ng-click='toggleModal()'>Create New Project</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>New Project</h3>
@@ -142,3 +158,6 @@
     <div ui-view="content"></div>
 
 -->
+    </div>
+  </body>
+</html>

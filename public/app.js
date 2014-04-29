@@ -7,11 +7,20 @@ angular.module('ostb', [
 .config( function($stateProvider) {
   console.log($stateProvider);
   $stateProvider
+  .state('logout', {
+    url: "/logout",
+    views: {
+      'content': {
+        template: '<h1>All out of logs!</h1>',
+        controller: 'Example'
+      }
+    }
+  })
   .state('example', {
     url: "/example",
     views: {
       'content': {
-        template: '<h1>Hey look at this content!</h1>',
+        template: '<h1>What a good example!</h1>',
         controller: 'Example'
       }
     }
@@ -52,6 +61,10 @@ angular.module('ostb', [
 
 .controller('Example', function($scope) {
   console.log('Example controller');
+})
+
+.controller('IndexContent', function($scope){
+  $scope.indexContent = 'test';
 })
 
 .directive('modalDialog', function() {
