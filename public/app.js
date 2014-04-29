@@ -48,3 +48,21 @@ angular.module('ostb', [
 //   $rootScope.$stateParams = $stateParams;
 
 // })
+
+// This is test data.
+window.documentsData = {
+  pages: {
+    1: {
+      name: "Mental Disorders of Coal Miners in Pre-Unification East Germany"
+    }
+  },
+  books: {
+    1: {
+      name: "Mining Coal Miners: Spelunking the Depths of The Coal Miner Psyche",
+      pages: {
+
+      }
+    }
+  }
+};
+console.log(window.documentsData);
