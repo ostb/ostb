@@ -9,6 +9,10 @@ var fs = require('fs');
 var users = require('./server_modules/controllers/users');
 var projects = require('./server_modules/controllers/projects');
 
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/userdb');
+
 var app = express();
 
 var converter = new showdown.converter();
@@ -79,6 +83,11 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser());
+
+app.use(function(req,res,next){
+  req.db = db;
+  next();
+});
 
 var options = {
   db: {type: 'none'}
