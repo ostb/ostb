@@ -16,11 +16,15 @@ exports.create = function(req, res) {
     // .then(function(result) {
     //   var projects = result.projects;
     //   projects[req.body.repo] = {};
-      collection.update({username: req.body.username}, {$set: {'projects.foo': 'foo'}});
       
-      var project = {};
-      project[req.body.repo] = {};
-      collection.update({username: req.body.username}, {$set: {projects: project}});
+      // var project = {};
+      // project[req.body.repo] = {};
+      // collection.update({username: req.body.username}, {$set: {projects: project}});
+
+
+      var projects = {}
+      projects['projects.' + req.body.repo] = {}
+      collection.update({username: req.body.username}, {$set: projects});
 
     // })
     // .catch(function(err) {
