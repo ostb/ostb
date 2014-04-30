@@ -1,0 +1,27 @@
+<h3>Versions</h3>
+
+<div ng-controller='VersionsController'>
+  <button ng-click='toggleModal()'>Update Version History</button>
+  <modal-dialog show='modalShown' width='400px' height='60%'>
+    <h3>Save New Version</h3>
+    <form ng-submit='getVersions(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+
+
+<ul>
+  <li ng-repeat='hash in versions'>
+    <div ng-repeat='(key, value) in hash'>
+      <p>{{key}} : {{value}}<p/>
+    </div>
+  </li>
+</ul>
+</div>

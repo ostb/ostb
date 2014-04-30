@@ -1,89 +1,12 @@
 ostb.controller('IndexController', function($scope) {
 })
 
-.controller('UsersController', function($scope, UsersFactory) {
-  $scope.modalShown = false;
-  $scope.toggleModal = function() {
-    $scope.modalShown = !$scope.modalShown;
-  };
-
-  $scope.createUser = function(user) {
-    UsersFactory.create(user)
-    .then(function() {
-      console.log('success');
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
-
-  $scope.deleteUser = function(user) {
-    UsersFactory.delete(user)
-    .then(function() {
-      console.log('success');
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
-})
-
-.controller('VersionsController', function($scope) {
-  console.log('Versions controller');
-
-  $scope.versions = {
-    a: {
-      commitMsg: 'foo'
-    },
-    b: {
-      commitMsg: 'bar'
-    }
-  }
-})
-
 .controller('Example', function($scope) {
   console.log('Example controller');
 })
 
 .controller('IndexContent', function($scope){
   $scope.indexContent = 'test';
-})
-
-.controller('ProjectsController', function($scope, ProjectsFactory) {
-  $scope.modalShown = false;
-  $scope.toggleModal = function() {
-    $scope.modalShown = !$scope.modalShown;
-  };
-
-  $scope.createProject = function(project) {
-    ProjectsFactory.create(project)
-    .then(function() {
-      console.log('success');
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
-
-  $scope.cloneProject = function(project) {
-    ProjectsFactory.clone(project)
-    .then(function() {
-      console.log('success');
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
-
-  $scope.deleteProject = function(project) {
-    ProjectsFactory.delete(project)
-    .then(function() {
-      console.log('success');
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
 })
 
 .controller('Example1', function($scope) {
@@ -127,5 +50,104 @@ ostb.controller('IndexController', function($scope) {
   };
   init();
   console.log('Example1 controller');
+})
+
+
+// ----- project CRUD controllers -----
+
+.controller('VersionsController', function($scope, ProjectsFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  $scope.getVersions = function(project) {
+    ProjectsFactory.getVersions(project)
+    .then(function(data) {
+      $scope.versions = data;
+      console.log($scope.versions);
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+})
+
+.controller('ProjectsController', function($scope, ProjectsFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  $scope.createProject = function(project) {
+    ProjectsFactory.create(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.cloneProject = function(project) {
+    ProjectsFactory.clone(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.deleteProject = function(project) {
+    ProjectsFactory.delete(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.commitProject = function(project) {
+    var temp = project.commitBody;
+    project.commitBody = {}
+    project.commitBody['content.md'] = temp;
+
+    ProjectsFactory.commit(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+})
+
+.controller('UsersController', function($scope, UsersFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  $scope.createUser = function(user) {
+    UsersFactory.create(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.deleteUser = function(user) {
+    UsersFactory.delete(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 });
 

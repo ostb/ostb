@@ -72,8 +72,13 @@ describe('repo & user testing', function() {
 
   it('should commit file changes', function(done) {
     fs.writeFileSync('user_data/alejandroTest/test_repo/content.md', 'Changes to the file.');
+
+    var commitBody = {
+      'content.md': 'Changes to the file.',
+    }
+
     var cmt = Promise.promisify(shell.commit);
-    cmt('alejandroTest', 'test_repo', 'second commit')
+    cmt('alejandroTest', 'test_repo', 'second commit', commitBody)
     .then(function(hash){
       (hash.length > 0).should.equal(true);
       done();
@@ -123,9 +128,10 @@ describe('repo & user testing', function() {
 
   it('should clone a project to another user directory', function(done) {
     var newUser = Promise.promisify(shell.createUser);
+    var copy = Promise.promisify(shell.clone);
     newUser('elliottTest')
     .then(function() {
-      return shell.clone('elliottTest', 'alejandroTest', 'test repo')
+      return copy('elliottTest', 'alejandroTest', 'test repo')
     })
     .then(function() {
       (fs.existsSync('user_data/elliottTest/test repo')).should.equal(true);
