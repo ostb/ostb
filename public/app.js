@@ -25,21 +25,12 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('documents', {
-    url: "/documents",
+  .state('editor', {
+    url: "/editor",
     views: {
       'content': {
-        template: '../views/documents.ejs',
+        templateUrl: 'partials/editor.html',
         controller: 'Example'
-      }
-    }
-  })
-  .state('versions', {
-    url: "/versions",
-    views: {
-      'content': {
-        templateUrl: '/partials/versions.html',
-        controller: 'VersionsController'
       }
     }
   })
