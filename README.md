@@ -11,3 +11,6 @@ OSTB will allow users to download and deploy their pages/books to their own host
 - $ mongod --dbpath ...path.../open_source_textbook/ostb/mongo_data/db    
 - $ mongo (connects to ^ mongod)
 - > (^ in mongo shell) use userdb
+
+###How to run mocha tests
+- $ mocha test/...nameOfTest.js...
