@@ -1,0 +1,46 @@
+<div id="editor-container">
+  <div id="editor-container-left">
+    <div id="editor-left"></div>
+  </div>
+  <div id="editor-container-right">
+    <div id="editor-right">
+      <div id="view" class="content"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.onload = function() {
+  var converter = new Showdown.converter();
+  var view = document.getElementById('view');
+
+  var editor-left = ace.edit("editor-left");
+  editor-left.setReadOnly(true);
+  editor-left.session.setUseWrapMode(true);
+  editor-left.setShowPrintMargin(false);
+
+  // This could instead be written simply as:
+  // sharejs.open('{{{docName}}}', function(doc, error) {
+  //   ...
+
+  var connection = new sharejs.Connection('/channel');
+
+  connection.open('{{{docName}}}', function(error, doc) {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    doc.attach_ace(editor-left);
+    editor-left.setReadOnly(false);
+
+    var render = function() {
+      view.innerHTML = converter.makeHtml(doc.snapshot);
+    };
+
+    window.doc = doc;
+
+    render();
+    doc.on('change', render);
+  });
+};
+</script>

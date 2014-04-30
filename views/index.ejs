@@ -6,14 +6,39 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="app.js"></script>
+    <script src="controllers/controllers.js"></script> 
+    <script src="directives/directives.js"></script> 
     <script src="factories/usersFactory.js"></script>
     <script src="factories/projectsFactory.js"></script>
-    <link rel="stylesheet" type="text/css" href="/style.css">
-
+    <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 
   <body>
+    <div ng-controller="IndexController" style="height: 100%; width: 100%;">
+      <!-- top navbar area --> 
+      <div style="height:8.9%; width: 100%;"> 
+        <!-- Navbar is included on every page -->
+        <div id="navbar">
+          <!-- Left Buttons --> 
+          <span style="float: left;"><ul class="editNav">
+            <div id="navText"><strong>OSTB</strong></div>
+            <li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
+          </ul></span>
+          <!-- Right Buttons --> 
+          <span style="float: right;"><ul class="editNav">
+            <li class="editButton"></li>
+            <li class="editButton"><a ui-sref="example">Example</a></li>
+            <li class="editButton" title="Save Version"><a ui-sref="logout">Logout</a></li>
+          </ul></span>
+        </div>
+      </div>
+      <!-- content --> 
+      <div style="height: 91.1%; width: 100%; margin-top: 100px;"> 
+        <div ui-view="content"></div>
+      <div>
+    </div>
 
+    <!-- test stuff below -->
     <h1>This is our index</h1>
 
     <h3>State: {{a}}</h3>
@@ -21,41 +46,47 @@
     <a href="/editor">Editor</a>
     <a ui-sref="example">Example</a>
     <a ui-sref="versions">versions</a>
-<br>
-<br>
+    <br>
+    <br>
 
-<p>Project CRUD tests:</p>
-<p>Your express instance will create a user_data dir witin the repo dir. This is where repo information will be stored. These modals will throw errors for which should be valid workflows to the error. (ie. there will never be a situation where you create a project w/o knowing the user.)</p>
-<div ng-controller='UsersController'>
-  <button ng-click='toggleModal()'>Create New User</button>
-  <modal-dialog show='modalShown' width='400px' height='60%'>
-    <h3>New User</h3>
-    <form ng-submit='createUser(user)'>
-      Username:
-      <br>
-      <input style="width: 300px;" type="text" placeholder="Your Username" ng-model="user.username"><br>
-      <div><input type="submit" value="Submit"></div>
-    </form>
-    <div style="color:red;">{{error}}</div>
-  </modal-dialog>
-</div>
+    <p>Project CRUD tests:</p>
+    <p>Your express instance will create a user_data dir witin the repo dir. This is where repo information will be stored. These modals will throw errors for which should be valid workflows to the error. (ie. there will never be a situation where you create a project w/o knowing the user.)</p>
+    <div ng-controller='UsersController'>
+      <button ng-click='toggleModal()'>Create New User</button>
+      <modal-dialog show='modalShown' width='400px' height='60%'>
+        <h3>New User</h3>
+        <form ng-submit='createUser(user)'>
+          Username:
+          <br>
+          <input style="width: 300px;" type="text" placeholder="Your Username" ng-model="user.username"><br>
+          <div><input type="submit" value="Submit"></div>
+        </form>
+        <div style="color:red;">{{error}}</div>
+      </modal-dialog>
+    </div>
 
-<div ng-controller='UsersController'>
-  <button ng-click='toggleModal()'>Delete User</button>
-  <modal-dialog show='modalShown' width='400px' height='60%'>
-    <h3>Delete User</h3>
-    <form ng-submit='deleteUser(user)'>
-      Username:
-      <br>
-      <input style="width: 300px;" type="text" placeholder="Username" ng-model="user.username"><br>
-      <div><input type="submit" value="Submit"></div>
-    </form>
-    <div style="color:red;">{{error}}</div>
-  </modal-dialog>
-</div>
-<br>
+    <div ng-controller='UsersController'>
+      <button ng-click='toggleModal()'>Delete User</button>
+      <modal-dialog show='modalShown' width='400px' height='60%'>
+        <h3>Delete User</h3>
+        <form ng-submit='deleteUser(user)'>
+          Username:
+          <br>
+          <input style="width: 300px;" type="text" placeholder="Username" ng-model="user.username"><br>
+          <div><input type="submit" value="Submit"></div>
+        </form>
+        <div style="color:red;">{{error}}</div>
+      </modal-dialog>
+    </div>
+    <br>
 
-<div ng-controller='ProjectsController'>
+  </body>
+</html>
+<!-- 
+    <div ng-controller='ProjectsController'>
+    </div>
+  </body>
+</html>
   <button ng-click='toggleModal()'>Create New Project</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>New Project</h3>
@@ -127,6 +158,4 @@
     <p>Your content is served below in ui-view="content"</p>
     <div ui-view="content"></div>
 
-  </body>
-</html>
-
+-->
