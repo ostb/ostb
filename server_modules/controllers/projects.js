@@ -67,12 +67,18 @@ exports.commit = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
-  console.log(req.body);
-  res.send(201);
-
   var cmt = Promise.promisify(shell.commit);
   cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
-  .then(function(hash){
+  .then(function(commitHash){
+
+    var commit = {
+      commitMessage: req.body.commitMessage,
+      date: new Date()
+    };
+    var projects = {};
+    projects['projects.' + req.body.repo + "." + commitHash] = commit;
+    collection.update({username: req.body.username}, {$set: projects});
+
     res.send(201);
   })
   .catch(function(err){
