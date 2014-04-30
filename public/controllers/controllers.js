@@ -84,5 +84,48 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
+})
+
+.controller('Example1', function($scope) {
+    var init = function() {
+    var converter = new Showdown.converter();
+    var view = document.getElementById('view');
+    var editor = ace.edit("editor");
+    console.log('editor', editor);
+    editor.setReadOnly(true);
+    editor.session.setUseWrapMode(true);
+    editor.setShowPrintMargin(false);
+    editor.resize(true);
+      
+    var connection = new sharejs.Connection('/channel');
+
+    connection.open('', function(error, doc) {
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      doc.attach_ace(editor);
+      editor.setReadOnly(false);
+
+      var render = function() {
+        view.innerHTML = converter.makeHtml(doc.snapshot);
+      };
+
+      window.doc = doc;
+      
+      render();
+      doc.on('change', render);
+
+      editor.getSession().on('changeScrollTop',function(scroll){
+        var lengthScroll = $('#right')[0].scrollHeight - $('#right').height();
+        $('#right').scrollTop(scroll);
+        console.log('editor scroll hit', scroll);
+      });
+
+    });
+  };
+  init();
+  console.log('Example1 controller');
 });
 
