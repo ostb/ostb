@@ -36,7 +36,6 @@ var ostb = angular.module('ostb', [
   })
 })
 
-
 // This is test data.
 window.documentsData = {
   pages: {
