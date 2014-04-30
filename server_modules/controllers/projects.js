@@ -68,16 +68,16 @@ exports.commit = function(req, res) {
   var collection = db.get('usercollection');
 
   console.log(req.body);
-  req.send(201);
+  res.send(201);
 
-  // var cmt = Promise.promisify(shell.commit);
-  // cmt('alejandroTest', 'test_repo', 'second commit')
-  // .then(function(hash){
-  //   res.send(201);
-  // })
-  // .catch(function(err){
-  //   res.send(400, err.toString());
-  // })
+  var cmt = Promise.promisify(shell.commit);
+  cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
+  .then(function(hash){
+    res.send(201);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  })
 }
 
 
