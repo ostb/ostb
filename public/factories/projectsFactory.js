@@ -30,7 +30,7 @@ angular.module('factories.projects', [])
 
     clone: function(project) {
       var dfd = $q.defer();
-      $http.post('/api/projects/clone?username=' + project.username + '&repo=' + project.repo + '&owner=' + project.owner)
+      $http.post('/api/projects/clone', project)
       .success(function(data, status, headers, config) {
         dfd.resolve();
       })
