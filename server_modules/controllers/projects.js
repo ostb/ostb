@@ -52,21 +52,20 @@ exports.clone = function(req, res) {
 
   console.log(req.body);
 
-  // shell.clone(req.body.username, req.body.owner, req.body.repo)
   var copy = Promise.promisify(shell.clone);
   copy(req.body.username, req.body.owner, req.body.repo)
   .then(function(commitHash) {
     console.log('cloned repo ' + req.body.repo + ' into ' + req.body.username);
     console.log('commitHash ', commitHash);
 
-    // var commits = {};
-    // commits[commitHash] = {
-    //   commitMessage: 'Copied project ' + req.body.repo + 'from' + req.body.owner,
-    //   date: new Date()
-    // }
-    // var projects = {};
-    // projects['projects.' + req.body.repo] = commits;
-    // collection.update({username: req.body.username}, {$set: projects});
+    var commits = {};
+    commits[commitHash] = {
+      commitMessage: 'Cloned project ' + req.body.repo + ' from ' + req.body.owner,
+      date: new Date()
+    }
+    var projects = {};
+    projects['projects.' + req.body.repo] = commits;
+    collection.update({username: req.body.username}, {$set: projects});
 
     res.send(201);
   })
