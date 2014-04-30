@@ -25,15 +25,11 @@ exports.init = function(username, repo, next) {
   }
   repo = repo.trim();
 
-  if(fs.existsSync('user_data/' + username + '/' + repo.trim() + '/')) {
-    throw 'You already have a project named ' + repo.trim() + '!';
+  if(fs.existsSync('user_data/' + username + '/' + repo + '/')) {
+    throw 'You already have a project named ' + repo + '!';
   }
+
   execute('git init user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
-  // .then(function() {
-    // fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'content.md', '#Welcome\nThis is the first version of your new project.');
-    // fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'index.html', '');
-    // fs.mkdirSync('user_data/' + username + '/' + repo.trim() + '/' + 'js');
-  // })
   .then(function() {
     var commitBody = {
       'content.md': '#Welcome\nThis is the first version of your new project.',
@@ -78,8 +74,14 @@ exports.checkout = function(username, repo, hash) {
   return execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git checkout ' + hash);
 }
 
-exports.clone = function(username, owner, repo) {
-  return execute('cd user_data/' + sanitizeSpaces(username) + ' && ' + 'git clone ../' + sanitizeSpaces(owner) + '/' + sanitizeSpaces(repo));
+exports.clone = function(username, owner, repo, next) {
+  execute('cd user_data/' + sanitizeSpaces(username) + ' && ' + 'git clone ../' + sanitizeSpaces(owner) + '/' + sanitizeSpaces(repo))
+  .then(function() {
+    return getCommitHash(owner, repo);
+  })
+  .then(function(hash) {
+    next(null, hash[0].trim());
+  })
 }
 
 exports.deleteRepo = function(username, repo) {
