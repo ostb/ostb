@@ -8,6 +8,8 @@ exports.createUser = function(username, next) {
   if(!isLegalName(username)) {
     throw 'Illegal character in username. Please use only alphanumberic characters and spaces.';
   }
+  username = username.trim();
+
   if(fs.existsSync('user_data/' + username)) {
     throw 'A user with that name already exists.'
   }
@@ -21,6 +23,8 @@ exports.init = function(username, repo, next) {
   if(!isLegalName(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
+  repo = repo.trim();
+
   if(fs.existsSync('user_data/' + username + '/' + repo.trim() + '/')) {
     throw 'You already have a project named ' + repo.trim() + '!';
   }
@@ -48,6 +52,7 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
   if(!isLegalName(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
+
   for(var key in commitBody) {      //iterate through all file/dir changes and write to disk
     if(key[key.length - 1] === '/') {   //directory
       fs.mkdirSync('user_data/' + username + '/' + repo + '/' + key);

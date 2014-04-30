@@ -72,8 +72,13 @@ describe('repo & user testing', function() {
 
   it('should commit file changes', function(done) {
     fs.writeFileSync('user_data/alejandroTest/test_repo/content.md', 'Changes to the file.');
+
+    var commitBody = {
+      'content.md': 'Changes to the file.',
+    }
+
     var cmt = Promise.promisify(shell.commit);
-    cmt('alejandroTest', 'test_repo', 'second commit')
+    cmt('alejandroTest', 'test_repo', 'second commit', commitBody)
     .then(function(hash){
       (hash.length > 0).should.equal(true);
       done();
