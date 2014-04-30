@@ -84,5 +84,9 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
+})
+
+.controller('Example1', function($scope) {
+  console.log('Example1 controller');
 });
 

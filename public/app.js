@@ -30,7 +30,7 @@ var ostb = angular.module('ostb', [
     views: {
       'content': {
         templateUrl: 'partials/editor.html',
-        controller: 'Example'
+        controller: 'Example1'
       }
     }
   })

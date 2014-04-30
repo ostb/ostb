@@ -31,7 +31,6 @@
 
 <script>
 window.onload = function() {
-  console.log('hitttt');
   var converter = new Showdown.converter();
   var view = document.getElementById('view');
 
@@ -39,7 +38,6 @@ window.onload = function() {
   editor.setReadOnly(true);
   editor.session.setUseWrapMode(true);
   editor.setShowPrintMargin(false);
-  editor.resize(true);
     
   var connection = new sharejs.Connection('/channel');
 
