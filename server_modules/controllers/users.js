@@ -3,10 +3,17 @@ var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
 
 exports.create = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+
   var newUser = Promise.promisify(shell.createUser);
   newUser(req.body.username)
   .then(function() {
     console.log('created user ', req.body.username);
+    collection.insert({
+      username: req.body.username
+    });
     res.send(201);
   })
   .catch(function(err){
