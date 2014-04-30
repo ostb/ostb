@@ -26,8 +26,6 @@ exports.delete = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
-  console.log(collection);
-
   shell.deleteUser(req.query.username)
   .then(function() {
     console.log('deleted user ', req.query.username);

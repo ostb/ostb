@@ -111,6 +111,16 @@ angular.module('ostb', [
       $scope.error = err;
     });
   };
+
+  $scope.commitProject = function(project) {
+    ProjectsFactory.commit(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 })
 
 .controller('UsersController', function($scope, UsersFactory) {

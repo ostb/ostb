@@ -108,18 +108,27 @@
     <div style="color:red;">{{error}}</div>
   </modal-dialog>
 </div>
-<br>
 
 <div ng-controller='ProjectsController'>
-  <button ng-click='toggleModal()'>Save Version</button>
+  <button ng-click='toggleModal()'>Commit Version</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>Save New Version</h3>
-    <form>
+    <form ng-submit='commitProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      Username:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
       Version Name:
       <br>
-      <input style="width: 300px;" type="text" placeholder="use a name that describes your changes..."><br>
+      <input style="width: 300px;" type="text" placeholder="use a name that describes your changes..." ng-model="project.commitMessage"><br>
+      content.md:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="this text overwrites the file content" ng-model="project.content"><br>
       <input type="submit" value="Submit">
     </form>
+    <div style="color:red;">{{error}}</div>
   </modal-dialog>
 </div>
 

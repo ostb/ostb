@@ -39,7 +39,20 @@ angular.module('factories.projects', [])
         dfd.reject(data);
       });
       return dfd.promise;
-    }
+    },
+
+    commit: function(project) {
+      var dfd = $q.defer();
+      $http.post('/api/projects/commit', project)
+      .success(function(data, status, headers, config) {
+        dfd.resolve();
+      })
+      .error(function(data, status, headers, config) {
+        console.log('fail', arguments);
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
   }
 });
 
