@@ -52,9 +52,12 @@ exports.clone = function(req, res) {
 
   console.log(req.body);
 
-  shell.clone(req.body.username, req.body.owner, req.body.repo)
-  .then(function() {
+  // shell.clone(req.body.username, req.body.owner, req.body.repo)
+  var copy = Promise.promisify(shell.clone);
+  copy(req.body.username, req.body.owner, req.body.repo)
+  .then(function(commitHash) {
     console.log('cloned repo ' + req.body.repo + ' into ' + req.body.username);
+    console.log('commitHash ', commitHash);
 
     // var commits = {};
     // commits[commitHash] = {
