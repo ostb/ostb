@@ -28,9 +28,17 @@ exports.create = function(req, res) {
 }
 
 exports.delete = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
   shell.deleteRepo(req.query.username, req.query.repo)
   .then(function() {
     console.log('deleted repo ', req.query.repo);
+
+    var projects = {};
+    projects['projects.' + req.query.repo] = '';
+    collection.update({username: req.query.username}, {$unset: projects});
+
     res.send(204);
   })
   .catch(function(err){
