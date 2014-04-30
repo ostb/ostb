@@ -36,18 +36,24 @@ var ostb = angular.module('ostb', [
   })
 })
 
+.controller('VersionsController', function($scope, ProjectsFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
 
-.controller('VersionsController', function($scope) {
-  console.log('Versions controller');
+  $scope.getVersions = function(project) {
+    ProjectsFactory.getVersions(project)
+    .then(function(data) {
+      $scope.versions = data;
+      console.log($scope.versions);
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 
-  $scope.versions = {
-    a: {
-      commitMsg: 'foo'
-    },
-    b: {
-      commitMsg: 'bar'
-    }
-  }
+  $scope.versions = {'asdfasdfafsd': {'asdf': 1}};
 })
 
 .controller('Example', function($scope) {

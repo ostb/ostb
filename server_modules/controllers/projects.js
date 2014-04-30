@@ -97,5 +97,32 @@ exports.commit = function(req, res) {
   })
 }
 
+exports.getVersions = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+  // var findOne = Promise.promisify(collection.findOne);
+  
+  collection.findOne({username: req.query.username}, function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      console.log(data.projects[req.query.repo]);
+      res.send(data.projects[req.query.repo]);
+    }
+  })
+
+  // findOne({username: req.query.username})
+  // .then(function(result) {
+  //   console.log(arguments);
+  //   console.log(result);
+  //   res.send(200);
+  // })
+  // .catch(function(err){
+  //   console.log(arguments);
+  //   res.send(400, err.toString());
+  // });
+}
+
+
 
 
