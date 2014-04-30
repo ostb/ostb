@@ -132,7 +132,8 @@ app.route('/api/projects/clone')
 .post(projects.clone);
 
 app.route('/api/projects/commit')
-.post(projects.commit);
+.post(projects.commit)
+// .get(projects.log);
 
 app.listen(3000);
 
