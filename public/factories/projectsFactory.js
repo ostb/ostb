@@ -53,6 +53,18 @@ angular.module('factories.projects', [])
       });
       return dfd.promise;
     },
+
+    getVersions: function(project) {
+      var dfd = $q.defer();
+      $http.get('/api/projects/commit?username=' + project.username + '&repo=' + project.repo)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
   }
 });
 

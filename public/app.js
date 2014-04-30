@@ -5,7 +5,6 @@ angular.module('ostb', [
 ])
 
 .config( function($stateProvider) {
-  console.log($stateProvider);
   $stateProvider
   .state('example', {
     url: "/example",
@@ -34,20 +33,26 @@ angular.module('ostb', [
       }
     }
   })
-
 })
 
-.controller('VersionsController', function($scope) {
-  console.log('Versions controller');
+.controller('VersionsController', function($scope, ProjectsFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
 
-  $scope.versions = {
-    a: {
-      commitMsg: 'foo'
-    },
-    b: {
-      commitMsg: 'bar'
-    }
-  }
+  $scope.getVersions = function(project) {
+    ProjectsFactory.getVersions(project)
+    .then(function(data) {
+      $scope.versions = data;
+      console.log($scope.versions);
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.versions = {'asdfasdfafsd': {'asdf': 1}};
 })
 
 .controller('Example', function($scope) {
