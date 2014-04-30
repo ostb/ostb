@@ -10,26 +10,30 @@
     <script src="directives/directives.js"></script> 
     <script src="factories/usersFactory.js"></script>
     <script src="factories/projectsFactory.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 
   <body>
     <div ng-controller="IndexController" style="height: 100%; width: 100%;">
       <!-- top navbar area --> 
-      <div style="height:8.9%; width: 100%;"> 
+      <div style="height:9%; width: 100%;"> 
         <!-- Navbar is included on every page -->
         <div id="navbar">
           <!-- Left Buttons --> 
           <span style="float: left;"><ul class="editNav">
-            <div id="navText"><strong>OSTB</strong></div>
-            <li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
+            <div id="navTextOSTB">OSTB</div>
           </ul></span>
           <!-- Right Buttons --> 
           <span style="float: right;"><ul class="editNav">
-            <li class="editButton"></li>
-            <li class="editButton"><a ui-sref="example">Example</a></li>
-            <li class="editButton" title="Save Version"><a ui-sref="logout">Logout</a></li>
+            <div id="navTextLogout">Logout</div>
+            <div id="navTextAccount">Account</div>
+            <div id="navTextDashboard">Dashboard</div>
           </ul></span>
+          <!-- bottom border -->
+          <img src="images/navbar_border_color.gif" id="navBorder"></img>
         </div>
       </div>
 

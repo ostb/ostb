@@ -18,13 +18,30 @@ body {
 	right: 0;
 	height: 53px;
 	width: 100%;
-	background-color: grey;
-  border: 1px solid black;
+	background-color: white;
 }
 
-#navText {
+#navTextOSTB {
   top: 20%;
-  left: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transform: translateX(40%);
+  -ms-transform: translateX(40%);
+  transform: translateX(40%);
+	line-height: 30px;
+  position: absolute;
+
+	color: black;
+	font-family: 'Roboto Slab', serif;
+  font-size: 22px;
+  font-weight: 300;
+}
+
+#navTextLogout {
+  top: 20%;
+  right: 0;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -32,11 +49,56 @@ body {
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 	line-height: 30px;
-  text-align: center;
   position: absolute;
 
-	color: white;
-	font-family: baskerville, palatino, 'palatino linotype', georgia,serif; 
+	color: #336699;
+	font-family: 'Roboto Slab', serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#navTextAccount {
+  top: 20%;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transform: translateX(-180%);
+  -ms-transform: translateX(-180%);
+  transform: translateX(-180%);
+	line-height: 30px;
+  position: absolute;
+
+	color: #336699;
+	font-family: 'Roboto Slab', serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#navTextDashboard{
+  top: 20%;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transform: translateX(-280%);
+  -ms-transform: translateX(-280%);
+  transform: translateX(-280%);
+	line-height: 30px;
+  position: absolute;
+
+	color: black;
+	font-family: 'Roboto Slab', serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#navBorder {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
 }
 
 .editNav {
