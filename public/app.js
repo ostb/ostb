@@ -113,6 +113,10 @@ angular.module('ostb', [
   };
 
   $scope.commitProject = function(project) {
+    var temp = project.commitBody;
+    project.commitBody = {}
+    project.commitBody['content.md'] = temp;
+
     ProjectsFactory.commit(project)
     .then(function() {
       console.log('success');
