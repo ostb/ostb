@@ -19,7 +19,9 @@
 
 <ul>
   <li ng-repeat='hash in versions'>
-    <h1>{{hash}}</h1>
+    <div ng-repeat='(key, value) in hash'>
+      <p>{{key}} : {{value}}<p/>
+    </div>
   </li>
 </ul>
 </div>

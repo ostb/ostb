@@ -52,8 +52,6 @@ var ostb = angular.module('ostb', [
       $scope.error = err;
     });
   };
-
-  $scope.versions = {'asdfasdfafsd': {'asdf': 1}};
 })
 
 .controller('Example', function($scope) {
