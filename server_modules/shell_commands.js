@@ -25,23 +25,35 @@ exports.init = function(username, repo, next) {
     throw 'You already have a project named ' + repo.trim() + '!';
   }
   execute('git init user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
+  // .then(function() {
+    // fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'content.md', '#Welcome\nThis is the first version of your new project.');
+    // fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'index.html', '');
+    // fs.mkdirSync('user_data/' + username + '/' + repo.trim() + '/' + 'js');
+  // })
   .then(function() {
-    fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'content.md', '#Welcome\nThis is the first version of your new project.');
-    fs.writeFileSync('user_data/' + username + '/' + repo.trim() + '/' + 'index.html', '');
-    fs.mkdirSync('user_data/' + username + '/' + repo.trim() + '/' + 'js');
-  })
-  .then(function() {
+    var commitBody = {
+      'content.md': '#Welcome\nThis is the first version of your new project.',
+      'index.html': '<!DOCTYPE HTML>',
+      'js/' : ''
+    }
     var cmt = Promise.promisify(commit);
-    return cmt(username, repo, 'Created new project ' + repo);
+    return cmt(username, repo, 'Created new project ' + repo, commitBody);
   })
   .then(function(hash) {
     next(null, hash);
   })
 }
 
-var commit = exports.commit = function(username, repo, commitMessage, next) {
+var commit = exports.commit = function(username, repo, commitMessage, commitBody, next) {
   if(!isLegalName(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
+  }
+  for(var key in commitBody) {      //iterate through all file/dir changes and write to disk
+    if(key[key.length - 1] === '/') {   //directory
+      fs.mkdirSync('user_data/' + username + '/' + repo + '/' + key);
+    }else {                             //file
+      fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
+    }
   }
   execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {

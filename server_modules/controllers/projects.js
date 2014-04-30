@@ -47,14 +47,37 @@ exports.delete = function(req, res) {
 }
 
 exports.clone = function(req, res) {
+  // var db = req.db;
+  // var collection = db.get('usercollection');
+
   shell.clone(req.query.username, req.query.owner, req.query.repo)
   .then(function() {
     console.log('cloned repo ' + req.query.repo + ' into ' + req.query.username);
+
+    //collection.update({username: req.body.username}, {$set: projects});
+
     res.send(201);
   })
   .catch(function(err) {
     res.send(400, err.toString());
   })
+}
+
+exports.commit = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+  console.log(req.body);
+  req.send(201);
+
+  // var cmt = Promise.promisify(shell.commit);
+  // cmt('alejandroTest', 'test_repo', 'second commit')
+  // .then(function(hash){
+  //   res.send(201);
+  // })
+  // .catch(function(err){
+  //   res.send(400, err.toString());
+  // })
 }
 
 
