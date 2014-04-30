@@ -11,7 +11,9 @@ exports.create = function(req, res) {
   .then(function() {
     console.log('created user ', req.body.username);
     collection.insert({
-      username: req.body.username
+      username: req.body.username,
+      meta: {},
+      projects: {}
     });
     res.send(201);
   })
