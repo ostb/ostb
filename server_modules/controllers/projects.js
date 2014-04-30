@@ -8,28 +8,17 @@ exports.create = function(req, res) {
 
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
-  .then(function() {
+  .then(function(commitHash) {
     console.log('created repo ', req.body.repo);
 
-    // var find = Promise.promisify(collection.findOne);
-    // find({username: req.body.username})
-    // .then(function(result) {
-    //   var projects = result.projects;
-    //   projects[req.body.repo] = {};
-      
-      // var project = {};
-      // project[req.body.repo] = {};
-      // collection.update({username: req.body.username}, {$set: {projects: project}});
-
-
-      var projects = {}
-      projects['projects.' + req.body.repo] = {}
-      collection.update({username: req.body.username}, {$set: projects});
-
-    // })
-    // .catch(function(err) {
-    //   res.send(400, err.toString())
-    // })
+    var commits = {};
+    commits[commitHash] = {
+      commitMessage: 'Created new project ' + req.body.repo,
+      date: new Date()
+    }
+    var projects = {};
+    projects['projects.' + req.body.repo] = commits;
+    collection.update({username: req.body.username}, {$set: projects});
 
     res.send(201);
   })

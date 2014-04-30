@@ -34,8 +34,8 @@ exports.init = function(username, repo, next) {
     var cmt = Promise.promisify(commit);
     return cmt(username, repo, 'Created new project ' + repo);
   })
-  .then(function() {
-    next();
+  .then(function(hash) {
+    next(null, hash);
   })
 }
 
