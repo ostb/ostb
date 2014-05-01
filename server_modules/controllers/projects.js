@@ -111,6 +111,18 @@ exports.getVersions = function(req, res) {
   })
 }
 
+exports.getProjects = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+  collection.findOne({username: req.query.username}, function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      res.send(data.projects);
+    }
+  });
+}
 
 
 

@@ -1,242 +1,105 @@
+/* ====================
+   DEFAULTS
+   ================= */
+
+.wrapper { max-width: 1020px; margin: 0 auto; }
+
+/* Navigation classes */
+.nav       { list-style: none; margin: 0; }
+.primary   { font-size: 1.2em; }
+.secondary { font-size: 1.05em; }
+.meta      { font-size: .875em; }
+
+/* Floats and hide */
+.left   { float: left; }
+.right  { float: right; }
+.clear  { clear: both; }
+.hidden { display: none; }
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, p { font-family: 'Roboto', sans-serif; }
+h1 { font-size: 2em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.3em; }
+p  { font-size: .825em; }
+
+/* Links */
+a         { color: #3977a6; text-decoration: none; }
+a:hover   { color: #73a6cd; }
+a:visited { color: #6e8a9f; }
+
+.logo a       { color: #000000; }
+.logo a:hover { color: #000000; }
+
+.meta a        { color: #000000; display: block; padding: 15px; cursor: pointer; }
+.meta a:hover  { color: #3977a6; }
+.meta a:active { color: #73a6cd; }
+.meta .current { background: #edeeef; }
+
+
+/* ====================
+   GENERAL
+   ================= */
 
 html {
-  width: 100%;
-  height: 100%
+	height: 100%;
 }
 
-body {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.metabar {
+  border-bottom: 1px solid #99c3e3;
+  overflow: auto;
 }
 
-/* */
-
-#header {
-  position: fixed;
-  top: 250px;
-  right: 0;
-  height: 100px;
-  width: 100%;
-  background-color: black;
+.logo {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  margin: 0 0 0 15px;
 }
 
-#htext {
-  line-height: 30px;
-  vertical-align: middle;
-
-  padding-left: 10px;
-  color: white;
-  font-family: baskerville, palatino, 'palatino linotype', georgia,serif; 
+.meta li {
+  float: left;
 }
 
-#right {
-  margin: 0;
-  position: fixed;
-  overflow: scroll;
-  float: right;
-  background-color: #E8F2FD;
-  top: 350px;
-  bottom: 0;
-  right: 0;
-  left: 50%;
-  width: 50%;
-  height: 100%;
+.login .wrapper {
+  width: 20em;
 }
 
-#view {
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-#editor { 
-  margin: 0;
-  position: fixed;
-  top: 350px;
-  bottom: 0;
-  right: 50%;
-  left: 0;
-  width: 50%;
-  height: 100%;
-}
-/* */
-#navbar {
-	position: fixed;
-	top: 0;
-	right: 0;
-	height: 53px;
-	width: 100%;
-	background-color: white;
-}
-
-#navTextOSTB {
-  top: 20%;
-  left: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  -webkit-transform: translateX(40%);
-  -ms-transform: translateX(40%);
-  transform: translateX(40%);
-	line-height: 30px;
-  position: absolute;
-
-	color: black;
-	font-family: 'Roboto Slab', serif;
-  font-size: 22px;
+.login input {
+  display: block;
+  width: 18em;
+  height: 1em;
+  border-radius: 4px;
+  border: 1px solid #bbbbbb;
+  margin-bottom: 4px;
+  padding: 1em;
+  font-size: .825em;
   font-weight: 300;
 }
 
-#navTextLogout {
-  top: 20%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-	line-height: 30px;
-  position: absolute;
-
-	color: #336699;
-	font-family: 'Roboto Slab', serif;
-  font-size: 14px;
-  font-weight: 400;
+.login input:focus {
+  border: 1px solid #99c3e3;
+  outline: 0;
 }
 
-#navTextAccount {
-  top: 20%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  -webkit-transform: translateX(-180%);
-  -ms-transform: translateX(-180%);
-  transform: translateX(-180%);
-	line-height: 30px;
-  position: absolute;
-
-	color: #336699;
-	font-family: 'Roboto Slab', serif;
-  font-size: 14px;
-  font-weight: 400;
+.login button {
+  width: 8em;
+  height: 2.5em;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background: #73a6cd;
+  color: #fff;
 }
 
-#navTextDashboard{
-  top: 20%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  -webkit-transform: translateX(-280%);
-  -ms-transform: translateX(-280%);
-  transform: translateX(-280%);
-	line-height: 30px;
-  position: absolute;
-
-	color: black;
-	font-family: 'Roboto Slab', serif;
-  font-size: 14px;
-  font-weight: 400;
+.login button:hover {
+  background: #6396bd;
 }
 
-#navBorder {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
+.login a {
+  font-size: .825em;
+  margin: 13px 0 0 26px;
 }
 
-.editNav {
-  color: white;
-  margin: 0;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 0px;
-}
 
-.editButton {
-  display: inline-block;
-  border: 1px solid grey;
-  height: 30px;
-  width: 30px;
-  padding: 10px 0 0 10px;
-}
-
-.editButton:hover {
-  border: 1px solid cyan;
-  cursor: pointer;
-}
-
-#editor-container {
-  position: relative;
-
-  width: 100%;
-  height: 100%;
-
-  padding: 0;
-}
-
-#editor-container-left { 
-  position: absolute;
-
-  width: 50%;
-  height: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  top:1;
-  bottom: 0;
-  left: 1;
-  right: 0;
-}
-
-#editor-container-right { 
-  position: absolute;
-
-  width: 50%;
-  height: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  top: 1;
-  bottom: 0;
-  left: 0;
-  right: 1;
-}
-
-#editor-left { 
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  margin: 0;
-
-  overflow-x: none;
-  overflow-y: scroll;
-}
-
-#editor-right {
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  margin: 0;
-
-  overflow-x: none;
-  overflow-y: scroll;
-
-  background-color: #E8F2FD;
-}
 
 .ng-modal-overlay {
   /* A dark translucent div that covers the whole screen */
@@ -247,7 +110,7 @@ body {
   width:100%;
   height:100%;
   background-color:#000000;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 .ng-modal-dialog {
   /* A centered div above the overlay with a box shadow. */

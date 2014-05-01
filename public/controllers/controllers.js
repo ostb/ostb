@@ -1,6 +1,14 @@
 ostb.controller('IndexController', function($scope) {
 })
 
+.controller('Login', function($scope) {
+  console.log('Login controller');
+})
+
+.controller('Dashboard', function($scope) {
+  console.log('Dashboard');
+})
+
 .controller('Example', function($scope) {
   console.log('Example controller');
 })
