@@ -39,7 +39,6 @@ var ostb = angular.module('ostb', [
     views: {
       'content': {
         templateUrl: 'partials/versions.html',
-        controller: 'Example'
       }
     }
   })
@@ -48,7 +47,6 @@ var ostb = angular.module('ostb', [
     views: {
       'content': {
         templateUrl: 'partials/projectCrudTest.html',
-        controller: 'Example'
       }
     }
   })
