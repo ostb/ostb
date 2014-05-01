@@ -25,6 +25,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('dashboard', {
+    url: "/dashboard",
+    views: {
+      'content': {
+        templateUrl: 'partials/dashboard.html',
+        controller: 'Dashboard'
+      }
+    }
+  })
   .state('example', {
     url: "/example",
     views: {
