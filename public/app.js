@@ -7,6 +7,15 @@ var ostb = angular.module('ostb', [
 .config(function($stateProvider) {
   console.log($stateProvider);
   $stateProvider
+  .state('login', {
+    url: "/login",
+    views: {
+      'content': {
+        templateUrl: 'partials/login.html',
+        controller: 'Login'
+      }
+    }
+  })
   .state('logout', {
     url: "/logout",
     views: {
