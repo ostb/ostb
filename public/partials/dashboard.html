@@ -35,9 +35,19 @@
         </modal-dialog>
 
         <ul>
+
           <div ng-repeat='project in projects'>
             <a ui-sref='project({projectId: project._id })'>{{project.repo}}<a/>
           </div>
+
+
+          <div>{{projects}}</div>
+          <!-- <li ng-repeat='hash in versions'>
+            <div ng-repeat='(key, value) in hash'>
+              <p>{{key}} : {{value}}<p/>
+            </div>
+          </li> -->
+
         </ul>
       </div>
 
