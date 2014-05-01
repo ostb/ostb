@@ -144,3 +144,56 @@ html {
   font-family: 'arial', 'sans-serif';
 }
 
+
+/* ====================
+   EDITOR
+   ================= */
+
+
+#header {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  height: 100px;
+  width: 100%;
+  background-color: black;
+}
+
+#htext {
+  line-height: 30px;
+  vertical-align: middle;
+
+  padding-left: 10px;
+  color: white;
+  font-family: baskerville, palatino, 'palatino linotype', georgia,serif; 
+}
+
+#right {
+  margin: 0;
+  position: fixed;
+  overflow: scroll;
+  float: right;
+  background-color: #E8F2FD;
+  top: 200px;
+  bottom: 0;
+  right: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+}
+
+#view {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+#editor { 
+  margin: 0;
+  position: fixed;
+  top: 200px;
+  bottom: 0;
+  right: 50%;
+  left: 0;
+  width: 50%;
+  height: 100%;
+}
