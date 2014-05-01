@@ -126,7 +126,8 @@ app.route('/api/users')
 
 app.route('/api/projects')
 .post(projects.create)
-.delete(projects.delete);
+.delete(projects.delete)
+.get(projects.getProjects);
 
 app.route('/api/projects/clone')
 .post(projects.clone);
