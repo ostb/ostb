@@ -34,6 +34,22 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('versions', {
+    url: "/versions",
+    views: {
+      'content': {
+        templateUrl: 'partials/versions.html',
+      }
+    }
+  })
+  .state('projectCrud', {
+    url: "/projectCrud",
+    views: {
+      'content': {
+        templateUrl: 'partials/projectCrudTest.html',
+      }
+    }
+  })
 })
 
 // This is test data.
