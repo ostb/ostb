@@ -136,7 +136,7 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-.controller('ProjectsListController', function($scope, ProjectsFactory) {
+.controller('ProjectsListController', function($scope, ProjectsFactory) {  
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -152,7 +152,6 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
-
 })
 
 .controller('UsersController', function($scope, UsersFactory) {
