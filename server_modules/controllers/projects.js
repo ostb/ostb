@@ -48,7 +48,7 @@ exports.delete = function(req, res) {
 
 exports.clone = function(req, res) {
   var db = req.db;
-  var collection = db.get('usercollection');
+  var collection = db.get('projectcollection');
 
   console.log(req.body);
 
@@ -57,14 +57,16 @@ exports.clone = function(req, res) {
   .then(function(commitHash) {
     console.log('cloned repo ' + req.body.repo + ' into ' + req.body.username);
 
-    var commits = {};
-    commits[commitHash] = {
+    var newProject = {
+      repo: req.body.repo,
+      username: req.body.username,
+      commits: {}
+    }
+    newProject.commits[commitHash] = {
       commitMessage: 'Cloned project ' + req.body.repo + ' from ' + req.body.owner,
       date: new Date()
     }
-    var projects = {};
-    projects['projects.' + req.body.repo] = commits;
-    collection.update({username: req.body.username}, {$set: projects});
+    collection.insert(newProject);
 
     res.send(201);
   })
