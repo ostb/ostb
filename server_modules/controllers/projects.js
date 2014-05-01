@@ -11,11 +11,16 @@ exports.create = function(req, res) {
   .then(function(commitHash) {
     console.log('created repo ', req.body.repo);
 
-    collection.insert({
+    var newProject = {
       repo: req.body.repo,
       username: req.body.username,
       commits: {}
-    });
+    }
+    newProject.commits[commitHash] = {
+      commitMessage: 'Created new project ' + req.body.repo,
+      date: new Date()
+    }
+    collection.insert(newProject);
 
     res.send(201);
   })
@@ -31,10 +36,6 @@ exports.delete = function(req, res) {
   shell.deleteRepo(req.query.username, req.query.repo)
   .then(function() {
     console.log('deleted repo ', req.query.repo);
-
-    // var projects = {};
-    // projects['projects.' + req.query.repo] = '';
-    // collection.update({username: req.query.username}, {$unset: projects});
 
     collection.remove({username: req.query.username, repo: req.query.repo});
 
@@ -55,7 +56,6 @@ exports.clone = function(req, res) {
   copy(req.body.username, req.body.owner, req.body.repo)
   .then(function(commitHash) {
     console.log('cloned repo ' + req.body.repo + ' into ' + req.body.username);
-    console.log('commitHash ', commitHash);
 
     var commits = {};
     commits[commitHash] = {
@@ -81,13 +81,20 @@ exports.commit = function(req, res) {
   cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
   .then(function(commitHash){
 
-    var commit = {
+    // var commit = {
+    //   commitMessage: req.body.commitMessage,
+    //   date: new Date()
+    // };
+    // var projects = {};
+    // projects['projects.' + req.body.repo + "." + commitHash] = commit;
+    // collection.update({username: req.body.username}, {$set: projects});
+
+    var commits = {}
+    commits[commitHash] = {
       commitMessage: req.body.commitMessage,
       date: new Date()
-    };
-    var projects = {};
-    projects['projects.' + req.body.repo + "." + commitHash] = commit;
-    collection.update({username: req.body.username}, {$set: projects});
+    }
+    collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
 
     res.send(201);
   })
@@ -98,7 +105,7 @@ exports.commit = function(req, res) {
 
 exports.getVersions = function(req, res) {
   var db = req.db;
-  var collection = db.get('usercollection');
+  var collection = db.get('projectcollection');
   
   collection.findOne({username: req.query.username}, function(err, data) {
     if(err) {
@@ -112,13 +119,13 @@ exports.getVersions = function(req, res) {
 
 exports.getProjects = function(req, res) {
   var db = req.db;
-  var collection = db.get('usercollection');
+  var collection = db.get('projectcollection');
 
-  collection.findOne({username: req.query.username}, function(err, data) {
+  collection.find({username: req.query.username}, function(err, data) {
     if(err) {
       res.send(404, err.toString());
     }else {
-      res.send(data.projects);
+      res.send(data);
     }
   });
 } 
