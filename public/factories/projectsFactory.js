@@ -65,6 +65,18 @@ angular.module('factories.projects', [])
       });
       return dfd.promise;
     },
+
+    getProjects: function(user) {
+      var dfd = $q.defer();
+      $http.get('/api/projects?username=' + user.username)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
   }
 });
 
