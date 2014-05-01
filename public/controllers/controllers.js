@@ -132,7 +132,7 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-.controller('ProjectsListController', function($scope, ProjectsFactory) {
+.controller('ProjectsListController', function($scope, ProjectsFactory) {  
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -149,7 +149,7 @@ ostb.controller('IndexController', function($scope) {
     });
   };
 
-  $scope.projects = 'here are projects';
+  $scope.projects = [{"_id":"5362922047d8d6c5a5000003","commits":{"1e331319524e4dfd877a41f9228dcda304a526e6":{"commitMessage":"version 2","date":"2014-05-01T18:38:44.715Z"},"962189663b16694c661c4035e8c40d6fc29cb984":{"commitMessage":"Created new project pro","date":"2014-05-01T18:27:44.397Z"}},"repo":"pro","username":"adrian"}]
 
 })
 
