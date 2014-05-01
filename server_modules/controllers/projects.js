@@ -77,7 +77,7 @@ exports.clone = function(req, res) {
 
 exports.commit = function(req, res) {
   var db = req.db;
-  var collection = db.get('usercollection');
+  var collection = db.get('projectcollection');
 
   var cmt = Promise.promisify(shell.commit);
   cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
@@ -92,7 +92,7 @@ exports.commit = function(req, res) {
     // collection.update({username: req.body.username}, {$set: projects});
 
     var commits = {}
-    commits[commitHash] = {
+    commits['commits.' + commitHash] = {
       commitMessage: req.body.commitMessage,
       date: new Date()
     }
