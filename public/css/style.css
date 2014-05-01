@@ -197,3 +197,23 @@ html {
   width: 50%;
   height: 100%;
 }
+
+.editButton {
+  color: white;
+  display: inline-block;
+  border: 1px solid black;
+  height: 30px;
+  width: 30px;
+  padding: 10px 0 0 10px;
+}
+
+.editButton:hover {
+  border: 1px solid cyan;
+  cursor: pointer;
+}
+
+.editButton:active {
+  background-color: cyan;
+}
+
+
