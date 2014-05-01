@@ -53,13 +53,51 @@ html {
 .logo {
   font-family: 'Roboto Slab', serif;
   font-weight: 300;
-  margin: 0;
+  margin: 0 0 0 15px;
 }
 
 .meta li {
   float: left;
 }
 
+.login .wrapper {
+  width: 20em;
+}
+
+.login input {
+  display: block;
+  width: 18em;
+  height: 1em;
+  border-radius: 4px;
+  border: 1px solid #bbbbbb;
+  margin-bottom: 4px;
+  padding: 1em;
+  font-size: .825em;
+  font-weight: 300;
+}
+
+.login input:focus {
+  border: 1px solid #99c3e3;
+  outline: 0;
+}
+
+.login button {
+  width: 8em;
+  height: 2.5em;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background: #73a6cd;
+  color: #fff;
+}
+
+.login button:hover {
+  background: #6396bd;
+}
+
+.login a {
+  font-size: .825em;
+  margin: 13px 0 0 26px;
+}
 
 
 
