@@ -14,7 +14,9 @@ exports.create = function(req, res) {
     collection.insert({
       username: req.body.username,
       meta: {},
-      projects: {}
+      email: '',
+      pwHash: ''
+      // projects: {}
     });
 
     res.send(201);

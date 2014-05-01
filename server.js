@@ -137,6 +137,7 @@ app.route('/api/projects/commit')
 .get(projects.getVersions);
 
 // app.route('/api/projects/checkout')
+// .get(projects.checkout);
 
 app.listen(3000);
 

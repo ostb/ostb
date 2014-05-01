@@ -4,21 +4,28 @@ var bodyParser = require('body-parser');
 
 exports.create = function(req, res) {
   var db = req.db;
-  var collection = db.get('usercollection');
+  // var collection = db.get('usercollection');
+  var collection = db.get('projectcollection');
 
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
   .then(function(commitHash) {
     console.log('created repo ', req.body.repo);
 
-    var commits = {};
-    commits[commitHash] = {
-      commitMessage: 'Created new project ' + req.body.repo,
-      date: new Date()
-    }
-    var projects = {};
-    projects['projects.' + req.body.repo] = commits;
-    collection.update({username: req.body.username}, {$set: projects});
+    // var commits = {};
+    // commits[commitHash] = {
+    //   commitMessage: 'Created new project ' + req.body.repo,
+    //   date: new Date()
+    // }
+    // var projects = {};
+    // projects['projects.' + req.body.repo] = commits;
+    // collection.update({username: req.body.username}, {$set: projects});
+
+    collection.insert({
+      repo: req.body.repo,
+      username: req.body.username,
+      commits: {}
+    });
 
     res.send(201);
   })
@@ -115,8 +122,6 @@ exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
-  console.log(req.query);
-
   collection.findOne({username: req.query.username}, function(err, data) {
     if(err) {
       res.send(404, err.toString());
@@ -124,7 +129,21 @@ exports.getProjects = function(req, res) {
       res.send(data.projects);
     }
   });
-}
+} 
 
+// exports.checkout = function(req, res) {
+//   var db = req.db;
+//   var collection = db.get('usercollection');
+
+//   console.log(req.query);
+
+//   collection.findOne({username: req.query.username}, function(err, data) {
+//     if(err) {
+//       res.send(404, err.toString());
+//     }else {
+//       res.send(data.projects);
+//     }
+//   });
+// }
 
 
