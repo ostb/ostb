@@ -83,14 +83,6 @@ exports.commit = function(req, res) {
   cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
   .then(function(commitHash){
 
-    // var commit = {
-    //   commitMessage: req.body.commitMessage,
-    //   date: new Date()
-    // };
-    // var projects = {};
-    // projects['projects.' + req.body.repo + "." + commitHash] = commit;
-    // collection.update({username: req.body.username}, {$set: projects});
-
     var commits = {}
     commits['commits.' + commitHash] = {
       commitMessage: req.body.commitMessage,
@@ -113,8 +105,8 @@ exports.getVersions = function(req, res) {
     if(err) {
       res.send(404, err.toString());
     }else {
-      console.log(data.projects[req.query.repo]);
-      res.send(data.projects[req.query.repo]);
+      console.log(data.commits);
+      res.send(data.commits);
     }
   })
 }
@@ -134,7 +126,7 @@ exports.getProjects = function(req, res) {
 
 // exports.checkout = function(req, res) {
 //   var db = req.db;
-//   var collection = db.get('usercollection');
+//   var collection = db.get('projectcollection');
 
 //   console.log(req.query);
 
