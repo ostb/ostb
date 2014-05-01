@@ -4,22 +4,12 @@ var bodyParser = require('body-parser');
 
 exports.create = function(req, res) {
   var db = req.db;
-  // var collection = db.get('usercollection');
   var collection = db.get('projectcollection');
 
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
   .then(function(commitHash) {
     console.log('created repo ', req.body.repo);
-
-    // var commits = {};
-    // commits[commitHash] = {
-    //   commitMessage: 'Created new project ' + req.body.repo,
-    //   date: new Date()
-    // }
-    // var projects = {};
-    // projects['projects.' + req.body.repo] = commits;
-    // collection.update({username: req.body.username}, {$set: projects});
 
     collection.insert({
       repo: req.body.repo,
@@ -36,15 +26,17 @@ exports.create = function(req, res) {
 
 exports.delete = function(req, res) {
   var db = req.db;
-  var collection = db.get('usercollection');
+  var collection = db.get('projectcollection');
 
   shell.deleteRepo(req.query.username, req.query.repo)
   .then(function() {
     console.log('deleted repo ', req.query.repo);
 
-    var projects = {};
-    projects['projects.' + req.query.repo] = '';
-    collection.update({username: req.query.username}, {$unset: projects});
+    // var projects = {};
+    // projects['projects.' + req.query.repo] = '';
+    // collection.update({username: req.query.username}, {$unset: projects});
+
+    collection.remove({username: req.query.username, repo: req.query.repo});
 
     res.send(204);
   })
