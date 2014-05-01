@@ -10,6 +10,7 @@
     </div>
     <div class="pages left">
       <h2>Pages</h2>
+
       <ul class="nav">
         <li><a ui-sref="project">On the Evils of Trigonometry</a></li>
         <li><a ui-sref="project">Discrete Math Intro</a></li>
@@ -18,6 +19,32 @@
         <li><a ui-sref="project">Belt Sander Use and Safety</a></li>
         <li><a ui-sref="project">Thermofluid Dynamics</a></li>
       </ul>
+
+      <br>
+      <div ng-controller='ProjectsListController'>
+        <button ng-click='toggleModal()'>Get Projects List</button>
+        <modal-dialog show='modalShown' width='400px' height='60%'>
+          <h3>Get Projects List</h3>
+          <form ng-submit='getVersions(user)'>
+            Username:
+            <br>
+            <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="user.username"><br>
+            <div><input type="submit" value="Submit"></div>
+          </form>
+          <div style="color:red;">{{error}}</div>
+        </modal-dialog>
+
+        <ul>
+
+          <div>{{projects}}</div>
+          <!-- <li ng-repeat='hash in versions'>
+            <div ng-repeat='(key, value) in hash'>
+              <p>{{key}} : {{value}}<p/>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+
     </div>
     <div class="right">
       <h2>Controls</h2>

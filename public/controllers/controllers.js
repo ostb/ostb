@@ -136,6 +136,27 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
+.controller('ProjectsListController', function($scope, ProjectsFactory) {
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  $scope.getProjects = function(user) {
+    ProjectsFactory.getProjects(user)
+    .then(function(data) {
+      $scope.projects = data;
+      console.log($scope.projects);
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
+  $scope.projects = 'here are projects';
+
+})
+
 .controller('UsersController', function($scope, UsersFactory) {
   $scope.modalShown = false;
   $scope.toggleModal = function() {
