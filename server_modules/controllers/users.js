@@ -16,7 +16,6 @@ exports.create = function(req, res) {
       meta: {},
       email: '',
       pwHash: ''
-      // projects: {}
     });
 
     res.send(201);
@@ -29,14 +28,14 @@ exports.create = function(req, res) {
 exports.delete = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
+  var projCollection = db.get('projectcollection');
 
   shell.deleteUser(req.query.username)
   .then(function() {
     console.log('deleted user ', req.query.username);
 
-    collection.remove({
-      username: req.query.username
-    });
+    collection.remove({username: req.query.username});
+    projCollection.remove({username: req.query.username});
     
     res.send(204);
   })
