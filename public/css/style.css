@@ -5,7 +5,7 @@
 .wrapper { max-width: 1020px; margin: 0 auto; }
 
 /* Navigation classes */
-.nav       { list-style: none; margin: 0; }
+.nav       { list-style: none; margin: 0; font-weight: 300; }
 .primary   { font-size: 1.2em; }
 .secondary { font-size: 1.05em; }
 .meta      { font-size: .875em; }
@@ -53,6 +53,9 @@ html {
 .logo {
   font-family: 'Roboto Slab', serif;
   font-weight: 300;
+  font-size: 1.5em;
+  line-height: 2em;
+  vertical-align: middle;
   margin: 0 0 0 15px;
 }
 
@@ -60,11 +63,11 @@ html {
   float: left;
 }
 
-.login .wrapper {
+.login .wrapper, .sign-up .wrapper {
   width: 20em;
 }
 
-.login input {
+.login input, .sign-up input {
   display: block;
   width: 18em;
   height: 1em;
@@ -76,28 +79,70 @@ html {
   font-weight: 300;
 }
 
-.login input:focus {
+.login input:focus, .sign-up input:focus {
   border: 1px solid #99c3e3;
   outline: 0;
 }
 
-.login button {
+.login button, .sign-up button {
+  margin-top: 20px;
   width: 8em;
-  height: 2.5em;
-  border-radius: 4px;
+  height: 2.25em;
   border: 1px solid #555;
+  border-radius: 4px;
   background: #73a6cd;
   color: #fff;
 }
 
-.login button:hover {
+.login button:hover, .sign-up button:hover {
   background: #6396bd;
 }
 
-.login a {
+.login a, .sign-up a {
   font-size: .825em;
-  margin: 13px 0 0 26px;
+  margin: 30px 0 0 27px;
 }
+
+.page h1 {
+  font-family: 'Roboto Slab', serif;
+}
+
+.page h1 span {
+  font-weight: 300;
+  color: #777;
+}
+
+.page button {
+  display: block;
+  width: 12em;
+  height: 2.5em;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  margin: 4px 0;
+  color: #3977a6;
+  font-weight: 300;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.page .nav {
+  margin: 2em 0;
+  padding: 0;
+}
+
+.page .nav a {
+  display: block;
+  width: 10em;
+  padding: .75em;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+
+
+
+
+
 
 
 

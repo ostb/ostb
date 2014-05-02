@@ -25,6 +25,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('sign-up', {
+    url: "/sign-up",
+    views: {
+      'content': {
+        templateUrl: 'partials/sign-up.html',
+        controller: 'Signup'
+      }
+    }
+  })
   .state('dashboard', {
     url: "/dashboard",
     views: {
@@ -34,12 +43,12 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('example', {
-    url: "/example",
+  .state('page', {
+    url: "/page",
     views: {
       'content': {
-        template: '<h1>What a good example!</h1>',
-        controller: 'Example'
+        templateUrl: 'partials/page.html',
+        controller: 'Page'
       }
     }
   })
@@ -69,8 +78,8 @@ var ostb = angular.module('ostb', [
         controller: 'Example'
       }
     }
-  })
-})
+  });
+});
 
 // This is test data.
 window.documentsData = {
