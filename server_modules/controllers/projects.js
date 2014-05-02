@@ -115,14 +115,19 @@ exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
-  collection.find({username: req.query.username}, function(err, data) {
+  var queryObj = {username: req.query.username};
+  if(req.query.repo) {
+    queryObj.repo = req.query.repo;
+  }
+
+  collection.find(queryObj, function(err, data) {
     if(err) {
       res.send(404, err.toString());
     }else {
       res.send(data);
     }
   });
-} 
+}
 
 // exports.checkout = function(req, res) {
 //   var db = req.db;

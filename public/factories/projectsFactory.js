@@ -77,6 +77,18 @@ angular.module('factories.projects', [])
       });
       return dfd.promise;
     },
+
+    getProject: function(project) {
+      var dfd = $q.defer();
+      $http.get('/api/projects?username=' + project.username  + '&repo=' + project.repo)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
   }
 });
 
