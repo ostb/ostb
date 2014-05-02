@@ -3,16 +3,17 @@
     <h1>Project: {{project.repo}}</h1>
     <p>{{project}}</p>
     <div>
+      <div ui-view="projectDetail"></div>
     </div>
     <div class="right">
       <button id="editButton">Edit</button>
       <div>
         <h3>
           <ul>
-            <li><a ui-sref="document">Document</a></li>
-            <li><a ui-sref="versions">Versions</a></li>
-            <li><a ui-sref="contributions">Contributions</a></li>
-            <li><a ui-sref="statistics">Statistics</a></li>
+            <li><a ui-sref="project.document">Document</a></li>
+            <li><a ui-sref="project.versions">Versions</a></li>
+            <li><a ui-sref="project.contributions">Contributions</a></li>
+            <li><a ui-sref="project.statistics">Statistics</a></li>
           </ul>
         </h3>
       </div>

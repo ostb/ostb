@@ -182,7 +182,6 @@ ostb.controller('IndexController', function($scope) {
   
   ProjectsFactory.getProjects({username: 'adrian', repo: $stateParams.projectName})
   .then(function(data) {
-    console.log(data[0]);
     $scope.project = data[0];
   })
   .catch(function(err) {
