@@ -177,7 +177,7 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-//NOTE!! 'adrian' is hardcoded until auth/users complete! /////////////////////////////////
+//NOTE!! 'adrian' is hardcoded until auth/users complete! ///////////////////////////////
 .controller('ProjectDetailController', function($scope, $stateParams, ProjectsFactory) {
   ProjectsFactory.getProject({username: 'adrian', repo: $stateParams.projectName})
   .then(function(data) {
