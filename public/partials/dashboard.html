@@ -35,9 +35,9 @@
         </modal-dialog>
 
         <ul>
-          <li ng-repeat='project in projects'>
-            <p>{{project.repo}}<p/>
-          </li>
+          <div ng-repeat='project in projects'>
+            <a ui-sref='project({projectId: project._id })'>{{project.repo}}<a/>
+          </div>
         </ul>
       </div>
 
