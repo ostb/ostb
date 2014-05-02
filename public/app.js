@@ -102,11 +102,43 @@ var ostb = angular.module('ostb', [
     views: {
       'content': {
         templateUrl: 'partials/versions.html',
+  .state('project.document', {     //user.project after auth implemented
+    url: "/document",
+    views: {
+      'projectDetail': {
+        template: '<h1>project document</h1>',
         controller: 'Example'
       }
     }
   })
-})
+  .state('project.versions', {     //user.project after auth implemented
+    url: "/versions",
+    views: {
+      'projectDetail': {
+        template: '<h1>project versions</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+  .state('project.contributions', {     //user.project after auth implemented
+    url: "/contributions",
+    views: {
+      'projectDetail': {
+        template: '<h1>project contributions</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+  .state('project.statistics', {     //user.project after auth implemented
+    url: "/statistics",
+    views: {
+      'projectDetail': {
+        template: '<h1>project statistics</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+});
 
 // This is test data.
 window.documentsData = {
