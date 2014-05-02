@@ -9,8 +9,8 @@ ostb.controller('IndexController', function($scope) {
   console.log('Dashboard');
 })
 
-.controller('Example', function($scope) {
-  console.log('Example controller');
+.controller('Signup', function($scope) {
+  console.log('Sign up');
 })
 
 .controller('IndexContent', function($scope){

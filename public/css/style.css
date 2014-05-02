@@ -60,11 +60,11 @@ html {
   float: left;
 }
 
-.login .wrapper {
+.login .wrapper, .sign-up .wrapper {
   width: 20em;
 }
 
-.login input {
+.login input, .sign-up input {
   display: block;
   width: 18em;
   height: 1em;
@@ -76,27 +76,28 @@ html {
   font-weight: 300;
 }
 
-.login input:focus {
+.login input:focus, .sign-up input:focus {
   border: 1px solid #99c3e3;
   outline: 0;
 }
 
-.login button {
+.login button, .sign-up button {
+  margin-top: 20px;
   width: 8em;
-  height: 2.5em;
+  height: 2.25em;
   border-radius: 4px;
   border: 1px solid #555;
   background: #73a6cd;
   color: #fff;
 }
 
-.login button:hover {
+.login button:hover, .sign-up button:hover {
   background: #6396bd;
 }
 
-.login a {
+.login a, .sign-up a {
   font-size: .825em;
-  margin: 13px 0 0 26px;
+  margin: 30px 0 0 27px;
 }
 
 
