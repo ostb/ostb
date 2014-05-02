@@ -117,10 +117,18 @@ exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
-  var queryObj = {username: req.query.username};
+  var queryObj = {};
+
+  if(req.query.username){
+    queryObj.username = req.query.username;
+  }else if(req.query.id){
+    queryObj._id = req.query.id;
+  }
   if(req.query.repo) {
     queryObj.repo = req.query.repo;
   }
+
+  console.log(req.query, queryObj);
 
   collection.find(queryObj, function(err, data) {
     if(err) {
