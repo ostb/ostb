@@ -31,6 +31,7 @@ var Mustache = (function() {
 })();
 
 var render = function(content, name, docName, res) {
+  console.log('render', arguments)
   var html, markdown;
   markdown = showdown.makeHtml(content);
   html = Mustache.to_html(template, {

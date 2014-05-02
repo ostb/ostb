@@ -5,9 +5,8 @@
     <div>
       <div ui-view="projectDetail"></div>
     </div>
-    <div class="right control">
-      <button id="editButton">Edit</button>
-
+    <div class="right">
+      <button id="editButton"><a ui-sref="editor({projectId: project._id})">Edit</a></button>
       <div>
         <h3>
           <ul>
