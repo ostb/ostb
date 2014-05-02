@@ -24,6 +24,7 @@ h3 { font-size: 1.3em; }
 p  { font-size: .825em; }
 
 /* Links */
+
 a         { color: #3977a6; text-decoration: none; }
 a:hover   { color: #73a6cd; }
 a:visited { color: #6e8a9f; }
@@ -36,6 +37,26 @@ a:visited { color: #6e8a9f; }
 .meta a:active { color: #73a6cd; }
 .meta .current { background: #edeeef; }
 
+/* Buttons */
+
+button {
+  display: block;
+  width: 12em;
+  height: 2.5em;
+  background: linear-gradient(to bottom, #fdfdfd 0%, #f8f8f8 100%);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 0 6px;
+  color: #3977a6;
+  font-weight: 300;
+  text-align: left;
+  padding-left: 10px;
+}
+
+button:hover {
+  background: linear-gradient(to bottom, #f8f8f8 0%, #fdfdfd 100%);
+  color: #73a6cd;
+}
 
 /* ====================
    GENERAL
@@ -67,7 +88,7 @@ html {
   width: 20em;
 }
 
-.login input, .sign-up input {
+.login input, .sign-up input, .account input {
   display: block;
   width: 18em;
   height: 1em;
@@ -79,7 +100,7 @@ html {
   font-weight: 300;
 }
 
-.login input:focus, .sign-up input:focus {
+.login input:focus, .sign-up input:focus, .account input:focus {
   border: 1px solid #99c3e3;
   outline: 0;
 }
@@ -89,9 +110,10 @@ html {
   width: 8em;
   height: 2.25em;
   border: 1px solid #555;
-  border-radius: 4px;
   background: #73a6cd;
   color: #fff;
+  text-align: center;
+  padding: 0;
 }
 
 .login button:hover, .sign-up button:hover {
@@ -128,25 +150,6 @@ html {
   color: #777;
 }
 
-.page button {
-  display: block;
-  width: 12em;
-  height: 2.5em;
-  background: linear-gradient(to bottom, #fdfdfd 0%, #f8f8f8 100%);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin: 0 0 6px;
-  color: #3977a6;
-  font-weight: 300;
-  text-align: left;
-  padding-left: 10px;
-}
-
-.page button:hover {
-  background: linear-gradient(to bottom, #f8f8f8 0%, #fdfdfd 100%);
-  color: #73a6cd;
-}
-
 .page .nav {
   margin: 2em 0;
   padding: 1em 0;
@@ -179,6 +182,19 @@ html {
 
 .page .nav li.current:hover {
   background: #fff;
+}
+
+.account .wrapper {
+  width: 40em;
+}
+
+.account div.left {
+  margin-right: 2em;
+}
+
+.account button {
+  text-align: center;
+  padding-left: 0;
 }
 
 
