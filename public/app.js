@@ -25,6 +25,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('sign-up', {
+    url: "/sign-up",
+    views: {
+      'content': {
+        templateUrl: 'partials/sign-up.html',
+        controller: 'Signup'
+      }
+    }
+  })
   .state('dashboard', {
     url: "/dashboard",
     views: {
@@ -34,12 +43,12 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('sign-up', {
-    url: "/sign-up",
+  .state('page', {
+    url: "/page",
     views: {
       'content': {
-        templateUrl: 'partials/sign-up.html',
-        controller: 'Signup'
+        templateUrl: 'partials/page.html',
+        controller: 'Page'
       }
     }
   })

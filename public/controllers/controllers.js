@@ -13,6 +13,10 @@ ostb.controller('IndexController', function($scope) {
   console.log('Sign up');
 })
 
+.controller('Page', function($scope) {
+  console.log('Page');
+})
+
 .controller('IndexContent', function($scope){
   $scope.indexContent = 'test';
 })
