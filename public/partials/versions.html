@@ -1,6 +1,12 @@
 <h3>Versions</h3>
 
-<div ng-controller='VersionsController'>
+<ul>
+  <li ng-repeat='commit in project.commits'>
+    <a> {{commit.date}} || {{commit.commitMessage}}</a>
+  </li>
+</ul>
+
+<!--<div ng-controller='VersionsController'>
   <button ng-click='toggleModal()'>Update Version History</button>
   <modal-dialog show='modalShown' width='400px' height='60%'>
     <h3>Save New Version</h3>
@@ -23,4 +29,4 @@
       </div>
     </li>
   </ul>
-</div>
+</div> -->
