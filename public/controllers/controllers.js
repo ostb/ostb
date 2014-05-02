@@ -181,8 +181,20 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-
-.controller('ProjectDetailController', function($scope, $stateParams) {
-  console.log($stateParams);
+//NOTE!! 'adrian' is hardcoded until auth/users complete! /////////////////////////////////
+.controller('ProjectDetailController', function($scope, $stateParams, ProjectsFactory) {
+  ProjectsFactory.getProject({username: 'adrian', repo: $stateParams.projectName})
+  .then(function(data) {
+    console.log(data[0]);
+    $scope.project = data[0];
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
+
+
+
+
+
 

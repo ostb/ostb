@@ -88,7 +88,7 @@ var ostb = angular.module('ostb', [
   //     }
   //   }
   // })
-  .state('project', {
+  .state('project', {     //user.project after auth implemented
     url: "/:projectName",
     views: {
       'content': {
