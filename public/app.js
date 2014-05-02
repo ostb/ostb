@@ -26,7 +26,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('dashboard', {
-    url: "/dashboard",
+    url: "/:username",
     views: {
       'content': {
         templateUrl: 'partials/dashboard.html',
@@ -70,17 +70,8 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  // .state('user', {
-  //   url: "/user",
-  //   views: {
-  //     'content': {
-  //       templateUrl: 'partials/page.html',
-  //       controller: 'ProjectDetailController'
-  //     }
-  //   }
-  // })
   .state('project', {     //user.project after auth implemented
-    url: "/:projectName",
+    url: "/project_id/:projectId",
     views: {
       'content': {
         templateUrl: 'partials/page.html',
