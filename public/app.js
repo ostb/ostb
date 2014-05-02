@@ -70,6 +70,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('project', {
+    url: "/:projectId",
+    views: {
+      'content': {
+        templateUrl: 'partials/versions.html',
+        controller: 'Example'
+      }
+    }
+  })
 })
 
 // This is test data.
