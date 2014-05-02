@@ -58,7 +58,7 @@ ostb.controller('IndexController', function($scope) {
 
   ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
   .then(function(data) {
-    $scope.project = data[0];
+    $scope.project = data;
   })
   .catch(function(err) {
     $scope.error = err;
