@@ -44,7 +44,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('editor', {
-    url: "/editor",
+    url: "/editor/project_id/:projectId",
     views: {
       'content': {
         templateUrl: 'partials/editor.html',
