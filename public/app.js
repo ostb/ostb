@@ -35,7 +35,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('dashboard', {
-    url: "/user_id/:username",
+    url: "/dashboard/:username",
     views: {
       'content': {
         templateUrl: 'partials/dashboard.html',
@@ -53,20 +53,11 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('editor', {
-    url: "/editor/project_id/:projectId",
+    url: "/editor/:username/:repo",
     views: {
       'content': {
         templateUrl: 'partials/editor.html',
-        controller: 'Example1'
-      }
-    }
-  })
-  .state('versions', {
-    url: "/versions",
-    views: {
-      'content': {
-        templateUrl: 'partials/versions.html',
-        controller: 'Example'
+        controller: 'EditorController'
       }
     }
   })
@@ -79,8 +70,8 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('project', {     //user.project after auth implemented
-    url: "/project_id/:projectId",
+  .state('project', {
+    url: "/:username/:repo",
     views: {
       'content': {
         templateUrl: 'partials/page.html',
@@ -88,12 +79,7 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('project', {
-    url: "/:projectId",
-    views: {
-      'content': {
-        templateUrl: 'partials/versions.html',
-  .state('project.document', {     //user.project after auth implemented
+  .state('project.document', {
     url: "/document",
     views: {
       'projectDetail': {
@@ -102,7 +88,7 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('project.versions', {     //user.project after auth implemented
+  .state('project.versions', {
     url: "/versions",
     views: {
       'projectDetail': {
@@ -111,7 +97,7 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('project.contributions', {     //user.project after auth implemented
+  .state('project.contributions', {
     url: "/contributions",
     views: {
       'projectDetail': {
@@ -120,7 +106,7 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('project.statistics', {     //user.project after auth implemented
+  .state('project.statistics', {
     url: "/statistics",
     views: {
       'projectDetail': {

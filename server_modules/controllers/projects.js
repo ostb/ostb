@@ -107,7 +107,6 @@ exports.getVersions = function(req, res) {
     if(err) {
       res.send(404, err.toString());
     }else {
-      console.log(data.commits);
       res.send(data.commits);
     }
   })
@@ -128,8 +127,6 @@ exports.getProjects = function(req, res) {
     queryObj.repo = req.query.repo;
   }
 
-  console.log(req.query, queryObj);
-
   collection.find(queryObj, function(err, data) {
     if(err) {
       res.send(404, err.toString());
@@ -139,19 +136,17 @@ exports.getProjects = function(req, res) {
   });
 }
 
-// exports.checkout = function(req, res) {
-//   var db = req.db;
-//   var collection = db.get('projectcollection');
+exports.getFile = function(req, res) {
+  var checkout = Promise.promisify(shell.checkout);
+  checkout(req.query.username, req.query.repo, null)
+  .then(function(data) {
+    console.log('rec data', data);
+  })
+}
 
-//   console.log(req.query);
 
-//   collection.findOne({username: req.query.username}, function(err, data) {
-//     if(err) {
-//       res.send(404, err.toString());
-//     }else {
-//       res.send(data.projects);
-//     }
-//   });
-// }
+
+
+
 
 

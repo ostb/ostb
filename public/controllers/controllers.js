@@ -21,12 +21,11 @@ ostb.controller('IndexController', function($scope) {
   $scope.indexContent = 'test';
 })
 
-.controller('Example1', function($scope) {
+.controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
     var init = function() {
     var converter = new Showdown.converter();
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
-    console.log('editor', editor);
     editor.setReadOnly(true);
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
@@ -57,11 +56,17 @@ ostb.controller('IndexController', function($scope) {
         $('#right').scrollTop(scroll);
         console.log('editor scroll hit', scroll);
       });
-
     });
   };
   init();
-  console.log('Example1 controller');
+
+  ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+  .then(function(data) {
+    $scope.project = data[0];
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 
@@ -183,7 +188,7 @@ ostb.controller('IndexController', function($scope) {
 //NOTE!! 'adrian' is hardcoded until auth/users complete! ///////////////////////////////
 .controller('ProjectDetailController', function($scope, $stateParams, ProjectsFactory) {
   
-  ProjectsFactory.getProjects({id: $stateParams.projectId})
+  ProjectsFactory.getProjects({username: $stateParams.username, repo: $stateParams.repo})
   .then(function(data) {
     $scope.project = data[0];
   })
@@ -191,7 +196,6 @@ ostb.controller('IndexController', function($scope) {
     $scope.error = err;
   });
 
-  $scope.project = 'aaaaa'
 })
 
 

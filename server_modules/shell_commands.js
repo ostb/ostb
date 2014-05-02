@@ -69,9 +69,18 @@ var getCommitHash = exports.getCommitHash = function(username, repo) {
   return execute('cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD');
 }
 
-exports.checkout = function(username, repo, hash) {
+exports.checkout = function(username, repo, hash, next) {
   hash = hash || 'master';
-  return execute('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash);
+  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
+  .then(function() {
+    fs.readFile('user_data/' + username + '/' + repo + '/' + 'content.md', 'utf-8', function(err, data) {
+      if(err){
+        throw err;
+      }
+      console.log('readfile', arguments);
+      next(null, data);
+    });
+  })
 }
 
 exports.clone = function(username, owner, repo, next) {
