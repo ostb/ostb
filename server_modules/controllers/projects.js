@@ -6,6 +6,8 @@ exports.create = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
+  console.log(req.body);
+
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
   .then(function(commitHash) {

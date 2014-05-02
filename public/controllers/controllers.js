@@ -144,7 +144,6 @@ ostb.controller('IndexController', function($scope) {
     ProjectsFactory.getProjects(user)
     .then(function(data) {
       $scope.projects = data;
-      console.log($scope.projects);
     })
     .catch(function(err) {
       $scope.error = err;
