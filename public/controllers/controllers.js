@@ -179,5 +179,10 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
-});
+})
+
+
+.controller('ProjectDetailController', function($scope, $stateParams) {
+  console.log($stateParams);
+})
 

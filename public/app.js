@@ -79,12 +79,21 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  // .state('user', {
+  //   url: "/user",
+  //   views: {
+  //     'content': {
+  //       templateUrl: 'partials/page.html',
+  //       controller: 'ProjectDetailController'
+  //     }
+  //   }
+  // })
   .state('project', {
-    url: "/:projectId",
+    url: "/:projectName",
     views: {
       'content': {
-        templateUrl: 'partials/versions.html',
-        controller: 'Example'
+        templateUrl: 'partials/page.html',
+        controller: 'ProjectDetailController'
       }
     }
   })
