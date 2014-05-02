@@ -92,12 +92,8 @@ exports.deleteUser = function(username) {
   return execute('rm -rf  user_data/' + sanitizeSpaces(username));
 }
 
-var sanitizeSpaces = function(input) {
-  return input.trim().replace(/ /g, '\\ ');
-}
-
 var isLegalName = function(name) {
-  var regex = /^[\w\-\s]+$/;
+  var regex = /^[\w\-]+$/;
   return regex.test(name);
 }
 
