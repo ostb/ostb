@@ -1,7 +1,6 @@
 <div class="page" ng-controller="ProjectDetailController">
   <div class="wrapper">
     <h1>Project: {{project.repo}}</h1>
-    <p>{{project}}</p>
     <div>
       <div ui-view="projectDetail"></div>
     </div>
@@ -22,7 +21,24 @@
           <ul>
             <li><a>Fork</a></li>
             <li><a>Add to book</a></li>
-            <li><a>Delete</a></li>
+            <li>
+              <div ng-controller='ProjectsController'>
+                <a ng-click='toggleModal()'>Delete</a>
+                <modal-dialog show='modalShown' width='400px' height='60%'>
+                  <h3>Delete Project</h3>
+                  <form ng-submit='deleteProject(project)'>
+                    Are you sure you want to delete {{project.repo}}?
+                    <br>
+                    <br>
+                    repo info: {{project.repo}} // {{project.username}}
+                    <br>
+                    <br>
+                    <div><input type="submit" value="Delete"></div>
+                  </form>
+                  <div style="color:red;">{{error}}</div>
+                </modal-dialog>
+              </div>
+            </li>
           </ul>
         </h3>
       </div>
