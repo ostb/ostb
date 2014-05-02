@@ -68,7 +68,12 @@ angular.module('factories.projects', [])
 
     getProjects: function(project) {
       var dfd = $q.defer();
-      var queryString = '/api/projects?username=' + project.username;
+      var queryString = '/api/projects?'
+      if(project.username) {
+        queryString += 'username=' + project.username;
+      }else if(project.id){
+        queryString += 'id=' + project.id;
+      }
       if(project.repo) {
         queryString += '&repo=' + project.repo
       }

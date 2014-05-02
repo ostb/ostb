@@ -22,17 +22,6 @@
 
       <br>
       <div ng-controller='ProjectsListController'>
-        <button ng-click='toggleModal()'>Get Projects List</button>
-        <modal-dialog show='modalShown' width='400px' height='60%'>
-          <h3>Get Projects List</h3>
-          <form ng-submit='getProjects(user)'>
-            Username:
-            <br>
-            <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="user.username"><br>
-            <div><input type="submit" value="Submit"></div>
-          </form>
-          <div style="color:red;">{{error}}</div>
-        </modal-dialog>
 
         <ul>
           <div ng-repeat='project in projects'>

@@ -26,7 +26,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('dashboard', {
-    url: "/:username",
+    url: "/user_id/:username",
     views: {
       'content': {
         templateUrl: 'partials/dashboard.html',

@@ -134,21 +134,19 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-.controller('ProjectsListController', function($scope, ProjectsFactory) {  
+.controller('ProjectsListController', function($scope, $stateParams, ProjectsFactory) {  
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
 
-  $scope.getProjects = function(user) {
-    ProjectsFactory.getProjects(user)
-    .then(function(data) {
-      $scope.projects = data;
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
+  ProjectsFactory.getProjects({username: $stateParams.username})
+  .then(function(data) {
+    $scope.projects = data;
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('UsersController', function($scope, UsersFactory) {
@@ -181,7 +179,7 @@ ostb.controller('IndexController', function($scope) {
 //NOTE!! 'adrian' is hardcoded until auth/users complete! ///////////////////////////////
 .controller('ProjectDetailController', function($scope, $stateParams, ProjectsFactory) {
   
-  ProjectsFactory.getProjects({username: 'adrian', repo: $stateParams.projectName})
+  ProjectsFactory.getProjects({id: $stateParams.projectId})
   .then(function(data) {
     $scope.project = data[0];
   })
