@@ -132,18 +132,23 @@ html {
   display: block;
   width: 12em;
   height: 2.5em;
-  background: #fff;
-  border: 1px solid #bbb;
+  background: linear-gradient(to bottom, #fdfdfd 0%, #f8f8f8 100%);
+  border: 1px solid #ccc;
   border-radius: 4px;
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   color: #3977a6;
   font-weight: 300;
   text-align: left;
   padding-left: 10px;
 }
 
+.page button:hover {
+  background: linear-gradient(to bottom, #f8f8f8 0%, #fdfdfd 100%);
+  color: #73a6cd;
+}
+
 .page .nav {
-  margin: 1.5em 0;
+  margin: 2em 0;
   padding: 1em 0;
   border-left: 1px solid #eee;
   box-shadow: inset 5px 0 5px -3px #f4f4f4;
@@ -156,31 +161,25 @@ html {
   cursor: pointer;
 }
 
-.page .nav li {
-  /*border-left: 1px solid #ddd;*/
-}
-
-.page .nav li:first-child {
-  /*border-top-left-radius: 4px;*/
-  /*border-top-right-radius: 4px;*/
-}
-
-.page .nav li:last-child {
-  /*border-bottom: 1px solid #ddd;*/
-  /*border-bottom-left-radius: 4px;*/
-  /*border-bottom-right-radius: 4px;*/
-}
-
 .page .nav li.current {
   border-top: 1px solid #eee;
-  border-right: 1px solid #eee;
+  border-right: 4px solid #73a6cd;
   border-bottom: 1px solid #eee;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
   background: #fff;
   border-left: 1px solid #fff;
   margin-left: -1px;
   box-shadow: 0 5px 5px -3px #eee;
 }
 
+.page .nav li:hover {
+  background: linear-gradient(to right, #f6f6f6 0%, #fff 100%);  
+}
+
+.page .nav li.current:hover {
+  background: #fff;
+}
 
 
 
