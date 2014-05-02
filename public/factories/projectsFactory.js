@@ -66,21 +66,14 @@ angular.module('factories.projects', [])
       return dfd.promise;
     },
 
-    getProjects: function(user) {
+    getProjects: function(project) {
       var dfd = $q.defer();
-      $http.get('/api/projects?username=' + user.username)
-      .success(function(data, status, headers, config) {
-        dfd.resolve(data);
-      })
-      .error(function(data, status, headers, config) {
-        dfd.reject(data);
-      });
-      return dfd.promise;
-    },
+      var queryString = '/api/projects?username=' + project.username;
+      if(project.repo) {
+        queryString += '&repo=' + project.repo
+      }
 
-    getProject: function(project) {
-      var dfd = $q.defer();
-      $http.get('/api/projects?username=' + project.username  + '&repo=' + project.repo)
+      $http.get(queryString)
       .success(function(data, status, headers, config) {
         dfd.resolve(data);
       })
