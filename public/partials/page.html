@@ -5,7 +5,7 @@
       <div ui-view="projectDetail"></div>
     </div>
     <div class="right">
-      <button id="editButton"><a ui-sref="editor({projectId: project._id})">Edit</a></button>
+      <button id="editButton"><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
       <div>
         <h3>
           <ul>
