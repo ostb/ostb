@@ -140,7 +140,10 @@ exports.getFile = function(req, res) {
   var checkout = Promise.promisify(shell.checkout);
   checkout(req.query.username, req.query.repo, null)
   .then(function(data) {
-    console.log('rec data', data);
+    res.send(200, data);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
   })
 }
 

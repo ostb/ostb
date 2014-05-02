@@ -31,7 +31,6 @@ var Mustache = (function() {
 })();
 
 var render = function(content, name, docName, res) {
-  console.log('render', arguments)
   var html, markdown;
   markdown = showdown.makeHtml(content);
   html = Mustache.to_html(template, {
@@ -96,15 +95,6 @@ var options = {
 }
 share.server.attach(app, options);
 
-
-// shell.commit('alejandro', 'intro_biology', 'test commit');
-
-// shell.log('alejandro', 'intro_biology');
-
-// shell.getCommitHash('alejandro', 'intro_biology')
-// .then(function(hash) {
-//   console.log('commit hash: ', hash[0]);
-// });
 
 // ----- ROUTING -----
 // ----- webpage requests -----

@@ -77,7 +77,6 @@ exports.checkout = function(username, repo, hash, next) {
       if(err){
         throw err;
       }
-      console.log('readfile', arguments);
       next(null, data);
     });
   })
