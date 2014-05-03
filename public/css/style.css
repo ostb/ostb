@@ -2,7 +2,7 @@
    DEFAULTS
    ================= */
 
-.wrapper { max-width: 1020px; margin: 0 auto; }
+.wrapper { max-width: 1020px; margin: 0 auto; position: relative; overflow: hidden; }
 
 /* Navigation classes */
 .nav       { list-style: none; margin: 0; font-weight: 300; }
@@ -14,7 +14,7 @@
 .left   { float: left; }
 .right  { float: right; }
 .clear  { clear: both; }
-.hidden { display: none; }
+.hidden { visibility: hidden; }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6, p { font-family: 'Roboto', sans-serif; }
@@ -22,26 +22,32 @@ h1 { font-size: 2em; }
 h2 { font-size: 1.6em; }
 h3 { font-size: 1.3em; }
 p  { font-size: .825em; }
+li { line-height: 1.5em;}
 
 /* Links */
 
-a         { color: #3977a6; text-decoration: none; }
+a         { color: #3977a6; text-decoration: none; cursor: pointer; }
 a:hover   { color: #73a6cd; }
 a:visited { color: #6e8a9f; }
 
 .logo a       { color: #000000; }
 .logo a:hover { color: #000000; }
 
-.meta a        { color: #000000; display: block; padding: 15px; cursor: pointer; }
+.meta a        { color: #000000; display: block; padding: 15px; }
 .meta a:hover  { color: #3977a6; }
 .meta a:active { color: #73a6cd; }
 .meta .current { background: #edeeef; }
+
+/* Two column layouts */
+
+.content { margin-right: 220px; }
+.control { width: 200px; position: absolute; top: 0; right: 0; }
 
 /* Buttons */
 
 button {
   display: block;
-  width: 12em;
+  width: 12.5em;
   height: 2.5em;
   background: linear-gradient(to bottom, #fdfdfd 0%, #f8f8f8 100%);
   border: 1px solid #ccc;
@@ -126,18 +132,11 @@ html {
 }
 
 .page .wrapper {
-  position: relative;
-}
-
-.page .content {
-  margin-right: 220px;
+  min-height: 480px;
 }
 
 .page .control {
-  width: 200px;
-  position: absolute;
-  top: 2px;
-  right: 0;
+  top: 1.25em;
 }
 
 .page h1 {
@@ -160,7 +159,7 @@ html {
 .page .nav a {
   display: block;
   width: 10em;
-  padding: .75em;
+  padding: .6em;
   cursor: pointer;
 }
 
@@ -195,6 +194,22 @@ html {
 .account button {
   text-align: center;
   padding-left: 0;
+}
+
+.dashboard .wrapper {
+  min-height: 240px;
+}
+
+.dashboard ul {
+  padding: 0;
+}
+
+.dashboard .control {
+  top: 6.5em;
+}
+
+.books, .pages {
+  width: 50%;
 }
 
 
