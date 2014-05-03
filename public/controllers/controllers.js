@@ -62,7 +62,7 @@ ostb.controller('IndexController', function($scope) {
       };
 
       window.doc = doc;
-      
+
       render();
       doc.on('change', render);
 
@@ -139,9 +139,11 @@ ostb.controller('IndexController', function($scope) {
   };
 
   $scope.commitProject = function(project) {
-    var temp = project.commitBody;
+
     project.commitBody = {}
-    project.commitBody['content.md'] = temp;
+    project.commitBody['content.md'] = window.doc.getText();
+    project.username = $stateParams.username;
+    project.repo = $stateParams.repo;
 
     ProjectsFactory.commit(project)
     .then(function() {
