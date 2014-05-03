@@ -138,13 +138,24 @@ exports.getProjects = function(req, res) {
 
 exports.getFile = function(req, res) {
   var checkout = Promise.promisify(shell.checkout);
-  checkout(req.query.username, req.query.repo, null)
-  .then(function(data) {
-    res.send(200, data);
-  })
-  .catch(function(err){
-    res.send(400, err.toString());
-  })
+
+  if(req.query.commitHash) {
+    checkout(req.query.username, req.query.repo, req.query.commitHash)
+    .then(function(data) {
+      res.send(200, data);
+    })
+    .catch(function(err){
+      res.send(400, err.toString());
+    })
+  }else {
+    checkout(req.query.username, req.query.repo, null)
+    .then(function(data) {
+      res.send(200, data);
+    })
+    .catch(function(err){
+      res.send(400, err.toString());
+    })
+  }
 }
 
 

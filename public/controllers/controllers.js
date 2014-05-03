@@ -37,14 +37,21 @@ ostb.controller('IndexController', function($scope) {
       
     var connection = new sharejs.Connection('/channel');
 
-    connection.open('', function(error, doc) {
+    var connectionName = $stateParams.repo;       //unique connection generated for each
+    if($stateParams.commitHash) {                 //version checkout. May not want to use
+      connectionName += $stateParams.commitHash;  //editor for this in deployment.
+    }
+    connection.open(connectionName, function(error, doc) {
       if (error) {
         console.error(error);
         return;
       }
 
-      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo, commitHash: $stateParams.commitHash})
       .then(function(data) {
+
+        console.log(data, doc.getLength() === 0)
+        console.log(doc);
 
         if(doc.getLength() === 0) {
           doc.insert(0, data);

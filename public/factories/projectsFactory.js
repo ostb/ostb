@@ -89,6 +89,7 @@ angular.module('factories.projects', [])
     },
 
     checkout: function(project) {
+
       var dfd = $q.defer();
       var queryString = '/api/projects/checkout?'
       if(project.username) {
@@ -98,6 +99,9 @@ angular.module('factories.projects', [])
       }
       if(project.repo) {
         queryString += '&repo=' + project.repo
+      }
+      if(project.commitHash) {
+        queryString += '&commitHash=' + project.commitHash
       }
 
       $http.get(queryString)
