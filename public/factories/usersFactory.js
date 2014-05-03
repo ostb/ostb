@@ -8,6 +8,12 @@ angular.module('factories.users', [])
       var dfd = $q.defer();
       $http.post('/api/users', user)
       .success(function(data, status, headers, config) {
+
+
+        console.log('hit usersFactoryjs');
+        console.log('user', user);
+
+
         dfd.resolve();
       })
       .error(function(data, status, headers, config) {

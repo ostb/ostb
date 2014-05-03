@@ -5,8 +5,35 @@ ostb.controller('IndexController', function($scope) {
   console.log('Login controller');
 })
 
-.controller('Signup', function($scope) {
-  console.log('Sign up');
+.controller('Dashboard', function($scope) {
+  console.log('Dashboard');
+})
+
+.controller('Signup', function($scope, UsersFactory) {
+  //2mayAdrian
+  $scope.user = {
+    username: undefined,
+    email: undefined,
+    password: undefined
+  };
+
+  $scope.submitTheForm = function(username, email, password) {
+    console.log('hit submitTheForm');
+    $scope.user.username = username;
+    $scope.user.email = email;
+    $scope.user.password = password;
+    $scope.createUser($scope.user);
+  };
+
+  $scope.createUser = function(user) {
+    UsersFactory.create(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 })
 
 .controller('Account', function($scope) {
@@ -163,6 +190,7 @@ ostb.controller('IndexController', function($scope) {
 })
 
 .controller('UsersController', function($scope, UsersFactory) {
+  
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -177,7 +205,7 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
-
+  
   $scope.deleteUser = function(user) {
     UsersFactory.delete(user)
     .then(function() {

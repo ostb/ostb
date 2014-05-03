@@ -2,6 +2,19 @@ var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
 
+
+//2MayAdrian
+var bcrypt = require('bcrypt-nodejs');
+
+
+var generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+var validPassword = function(password) {
+  return bcrypt.compareSync(password, this.local.password);
+};
+
+
 exports.create = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
@@ -14,8 +27,12 @@ exports.create = function(req, res) {
     collection.insert({
       username: req.body.username,
       meta: {},
-      email: '',
-      pwHash: ''
+      // email: '',
+      // pwHash: '',
+
+      //2MayAdrian
+      email: req.body.email,
+      pwHash: generateHash(req.body.password)
     });
 
     res.send(201);

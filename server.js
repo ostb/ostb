@@ -6,6 +6,15 @@ var shell = require('./server_modules/shell_commands');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 
+
+//30aprAdrian
+var flash = require('connect-flash');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
+
+
 var users = require('./server_modules/controllers/users');
 var projects = require('./server_modules/controllers/projects');
 
@@ -130,10 +139,81 @@ app.route('/api/projects/commit')
 app.route('/api/projects/checkout')
 .get(projects.getFile);
 
+
+
+
+//30aprAdrian setup passport config
+app.use(cookieParser());
+app.use(session({ secret: 'ostbRules' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); 
+
+// app.post('/login', passport.authenticate('local'), function(req, res) {
+//     var user = {};
+//     user.email = req.user.email;
+//     user.phone = req.user.phone;
+//     user.display_name = req.user.display_name;
+//     user.upcomingGames = req.user.upcomingGames;
+//     user.gamesPlayed = req.user.gamesPlayed;
+//     user.id = req.user._id;
+//     res.json(user);
+// });
+
+app.get('/login', function(req, res) {
+    res.render('login');
+});
+
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.json(200, 'Logged Out');
+});
+
+app.get('/signup',function(req, res) {
+  res.render('signup');
+});
+
+
+//2mayAdrian
+passport.serializeUser(function(user, done) {
+  console.log('User serialize');
+  console.log(user);  
+  console.log(user.email);
+  done(null, user.email);
+});
+
+passport.deserializeUser(function(email, done) {
+  console.log('User deserialize');
+  User.findOne({email: email}, function (err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },
+  function(req, email, password, done) {
+
+    process.nextTick(function(){
+      users.findOne({'local.email' : email}, function(err, user){
+        if(err){
+          return done(err);
+        }
+        if(user){
+          return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+        } else {
+          users.create(req.body);
+        }
+      });
+    });
+  })
+    // users.login(username, password, function(err, user) {
+    //   //console.log('*****', err, user);
+    //   return done(null, user);
+    // });
+);
+
+
 app.listen(3000);
-
-
-
-
-
 
