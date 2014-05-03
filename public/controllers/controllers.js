@@ -101,13 +101,14 @@ ostb.controller('IndexController', function($scope) {
   // $scope.versions = $scope.project.commits;
 })
 
-.controller('ProjectsController', function($scope, ProjectsFactory) {
+.controller('ProjectsController', function($scope, $stateParams, ProjectsFactory) {
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
 
   $scope.createProject = function(project) {
+    project.username = project.username || $stateParams.username;
     ProjectsFactory.create(project)
     .then(function() {
       console.log('success');
