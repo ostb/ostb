@@ -96,15 +96,6 @@ var options = {
 share.server.attach(app, options);
 
 
-// shell.commit('alejandro', 'intro_biology', 'test commit');
-
-// shell.log('alejandro', 'intro_biology');
-
-// shell.getCommitHash('alejandro', 'intro_biology')
-// .then(function(hash) {
-//   console.log('commit hash: ', hash[0]);
-// });
-
 // ----- ROUTING -----
 // ----- webpage requests -----
 app.get('/editor', function(req, res) {
@@ -136,8 +127,8 @@ app.route('/api/projects/commit')
 .post(projects.commit)
 .get(projects.getVersions);
 
-// app.route('/api/projects/checkout')
-// .get(projects.checkout);
+app.route('/api/projects/checkout')
+.get(projects.getFile);
 
 app.listen(3000);
 

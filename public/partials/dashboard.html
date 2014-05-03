@@ -19,11 +19,43 @@
           <li><a ui-sref="project">Belt Sander Use and Safety</a></li>
           <li><a ui-sref="project">Thermofluid Dynamics</a></li>
         </ul>
+  
+        <br>
+        <div ng-controller='ProjectsListController'>
+
+          <ul>
+            <div ng-repeat='project in projects'>
+              <a ui-sref='project({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
+            </div>
+          </ul>
+        </div>
       </div>
     </div>
+
+    <div class="right">
+      <h2>Controls</h2>
+
     <div class="control">
       <button>New Book</button>
-      <button>New Page</button>
+      <div ng-controller='ProjectsController'>
+        <button ng-click='toggleModal()'>New Page</button>
+        <modal-dialog show='modalShown' width='400px' height='60%'>
+          <h3>New Project</h3>
+          <form ng-submit='createProject(project)'>
+            Project Name:
+            <br>
+            <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+            <br>
+            <div><input type="submit" value="Submit"></div>
+          </form>
+          <div style="color:red;">{{error}}</div>
+        </modal-dialog>
+      </div>
+
     </div>
   </div>
 </div>
+
+
+
+

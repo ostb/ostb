@@ -13,7 +13,7 @@ exports.createUser = function(username, next) {
   if(fs.existsSync('user_data/' + username)) {
     throw 'A user with that name already exists.'
   }
-  execute('mkdir user_data/' + sanitizeSpaces(username))
+  execute('mkdir user_data/' + username)
   .then(function() {
     next();
   });
@@ -29,7 +29,7 @@ exports.init = function(username, repo, next) {
     throw 'You already have a project named ' + repo + '!';
   }
 
-  execute('git init user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo))
+  execute('git init user_data/' + username + '/' + repo)
   .then(function() {
     var commitBody = {
       'content.md': '#Welcome\nThis is the first version of your new project.',
@@ -45,7 +45,7 @@ exports.init = function(username, repo, next) {
 }
 
 var commit = exports.commit = function(username, repo, commitMessage, commitBody, next) {
-  if(!isLegalName(commitMessage)) {
+  if(!isLegalCommitMessage(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
 
@@ -56,7 +56,7 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
       fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
     }
   }
-  execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
+  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {
     return getCommitHash(username, repo);
   })
@@ -66,16 +66,24 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
 }
 
 var getCommitHash = exports.getCommitHash = function(username, repo) {
-  return execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git rev-parse HEAD');
+  return execute('cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD');
 }
 
-exports.checkout = function(username, repo, hash) {
+exports.checkout = function(username, repo, hash, next) {
   hash = hash || 'master';
-  return execute('cd user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo) + ' && ' + 'git checkout ' + hash);
+  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
+  .then(function() {
+    fs.readFile('user_data/' + username + '/' + repo + '/' + 'content.md', 'utf-8', function(err, data) {
+      if(err){
+        throw err;
+      }
+      next(null, data);
+    });
+  })
 }
 
 exports.clone = function(username, owner, repo, next) {
-  execute('cd user_data/' + sanitizeSpaces(username) + ' && ' + 'git clone ../' + sanitizeSpaces(owner) + '/' + sanitizeSpaces(repo))
+  execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
   .then(function() {
     return getCommitHash(owner, repo);
   })
@@ -85,22 +93,22 @@ exports.clone = function(username, owner, repo, next) {
 }
 
 exports.deleteRepo = function(username, repo) {
-  return execute('rm -rf  user_data/' + sanitizeSpaces(username) + '/' + sanitizeSpaces(repo));
+  return execute('rm -rf  user_data/' + username + '/' + repo);
 }
 
 exports.deleteUser = function(username) {
-  return execute('rm -rf  user_data/' + sanitizeSpaces(username));
-}
-
-var sanitizeSpaces = function(input) {
-  return input.trim().replace(/ /g, '\\ ');
+  return execute('rm -rf  user_data/' + username);
 }
 
 var isLegalName = function(name) {
-  var regex = /^[\w\-\s]+$/;
+  var regex = /^[\w\-]+$/;
   return regex.test(name);
 }
 
+var isLegalCommitMessage = function(name) {
+  var regex = /^[\w\-\s]+$/;
+  return regex.test(name);
+}
 
 
 

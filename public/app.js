@@ -44,7 +44,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('dashboard', {
-    url: "/dashboard",
+    url: "/dashboard/:username",
     views: {
       'content': {
         templateUrl: 'partials/dashboard.html',
@@ -62,20 +62,11 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('editor', {
-    url: "/editor",
+    url: "/editor/:username/:repo",
     views: {
       'content': {
         templateUrl: 'partials/editor.html',
-        controller: 'Example1'
-      }
-    }
-  })
-  .state('versions', {
-    url: "/versions",
-    views: {
-      'content': {
-        templateUrl: 'partials/versions.html',
-        controller: 'Example'
+        controller: 'EditorController'
       }
     }
   })
@@ -87,7 +78,52 @@ var ostb = angular.module('ostb', [
         controller: 'Example'
       }
     }
-  });
+  })
+  .state('project', {
+    url: "/:username/:repo",
+    views: {
+      'content': {
+        templateUrl: 'partials/page.html',
+        controller: 'ProjectDetailController'
+      }
+    }
+  })
+  .state('project.document', {
+    url: "/document",
+    views: {
+      'projectDetail': {
+        template: '<h1>project document</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+  .state('project.versions', {
+    url: "/versions",
+    views: {
+      'projectDetail': {
+        templateUrl: '/partials/versions.html',
+        controller: 'VersionsController'
+      }
+    }
+  })
+  .state('project.contributions', {
+    url: "/contributions",
+    views: {
+      'projectDetail': {
+        template: '<h1>project contributions</h1>',
+        controller: 'Example'
+      }
+    }
+  })
+  .state('project.statistics', {
+    url: "/statistics",
+    views: {
+      'projectDetail': {
+        template: '<h1>project statistics</h1>',
+        controller: 'Example'
+      }
+    }
+  })
 });
 
 // This is test data.

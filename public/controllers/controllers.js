@@ -25,12 +25,11 @@ ostb.controller('IndexController', function($scope) {
   $scope.indexContent = 'test';
 })
 
-.controller('Example1', function($scope) {
+.controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
     var init = function() {
     var converter = new Showdown.converter();
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
-    console.log('editor', editor);
     editor.setReadOnly(true);
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
@@ -44,58 +43,72 @@ ostb.controller('IndexController', function($scope) {
         return;
       }
 
-      doc.attach_ace(editor);
-      editor.setReadOnly(false);
+      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+      .then(function(data) {
+
+        if(doc.getLength() === 0) {
+          doc.insert(0, data);
+        }
+
+        doc.attach_ace(editor);
+        editor.setReadOnly(false);
+      })
+      .catch(function(err) {
+        $scope.error = err;
+      });
 
       var render = function() {
         view.innerHTML = converter.makeHtml(doc.snapshot);
       };
 
       window.doc = doc;
-      
+
       render();
       doc.on('change', render);
 
       editor.getSession().on('changeScrollTop',function(scroll){
         var lengthScroll = $('#right')[0].scrollHeight - $('#right').height();
         $('#right').scrollTop(scroll);
-        console.log('editor scroll hit', scroll);
+        // console.log('editor scroll hit', scroll);
       });
-
     });
   };
   init();
-  console.log('Example1 controller');
+
+  $scope.projectName = $stateParams.repo;
 })
 
 
 // ----- project CRUD controllers -----
 
 .controller('VersionsController', function($scope, ProjectsFactory) {
-  $scope.modalShown = false;
-  $scope.toggleModal = function() {
-    $scope.modalShown = !$scope.modalShown;
-  };
+  // $scope.modalShown = false;
+  // $scope.toggleModal = function() {
+  //   $scope.modalShown = !$scope.modalShown;
+  // };
 
-  $scope.getVersions = function(project) {
-    ProjectsFactory.getVersions(project)
-    .then(function(data) {
-      $scope.versions = data;
-      console.log($scope.versions);
-    })
-    .catch(function(err) {
-      $scope.error = err;
-    });
-  };
+  // $scope.getVersions = function(project) {
+  //   ProjectsFactory.getVersions(project)
+  //   .then(function(data) {
+  //     $scope.versions = data;
+  //     console.log($scope.versions);
+  //   })
+  //   .catch(function(err) {
+  //     $scope.error = err;
+  //   });
+  // };
+
+  // $scope.versions = $scope.project.commits;
 })
 
-.controller('ProjectsController', function($scope, ProjectsFactory) {
+.controller('ProjectsController', function($scope, $stateParams, ProjectsFactory) {
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
   };
 
   $scope.createProject = function(project) {
+    project.username = project.username || $stateParams.username;
     ProjectsFactory.create(project)
     .then(function() {
       console.log('success');
@@ -126,9 +139,11 @@ ostb.controller('IndexController', function($scope) {
   };
 
   $scope.commitProject = function(project) {
-    var temp = project.commitBody;
+
     project.commitBody = {}
-    project.commitBody['content.md'] = temp;
+    project.commitBody['content.md'] = window.doc.getText();
+    project.username = $stateParams.username;
+    project.repo = $stateParams.repo;
 
     ProjectsFactory.commit(project)
     .then(function() {
@@ -138,6 +153,21 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
+})
+
+.controller('ProjectsListController', function($scope, $stateParams, ProjectsFactory) {  
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    $scope.modalShown = !$scope.modalShown;
+  };
+
+  ProjectsFactory.getProjects({username: $stateParams.username})
+  .then(function(data) {
+    $scope.projects = data;
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('UsersController', function($scope, UsersFactory) {
@@ -165,5 +195,23 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
-});
+})
+
+//NOTE!! 'adrian' is hardcoded until auth/users complete! ///////////////////////////////
+.controller('ProjectDetailController', function($scope, $stateParams, ProjectsFactory) {
+  
+  ProjectsFactory.getProjects({username: $stateParams.username, repo: $stateParams.repo})
+  .then(function(data) {
+    $scope.project = data[0];
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
+
+})
+
+
+
+
+
 

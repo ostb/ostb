@@ -6,6 +6,8 @@ exports.create = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
+  console.log(req.body);
+
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
   .then(function(commitHash) {
@@ -105,7 +107,6 @@ exports.getVersions = function(req, res) {
     if(err) {
       res.send(404, err.toString());
     }else {
-      console.log(data.commits);
       res.send(data.commits);
     }
   })
@@ -114,28 +115,41 @@ exports.getVersions = function(req, res) {
 exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
-  collection.find({username: req.query.username}, function(err, data) {
+
+  var queryObj = {};
+
+  if(req.query.username){
+    queryObj.username = req.query.username;
+  }else if(req.query.id){
+    queryObj._id = req.query.id;
+  }
+  if(req.query.repo) {
+    queryObj.repo = req.query.repo;
+  }
+
+  collection.find(queryObj, function(err, data) {
     if(err) {
       res.send(404, err.toString());
     }else {
       res.send(data);
     }
   });
-} 
+}
 
-// exports.checkout = function(req, res) {
-//   var db = req.db;
-//   var collection = db.get('projectcollection');
+exports.getFile = function(req, res) {
+  var checkout = Promise.promisify(shell.checkout);
+  checkout(req.query.username, req.query.repo, null)
+  .then(function(data) {
+    res.send(200, data);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  })
+}
 
-//   console.log(req.query);
 
-//   collection.findOne({username: req.query.username}, function(err, data) {
-//     if(err) {
-//       res.send(404, err.toString());
-//     }else {
-//       res.send(data.projects);
-//     }
-//   });
-// }
+
+
+
 
 
