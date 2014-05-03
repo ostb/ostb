@@ -31,6 +31,16 @@ ostb.controller('IndexController', function($scope) {
     editor.setShowPrintMargin(false);
     editor.resize(true);
       
+    // var content;
+    // ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+    // .then(function(data) {
+    //   // $scope.project = data;
+    //   content = data;
+    // })
+    // .catch(function(err) {
+    //   $scope.error = err;
+    // });
+
     var connection = new sharejs.Connection('/channel');
 
     connection.open('', function(error, doc) {
@@ -39,8 +49,20 @@ ostb.controller('IndexController', function($scope) {
         return;
       }
 
-      doc.attach_ace(editor);
-      editor.setReadOnly(false);
+      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+      .then(function(data) {
+
+        console.log(doc);
+        if(doc.getLength() === 0) {
+          doc.insert(0, data);
+        }
+
+        doc.attach_ace(editor);
+        editor.setReadOnly(false);
+      })
+      .catch(function(err) {
+        $scope.error = err;
+      });
 
       var render = function() {
         view.innerHTML = converter.makeHtml(doc.snapshot);
@@ -54,19 +76,12 @@ ostb.controller('IndexController', function($scope) {
       editor.getSession().on('changeScrollTop',function(scroll){
         var lengthScroll = $('#right')[0].scrollHeight - $('#right').height();
         $('#right').scrollTop(scroll);
-        console.log('editor scroll hit', scroll);
+        // console.log('editor scroll hit', scroll);
       });
     });
   };
   init();
 
-  ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
-  .then(function(data) {
-    $scope.project = data;
-  })
-  .catch(function(err) {
-    $scope.error = err;
-  });
 })
 
 
