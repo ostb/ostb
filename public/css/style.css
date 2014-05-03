@@ -25,26 +25,29 @@ p  { font-size: .825em; }
 li { line-height: 1.5em;}
 
 /* Links */
-
 a         { color: #3977a6; text-decoration: none; cursor: pointer; }
-a:hover   { color: #73a6cd; }
 a:visited { color: #6e8a9f; }
+a:hover   { color: #73a6cd; }
 
 .logo a       { color: #000000; }
 .logo a:hover { color: #000000; }
 
-.meta a        { color: #000000; display: block; padding: 15px; }
-.meta a:hover  { color: #3977a6; }
-.meta a:active { color: #73a6cd; }
-.meta .current { background: #edeeef; }
+.nav a:visited { color: #3977a6; }
+.nav a:hover   { color: #73a6cd; }
+
+.meta a         { color: #000000; display: block; padding: 15px; }
+.meta a:visited { color: #000000; }
+.meta a:hover   { color: #3977a6; }
+.meta a:active  { color: #73a6cd; }
+.meta .current  { background: #edeeef; }
+
+:focus { outline: 1px dotted #ccc; }
 
 /* Two column layouts */
-
 .content { margin-right: 220px; }
 .control { width: 200px; top: 0; right: 0; position: absolute;}  /*position:absolute WAS DISABLED FOR MODALS*/ 
 
 /* Buttons */
-
 button {
   display: block;
   width: 12.5em;
@@ -59,10 +62,9 @@ button {
   padding-left: 10px;
 }
 
-button:hover {
-  background: linear-gradient(to bottom, #f8f8f8 0%, #fdfdfd 100%);
-  color: #73a6cd;
-}
+button:hover { background: linear-gradient(to bottom, #f8f8f8 0%, #fdfdfd 100%); color: #73a6cd; }
+button:active { box-shadow: inset 1px 1px 3px #ddd; }
+button:focus { outline: 0; border-color: #999; }
 
 /* ====================
    GENERAL
@@ -128,7 +130,8 @@ html {
 
 .login a, .sign-up a {
   font-size: .825em;
-  margin: 30px 0 0 27px;
+  font-weight: 300;
+  margin: 30px 0 0 28px;
 }
 
 .page .wrapper {
@@ -141,7 +144,7 @@ html {
 
 .page h1 {
   font-family: 'Roboto Slab', serif;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .page h1 span {
@@ -152,7 +155,7 @@ html {
 .page .nav {
   margin: 2em 0;
   padding: 1em 0;
-  border-left: 1px solid #eee;
+  border-left: 1px solid #ebebeb;
   box-shadow: inset 5px 0 5px -3px #f4f4f4;
 }
 
@@ -164,9 +167,9 @@ html {
 }
 
 .page .nav li.current {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ebebeb;
   border-right: 4px solid #73a6cd;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ebebeb;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   background: #fff;
