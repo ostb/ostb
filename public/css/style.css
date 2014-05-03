@@ -2,7 +2,7 @@
    DEFAULTS
    ================= */
 
-.wrapper { max-width: 1020px; margin: 0 auto; }
+.wrapper { max-width: 1020px; margin: 0 auto; position: relative; overflow: hidden; }
 
 /* Navigation classes */
 .nav       { list-style: none; margin: 0; font-weight: 300; }
@@ -14,7 +14,7 @@
 .left   { float: left; }
 .right  { float: right; }
 .clear  { clear: both; }
-.hidden { display: none; }
+.hidden { visibility: hidden; }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6, p { font-family: 'Roboto', sans-serif; }
@@ -22,20 +22,47 @@ h1 { font-size: 2em; }
 h2 { font-size: 1.6em; }
 h3 { font-size: 1.3em; }
 p  { font-size: .825em; }
+li { line-height: 1.5em;}
 
 /* Links */
-a         { color: #3977a6; text-decoration: none; }
+
+a         { color: #3977a6; text-decoration: none; cursor: pointer; }
 a:hover   { color: #73a6cd; }
 a:visited { color: #6e8a9f; }
 
 .logo a       { color: #000000; }
 .logo a:hover { color: #000000; }
 
-.meta a        { color: #000000; display: block; padding: 15px; cursor: pointer; }
+.meta a        { color: #000000; display: block; padding: 15px; }
 .meta a:hover  { color: #3977a6; }
 .meta a:active { color: #73a6cd; }
 .meta .current { background: #edeeef; }
 
+/* Two column layouts */
+
+.content { margin-right: 220px; }
+.control { width: 200px; position: absolute; top: 0; right: 0; }
+
+/* Buttons */
+
+button {
+  display: block;
+  width: 12.5em;
+  height: 2.5em;
+  background: linear-gradient(to bottom, #fdfdfd 0%, #f8f8f8 100%);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 0 6px;
+  color: #3977a6;
+  font-weight: 300;
+  text-align: left;
+  padding-left: 10px;
+}
+
+button:hover {
+  background: linear-gradient(to bottom, #f8f8f8 0%, #fdfdfd 100%);
+  color: #73a6cd;
+}
 
 /* ====================
    GENERAL
@@ -67,7 +94,7 @@ html {
   width: 20em;
 }
 
-.login input, .sign-up input {
+.login input, .sign-up input, .account input {
   display: block;
   width: 18em;
   height: 1em;
@@ -79,7 +106,7 @@ html {
   font-weight: 300;
 }
 
-.login input:focus, .sign-up input:focus {
+.login input:focus, .sign-up input:focus, .account input:focus {
   border: 1px solid #99c3e3;
   outline: 0;
 }
@@ -89,9 +116,10 @@ html {
   width: 8em;
   height: 2.25em;
   border: 1px solid #555;
-  border-radius: 4px;
   background: #73a6cd;
   color: #fff;
+  text-align: center;
+  padding: 0;
 }
 
 .login button:hover, .sign-up button:hover {
@@ -104,18 +132,11 @@ html {
 }
 
 .page .wrapper {
-  position: relative;
-}
-
-.page .content {
-  margin-right: 220px;
+  min-height: 480px;
 }
 
 .page .control {
-  width: 200px;
-  position: absolute;
-  top: 2px;
-  right: 0;
+  top: 1.25em;
 }
 
 .page h1 {
@@ -128,22 +149,8 @@ html {
   color: #777;
 }
 
-.page button {
-  display: block;
-  width: 12em;
-  height: 2.5em;
-  background: #fff;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  margin: 0 0 4px;
-  color: #3977a6;
-  font-weight: 300;
-  text-align: left;
-  padding-left: 10px;
-}
-
 .page .nav {
-  margin: 1.5em 0;
+  margin: 2em 0;
   padding: 1em 0;
   border-left: 1px solid #eee;
   box-shadow: inset 5px 0 5px -3px #f4f4f4;
@@ -152,35 +159,58 @@ html {
 .page .nav a {
   display: block;
   width: 10em;
-  padding: .75em;
+  padding: .6em;
   cursor: pointer;
-}
-
-.page .nav li {
-  /*border-left: 1px solid #ddd;*/
-}
-
-.page .nav li:first-child {
-  /*border-top-left-radius: 4px;*/
-  /*border-top-right-radius: 4px;*/
-}
-
-.page .nav li:last-child {
-  /*border-bottom: 1px solid #ddd;*/
-  /*border-bottom-left-radius: 4px;*/
-  /*border-bottom-right-radius: 4px;*/
 }
 
 .page .nav li.current {
   border-top: 1px solid #eee;
-  border-right: 1px solid #eee;
+  border-right: 4px solid #73a6cd;
   border-bottom: 1px solid #eee;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
   background: #fff;
   border-left: 1px solid #fff;
   margin-left: -1px;
   box-shadow: 0 5px 5px -3px #eee;
 }
 
+.page .nav li:hover {
+  background: linear-gradient(to right, #f6f6f6 0%, #fff 100%);  
+}
+
+.page .nav li.current:hover {
+  background: #fff;
+}
+
+.account .wrapper {
+  width: 40em;
+}
+
+.account div.left {
+  margin-right: 2em;
+}
+
+.account button {
+  text-align: center;
+  padding-left: 0;
+}
+
+.dashboard .wrapper {
+  min-height: 240px;
+}
+
+.dashboard ul {
+  padding: 0;
+}
+
+.dashboard .control {
+  top: 6.5em;
+}
+
+.books, .pages {
+  width: 50%;
+}
 
 
 

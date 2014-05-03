@@ -114,7 +114,6 @@ exports.getVersions = function(req, res) {
 exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
-
   collection.find({username: req.query.username}, function(err, data) {
     if(err) {
       res.send(404, err.toString());
