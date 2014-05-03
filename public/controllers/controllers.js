@@ -5,12 +5,16 @@ ostb.controller('IndexController', function($scope) {
   console.log('Login controller');
 })
 
-.controller('Dashboard', function($scope) {
-  console.log('Dashboard');
-})
-
 .controller('Signup', function($scope) {
   console.log('Sign up');
+})
+
+.controller('Account', function($scope) {
+  console.log('Account');
+})
+
+.controller('Dashboard', function($scope) {
+  console.log('Dashboard');
 })
 
 .controller('Page', function($scope) {
