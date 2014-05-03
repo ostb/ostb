@@ -1,20 +1,42 @@
-    <div id="header">
-      <div id="htext">editing <strong>{{projectName}}</strong>
-      </div>
-      <span style="float: left;"><ul class="editNav">
-        <li class="editButton"><i class="fa fa-bold fa-fw"></i></li>
-        <li class="editButton"><i class="fa fa-italic fa-fw"></i></li>
-        <li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
-        <li class="editButton"><i class="fa fa-indent fa-fw"></i></li>
-        <li class="editButton"><i class="fa fa-picture-o fa-fw"></i></li>
-      </ul></span>
+<div id="header">
+  <div id="htext">editing <strong>{{projectName}}</strong>
+  </div>
+  <span style="float: left;"><ul class="editNav">
+    <li class="editButton"><i class="fa fa-bold fa-fw"></i></li>
+    <li class="editButton"><i class="fa fa-italic fa-fw"></i></li>
+    <li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
+    <li class="editButton"><i class="fa fa-indent fa-fw"></i></li>
+    <li class="editButton"><i class="fa fa-picture-o fa-fw"></i></li>
+  </ul></span>
 
-      <span style="float: right;"><ul class="editNav" style="float: left; -webkit-margin-end: 1em">
-        <li class="editButton" title="Save Version"><i class="fa fa-floppy-o fa-fw"></i></li>
-      </ul></span>
+  <div ng-controller='ProjectsController'>
+    <span style="float: right;"><ul class="editNav" style="float: left; -webkit-margin-end: 1em">
+      <li class="editButton" title="Save Version" ng-click='toggleModal()'><i class="fa fa-floppy-o fa-fw"></i></li>
+    </ul></span>
 
-    </div>
-    <div id="right">
-      <div id="view" class="content"></div>
-    </div>
-    <div id="editor"></div>
+    <modal-dialog show='modalShown' width='400px' height='60%'>
+      <h3>Save New Version</h3>
+      <form ng-submit='commitProject(project)'>
+        Project Name:
+        <br>
+        <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+        Username:
+        <br>
+        <input style="width: 300px;" type="text" placeholder="USERNAME" ng-model="project.username"><br>
+        Version Name:
+        <br>
+        <input style="width: 300px;" type="text" placeholder="use a name that describes your changes..." ng-model="project.commitMessage"><br>
+        content.md:
+        <br>
+        <input style="width: 300px;" type="text" placeholder="this text overwrites the file content" ng-model="project.content"><br>
+        <input type="submit" value="Submit">
+      </form>
+      <div style="color:red;">{{error}}</div>
+    </modal-dialog>
+  </div>
+
+</div>
+<div id="right">
+  <div id="view" class="content"></div>
+</div>
+<div id="editor"></div>
