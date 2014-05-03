@@ -31,16 +31,6 @@ ostb.controller('IndexController', function($scope) {
     editor.setShowPrintMargin(false);
     editor.resize(true);
       
-    // var content;
-    // ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
-    // .then(function(data) {
-    //   // $scope.project = data;
-    //   content = data;
-    // })
-    // .catch(function(err) {
-    //   $scope.error = err;
-    // });
-
     var connection = new sharejs.Connection('/channel');
 
     connection.open('', function(error, doc) {
@@ -52,7 +42,6 @@ ostb.controller('IndexController', function($scope) {
       ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
 
-        console.log(doc);
         if(doc.getLength() === 0) {
           doc.insert(0, data);
         }
@@ -81,6 +70,8 @@ ostb.controller('IndexController', function($scope) {
     });
   };
   init();
+
+  $scope.projectName = $stateParams.repo;
 })
 
 
