@@ -81,7 +81,6 @@ ostb.controller('IndexController', function($scope) {
     });
   };
   init();
-
 })
 
 
