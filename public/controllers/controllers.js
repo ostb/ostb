@@ -80,25 +80,7 @@ ostb.controller('IndexController', function($scope) {
 
 // ----- project CRUD controllers -----
 
-.controller('VersionsController', function($scope, ProjectsFactory) {
-  // $scope.modalShown = false;
-  // $scope.toggleModal = function() {
-  //   $scope.modalShown = !$scope.modalShown;
-  // };
-
-  // $scope.getVersions = function(project) {
-  //   ProjectsFactory.getVersions(project)
-  //   .then(function(data) {
-  //     $scope.versions = data;
-  //     console.log($scope.versions);
-  //   })
-  //   .catch(function(err) {
-  //     $scope.error = err;
-  //   });
-  // };
-
-  // $scope.versions = $scope.project.commits;
-})
+.controller('VersionsController', function($scope) {})
 
 .controller('ProjectsController', function($scope, $stateParams, ProjectsFactory) {
   $scope.modalShown = false;
