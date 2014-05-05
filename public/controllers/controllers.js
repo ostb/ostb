@@ -47,14 +47,12 @@ ostb.controller('IndexController', function($scope) {
         return;
       }
 
-      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo, commitHash: $stateParams.commitHash})
+      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
-
-        console.log(data, doc.getLength() === 0)
-        console.log(doc);
 
         if(doc.getLength() === 0) {
           doc.insert(0, data);
+          console.log('inserting data')
         }
 
         doc.attach_ace(editor);

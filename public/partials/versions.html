@@ -8,7 +8,7 @@
 
 <ul>
   <li ng-repeat='(key, value) in project.commits'>
-      <a ui-sref="editor({username: project.username, repo: project.repo, commitHash: key})"> {{value.date}} || {{value.commitMessage}}</a>
+      <a ui-sref="project.document({username: project.username, repo: project.repo})"> {{value.date}} || {{value.commitMessage}}</a>
     </div>
   </li>
 </ul>
