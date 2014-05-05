@@ -62,7 +62,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('editor', {
-    url: "/editor/:username/:repo/:commitHash",
+    url: "/editor/:username/:repo",
     views: {
       'content': {
         templateUrl: 'partials/editor.html',

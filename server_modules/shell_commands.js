@@ -71,6 +71,7 @@ var getCommitHash = exports.getCommitHash = function(username, repo) {
 
 exports.checkout = function(username, repo, hash, next) {
   hash = hash || 'master';
+
   execute('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
   .then(function() {
     fs.readFile('user_data/' + username + '/' + repo + '/' + 'content.md', 'utf-8', function(err, data) {

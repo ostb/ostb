@@ -37,22 +37,16 @@ ostb.controller('IndexController', function($scope) {
     
     var connection = new sharejs.Connection('/channel');
 
-    var connectionName = $stateParams.repo;       //unique connection generated for each
-    if($stateParams.commitHash) {                 //version checkout. May not want to use
-      connectionName += $stateParams.commitHash;  //editor for this in deployment.
-    }
+    var connectionName = $stateParams.username + '-' + $stateParams.repo;       //unique connection generated
     connection.open(connectionName, function(error, doc) {
       if (error) {
         console.error(error);
         return;
       }
-
       ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
-
         if(doc.getLength() === 0) {
           doc.insert(0, data);
-          console.log('inserting data')
         }
 
         doc.attach_ace(editor);
@@ -160,7 +154,7 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-.controller('ProjectsListController', function($scope, $stateParams, ProjectsFactory) {  
+.controller('ProjectsListController', function($scope, $stateParams, ProjectsFactory) {
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -223,9 +217,13 @@ ostb.controller('IndexController', function($scope) {
     preview.innerHTML = converter.makeHtml(data);
   };
 
-  ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo, commitHash: $stateParams.commitHash})
+  var queryObj = {username: $stateParams.username, repo: $stateParams.repo}
+  if($stateParams.commitHash) {
+    queryObj.commitHash = $stateParams.commitHash;
+  }
+
+  ProjectsFactory.checkout(queryObj)
   .then(function(data) {
-    console.log(data);
     render(data);
   })
   .catch(function(err) {
