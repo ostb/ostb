@@ -88,21 +88,9 @@ describe('repo & user testing', function() {
     })
   });
 
-  it('should sanitize white space in inputs', function(done) {
+  it('should not allow white space in inputs', function(done) {
     var newRepo = Promise.promisify(shell.init);
     newRepo('alejandroTest', ' test repo ')
-    .then(function() {
-      (fs.existsSync('user_data/alejandroTest/test\ repo')).should.equal(true);
-      done();
-    })
-    .catch(function(err){
-      console.log(err);
-    })
-  });
-
-  it('should throw an error for inputs with illegal characters', function(done) {
-    var newRepo = Promise.promisify(shell.init);
-    newRepo('alejandroTest', 'test repo !!!OMG!?@$!')
     .then(function() {
       (true).should.equal(false);     //should not execute .then
       done();
@@ -113,17 +101,31 @@ describe('repo & user testing', function() {
     })
   });
 
-  it('should checkout a previous version', function(done) {
-    shell.checkout('alejandroTest', 'test_repo', origHash)
+  it('should throw an error for inputs with illegal characters', function(done) {
+    var newRepo = Promise.promisify(shell.init);
+    newRepo('alejandroTest', 'test_repo_!!!OMG!?@$!')
     .then(function() {
-      var contents = fs.readFileSync('user_data/alejandroTest/test_repo/content.md');
-      contents.should.equal('#Welcome\nThis is the first version of your new project.');
+      (true).should.equal(false);     //should not execute .then
       done();
     })
     .catch(function(err){
-      // console.log(err);    //detached HEAD warning proceeds here.
+      (typeof err).should.not.equal('undefined');
       done();
-    });
+    })
+  });
+
+  it('should checkout versions', function(done) {
+    var checkout = Promise.promisify(shell.checkout);
+
+    checkout('alejandroTest', 'test_repo', null)
+    .then(function(data) {
+      console.log('data: ', data);
+      data.should.equal('Changes to the file.');
+      done();
+    })
+    .catch(function(err){
+      console.log(err, arguments);    //detached HEAD warning proceeds here.
+    })
   });
 
   it('should clone a project to another user directory', function(done) {
@@ -131,10 +133,10 @@ describe('repo & user testing', function() {
     var copy = Promise.promisify(shell.clone);
     newUser('elliottTest')
     .then(function() {
-      return copy('elliottTest', 'alejandroTest', 'test repo')
+      return copy('elliottTest', 'alejandroTest', 'test_repo')
     })
     .then(function() {
-      (fs.existsSync('user_data/elliottTest/test repo')).should.equal(true);
+      (fs.existsSync('user_data/elliottTest/test_repo')).should.equal(true);
       done();
     })
     .catch(function(err) {
