@@ -34,7 +34,7 @@ ostb.controller('IndexController', function($scope) {
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
     editor.resize(true);
-      
+    
     var connection = new sharejs.Connection('/channel');
 
     var connectionName = $stateParams.repo;       //unique connection generated for each
@@ -216,14 +216,17 @@ ostb.controller('IndexController', function($scope) {
 
 .controller('DocumentController', function($scope, $stateParams, ProjectsFactory) {
   
+  var preview = document.getElementById('preview');
   var converter = new Showdown.converter();
+
   var render = function(data) {
-    console.log(converter.makeHtml(data));
+    preview.innerHTML = converter.makeHtml(data);
   };
 
   ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo, commitHash: $stateParams.commitHash})
   .then(function(data) {
-    $scope.preview = render(data);
+    console.log(data);
+    render(data);
   })
   .catch(function(err) {
     $scope.error = err;
