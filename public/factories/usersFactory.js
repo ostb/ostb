@@ -9,8 +9,28 @@ angular.module('factories.users', [])
       $http.post('/api/users', user)
       .success(function(data, status, headers, config) {
 
+        console.log('hit usersFactoryjs create');
+        console.log('user', user);
+        console.log('data', data);
+        console.log('status', status);
+        console.log('headers', headers);
+        console.log('config', config);
+        
+        dfd.resolve();
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
 
-        console.log('hit usersFactoryjs');
+    post: function(user){
+      var dfd = $q.defer();
+      $http.post('/login', user)
+      .success(function(data, status, headers, config) {
+
+
+        console.log('hit usersFactoryjs post');
         console.log('user', user);
 
 

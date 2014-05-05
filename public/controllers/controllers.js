@@ -1,7 +1,31 @@
 ostb.controller('IndexController', function($scope) {
 })
 
-.controller('Login', function($scope) {
+.controller('Login', function($scope, UsersFactory) {
+  $scope.user = {
+    username: undefined,
+    // email: undefined,
+    password: undefined
+  };
+
+  $scope.submitTheForm = function(username, password) {
+    console.log('hit submitTheForm Login');
+    $scope.user.username = username;
+    // $scope.user.email = email;
+    $scope.user.password = password;
+    $scope.postUser($scope.user);
+  };
+
+  $scope.postUser = function(user) {
+    UsersFactory.post(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
   console.log('Login controller');
 })
 
@@ -18,7 +42,7 @@ ostb.controller('IndexController', function($scope) {
   };
 
   $scope.submitTheForm = function(username, email, password) {
-    console.log('hit submitTheForm');
+    console.log('hit submitTheForm Signup');
     $scope.user.username = username;
     $scope.user.email = email;
     $scope.user.password = password;
