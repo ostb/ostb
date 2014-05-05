@@ -212,7 +212,17 @@ ostb.controller('IndexController', function($scope) {
   .catch(function(err) {
     $scope.error = err;
   });
+})
 
+.controller('DocumentController', function($scope, $stateParams, ProjectsFactory) {
+  
+  ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo, commitHash: $stateParams.commitHash})
+  .then(function(data) {
+    $scope.preview = data;
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 

@@ -1,14 +1,8 @@
 <h3>Versions</h3>
 
-<!-- <ul>
-  <li ng-repeat='commit in project.commits'>
-    <a> {{commit.date}} || {{commit.commitMessage}}</a>
-  </li>
-</ul> -->
-
 <ul>
   <li ng-repeat='(key, value) in project.commits'>
-      <a ui-sref="project.document({username: project.username, repo: project.repo})"> {{value.date}} || {{value.commitMessage}}</a>
+      <a ui-sref="project.document({username: project.username, repo: project.repo, commitHash: key})"> {{value.date}} || {{value.commitMessage}}</a>
     </div>
   </li>
 </ul>
