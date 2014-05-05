@@ -216,9 +216,14 @@ ostb.controller('IndexController', function($scope) {
 
 .controller('DocumentController', function($scope, $stateParams, ProjectsFactory) {
   
+  var converter = new Showdown.converter();
+  var render = function(data) {
+    console.log(converter.makeHtml(data));
+  };
+
   ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo, commitHash: $stateParams.commitHash})
   .then(function(data) {
-    $scope.preview = data;
+    $scope.preview = render(data);
   })
   .catch(function(err) {
     $scope.error = err;
