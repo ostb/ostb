@@ -1,4 +1,4 @@
-<div class="page" ng-controller="ProjectDetailController">
+<div class="page">
   <div class="wrapper">
     <div class="content">
     <h1>Project: {{project.repo}}</h1>
@@ -10,33 +10,34 @@
 
       <div class="control">
         <button id="editButton"><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
+
         <ul class="nav">
-          <li class="current"><a ui-sref="document">Document</a></li>
-          <li><a ui-sref="project.versions">Versions</a></li>
-          <li><a ui-sref="project.contributors">Contributors</a></li>
-          <li><a ui-sref="project.statistics">Statistics</a></li>
-          <li>
-            <div ng-controller='ProjectsController'>
-              <a ng-click='toggleModal()'>Delete</a>
-              <modal-dialog show='modalShown' width='400px' height='60%'>
-                <h3>Delete Project</h3>
-                <form ng-submit='deleteProject(project)'>
-                  Are you sure you want to delete {{project.repo}}?
-                  <br>
-                  <br>
-                  repo info: {{project.repo}} // {{project.username}}
-                  <br>
-                  <br>
-                  <div><input type="submit" value="Delete"></div>
-                </form>
-                <div style="color:red;">{{error}}</div>
-              </modal-dialog>
-            </div>
-          </li>
+          <li ng-class="{current:isActive('project.document')}"><a ui-sref="project.document">Document</a></li>
+          <li ng-class="{current:isActive('project.versions')}"><a ui-sref="project.versions">Versions</a></li>
+          <li ng-class="{current:isActive('project.contributors')}"><a ui-sref="project.contributors">Contributors</a></li>
+          <li ng-class="{current:isActive('project.statistics')}"><a ui-sref="project.statistics">Statistics</a></li>
         </ul>
         <button>Add to Book...</button>
         <button>Fork</button>
         <button>Download</button>
+        <button>
+          <div ng-controller='ProjectsController'>
+            <a ng-click='toggleModal()'>Delete</a>
+            <modal-dialog show='modalShown' width='400px' height='60%'>
+              <h3>Delete Project</h3>
+              <form ng-submit='deleteProject(project)'>
+                Are you sure you want to delete {{project.repo}}?
+                <br>
+                <br>
+                repo info: {{project.repo}} // {{project.username}}
+                <br>
+                <br>
+                <div><input type="submit" value="Delete"></div>
+              </form>
+              <div style="color:red;">{{error}}</div>
+            </modal-dialog>
+          </div>
+        </button>
       </div>
     </div>
   </div>

@@ -34,18 +34,17 @@ ostb.controller('IndexController', function($scope) {
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
     editor.resize(true);
-      
+    
     var connection = new sharejs.Connection('/channel');
 
-    connection.open('', function(error, doc) {
+    var connectionName = $stateParams.username + '-' + $stateParams.repo;       //unique connection generated
+    connection.open(connectionName, function(error, doc) {
       if (error) {
         console.error(error);
         return;
       }
-
       ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
-
         if(doc.getLength() === 0) {
           doc.insert(0, data);
         }
@@ -81,25 +80,7 @@ ostb.controller('IndexController', function($scope) {
 
 // ----- project CRUD controllers -----
 
-.controller('VersionsController', function($scope, ProjectsFactory) {
-  // $scope.modalShown = false;
-  // $scope.toggleModal = function() {
-  //   $scope.modalShown = !$scope.modalShown;
-  // };
-
-  // $scope.getVersions = function(project) {
-  //   ProjectsFactory.getVersions(project)
-  //   .then(function(data) {
-  //     $scope.versions = data;
-  //     console.log($scope.versions);
-  //   })
-  //   .catch(function(err) {
-  //     $scope.error = err;
-  //   });
-  // };
-
-  // $scope.versions = $scope.project.commits;
-})
+.controller('VersionsController', function($scope) {})
 
 .controller('ProjectsController', function($scope, $stateParams, ProjectsFactory) {
   $scope.modalShown = false;
@@ -155,7 +136,7 @@ ostb.controller('IndexController', function($scope) {
   };
 })
 
-.controller('ProjectsListController', function($scope, $stateParams, ProjectsFactory) {  
+.controller('ProjectsListController', function($scope, $stateParams, ProjectsFactory) {
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -198,8 +179,12 @@ ostb.controller('IndexController', function($scope) {
 })
 
 //NOTE!! 'adrian' is hardcoded until auth/users complete! ///////////////////////////////
-.controller('ProjectDetailController', function($scope, $stateParams, ProjectsFactory) {
-  
+.controller('ProjectDetailController', function($scope, $state, $stateParams, ProjectsFactory) {
+
+  $scope.isActive = function(link) {
+    return $state.$current.includes[link];
+  }
+
   ProjectsFactory.getProjects({username: $stateParams.username, repo: $stateParams.repo})
   .then(function(data) {
     $scope.project = data[0];
@@ -207,7 +192,29 @@ ostb.controller('IndexController', function($scope) {
   .catch(function(err) {
     $scope.error = err;
   });
+})
 
+.controller('DocumentController', function($scope, $stateParams, ProjectsFactory) {
+  
+  var preview = document.getElementById('preview');
+  var converter = new Showdown.converter();
+
+  var render = function(data) {
+    preview.innerHTML = converter.makeHtml(data);
+  };
+
+  var queryObj = {username: $stateParams.username, repo: $stateParams.repo}
+  if($stateParams.commitHash) {
+    queryObj.commitHash = $stateParams.commitHash;
+  }
+
+  ProjectsFactory.checkout(queryObj)
+  .then(function(data) {
+    render(data);
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 

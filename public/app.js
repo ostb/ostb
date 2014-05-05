@@ -89,11 +89,11 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('project.document', {
-    url: "/document",
+    url: "/document/:commitHash",
     views: {
       'projectDetail': {
-        template: '<h1>project document</h1>',
-        controller: 'Example'
+        templateUrl: 'partials/document.html',
+        controller: 'DocumentController'
       }
     }
   })
@@ -106,12 +106,12 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('project.contributions', {
-    url: "/contributions",
+  .state('project.contributors', {
+    url: "/contributors",
     views: {
       'projectDetail': {
-        template: '<h1>project contributions</h1>',
-        controller: 'Example'
+        template: '<h1>project contributors</h1>',
+        controller: 'IndexController'
       }
     }
   })
@@ -120,7 +120,7 @@ var ostb = angular.module('ostb', [
     views: {
       'projectDetail': {
         template: '<h1>project statistics</h1>',
-        controller: 'Example'
+        controller: 'IndexController'
       }
     }
   })
