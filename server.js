@@ -6,7 +6,6 @@ var shell = require('./server_modules/shell_commands');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 
-
 //30aprAdrian
 var flash = require('connect-flash');
 var passport = require('passport');
@@ -95,6 +94,11 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser());
 
+//30aprAdrian setup passport config
+app.use(cookieParser());
+app.use(session({ secret: 'ostbRules' })); // session secret
+
+
 app.use(function(req,res,next){
   req.db = db;
   next();
@@ -146,11 +150,11 @@ app.route('/auth/signup')
 .post(users.signup);
 
 app.route('/auth/login')
+.post(users.login);
 // .all(function(req, res) {
 //   checkUser(req, res);
 //   res.render('index');
-// })
-.post(users.login);
+// });
 // .get(users.currentUser);
 // passport.authenticate('local')
 
@@ -162,10 +166,15 @@ app.route('/auth/login')
 //   res.json(user);
 // });
 
+// function checkUser(req, res, next){
+//   console.log('req!!!', req);
+//   if(!req.session.user){
+//     console.log('not logged in');
+//   }else{
+//     next();
+//   }
+// };
 
-//30aprAdrian setup passport config
-app.use(cookieParser());
-app.use(session({ secret: 'ostbRules' })); // session secret
 // app.use(passport.initialize());
 // app.use(passport.session()); // persistent login sessions
 // app.use(flash()); 
@@ -300,14 +309,4 @@ app.use(session({ secret: 'ostbRules' })); // session secret
 //   next(); // <-- important!
 // });
 
-// function checkUser(req, res, next){
-//   console.log('req!!!', req);
-//   if(!req.session.user_id){
-//     console.log('Yippeeee!!!');
-//   }else{
-//     next();
-//   }
-// };
-
 app.listen(3000);
-

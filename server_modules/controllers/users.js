@@ -8,10 +8,6 @@ var passport = require('passport');
 //   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 // };
 
-exports.validPassword = function(password, hash) {
-  return bcrypt.compareSync(password, hash);
-};
-
 var validPassword = function(password, hash) {
   return bcrypt.compareSync(password, hash);
 };
@@ -60,8 +56,8 @@ exports.signup = function(req, res) {
 exports.login = function(req, res) {
   console.log('hit users js loggin');
   var db = req.db;
-  // req.session.user_id = req.body.username;
-  // console.log('req.session', req.session);
+  console.log('req.session', req.session);
+  console.log('req.session.user', req.session.user);
 
   var collection = db.get('usercollection');
     collection.findOne({
@@ -69,11 +65,18 @@ exports.login = function(req, res) {
     }).on('success', function(data){
       console.log('data', data);
       if(data){
-        validPassword(req.body.password, data.pwHash);  
-        console.log('validPassword', validPassword(req.body.password, data.pwHash));
+        if(validPassword(req.body.password, data.pwHash)){
+          req.session.user = req.body.username;
+          res.send(201);
+        }else{
+          req.session.user = undefined;
+          res.send(401);
+        }
+        // console.log('validPassword', validPassword(req.body.password, data.pwHash));
+        console.log('req.session.user', req.session.user);
+        console.log('req.session', req.session);
       }
     });
-    res.send(201);
   // })
   // .catch(function(err){
   //   res.send(400, err.toString());
