@@ -94,7 +94,6 @@ ostb.controller('IndexController', function($scope) {
   }
 
   $scope.$watch('isActive()', function() {
-    alert('change');
     $scope.modalShown = $scope.isActive();
   });
 
