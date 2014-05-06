@@ -82,19 +82,10 @@ ostb.controller('IndexController', function($scope) {
   var render = function(data) {
     return '' +
     '<!DOCTYPE HTML>\n<html>\n<head>\n' + 
-    '<link rel="stylesheet" type="text/css" href="css/normalize.css">\n</head>\n<body>\n' + 
+    '<link rel="stylesheet" type="text/css" href="css/normalize.css">\n' +
+    '<link rel="stylesheet" type="text/css" href="css/default.css">\n</head>\n<body>\n' + 
     converter.makeHtml(data) + '\n</body>\n</html>';
   };
-
-  // var style = '' +
-  // 'h1, h2, h3, h4, h5, h6, p { font-family: "Roboto", sans-serif; }\n' +
-  // 'h1 { font-size: 2em; }\n' +
-  // 'h2 { font-size: 1.6em; }\n' +
-  // 'h3 { font-size: 1.3em; }\n' +
-  // 'p  { font-size: .825em; }\n' +
-  // 'li { line-height: 1.5em;}';
-
-  // var normalizeCss = fs.readFileSync('public/css/normalize.css');
 
   $scope.getFolder = function() {
     ProjectsFactory.getFolder({username: $stateParams.username, repo: $stateParams.repo})
@@ -110,7 +101,7 @@ ostb.controller('IndexController', function($scope) {
     var zip = new JSZip();
     zip.file('content.md', data['content.md']);
     zip.file('index.html', render(data['content.md']));
-    zip.folder('css').file('normalize.css', data['normalize.css']);
+    zip.folder('css').file('normalize.css', data['normalize.css']).file('default.css', data['default.css']);
     try {
       var blob = zip.generate({type:"blob"});
       saveAs(blob, $stateParams.repo + ".zip");

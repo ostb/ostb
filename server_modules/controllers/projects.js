@@ -164,11 +164,14 @@ exports.getFolder = function(req, res) {
   read(filepath + 'content.md', 'utf-8')
   .then(function(data) {
     folder['content.md'] = data;
-    // res.send(folder);
     return read('public/css/normalize.css', 'utf-8')
   })
   .then(function(data) {
     folder['normalize.css'] = data;
+    return read('public/css/default.css', 'utf-8')
+  })
+  .then(function(data) {
+    folder['default.css'] = data;
     res.send(folder);
   })
   .catch(function(err){
