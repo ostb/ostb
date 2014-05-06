@@ -1,7 +1,8 @@
 var ostb = angular.module('ostb', [
   'ui.router',
   'factories.users',
-  'factories.projects'
+  'factories.projects',
+  'factories.modals'
 ])
 
 .config(function($stateProvider) {

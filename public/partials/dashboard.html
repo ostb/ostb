@@ -30,23 +30,24 @@
       <button>New Book</button>
       <div ng-controller='ProjectsController'>
         <button ng-click='toggleModal()'>New Page</button>
-        <modal-dialog show='modalShown' width='400px' height='60%'>
-          <h3>New Project</h3>
-          <form ng-submit='createProject(project)'>
-            Project Name:
-            <br>
-            <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
-            <br>
-            <div><input type="submit" value="Submit"></div>
-          </form>
-          <div style="color:red;">{{error}}</div>
-        </modal-dialog>
       </div>
-
     </div>
   </div>
 </div>
 
-
+<div ng-controller='ProjectsController'>
+  <a ng-click='toggleModal()'></a>
+  <modal-dialog width='400px' height='60%' show='modalShown'>
+    <h3>Create New Project</h3>
+    <form ng-submit='createProject(project)'>
+      Project Name:
+      <br>
+      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
+      <br>
+      <div><input type="submit" value="Submit"></div>
+    </form>
+    <div style="color:red;">{{error}}</div>
+  </modal-dialog>
+</div>
 
 

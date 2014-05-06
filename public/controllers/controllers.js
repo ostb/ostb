@@ -82,10 +82,21 @@ ostb.controller('IndexController', function($scope) {
 
 .controller('VersionsController', function($scope) {})
 
-.controller('ProjectsController', function($scope, $stateParams, ProjectsFactory) {
+.controller('ProjectsController', function($scope, $stateParams, ProjectsFactory, ModalsFactory) {
+
   $scope.modalShown = false;
+
+  $scope.isActive = function() {
+    return ModalsFactory.isActive();
+  }
+
+  $scope.$watch('isActive()', function() {
+    $scope.modalShown = $scope.isActive();
+  });
+
   $scope.toggleModal = function() {
-    $scope.modalShown = !$scope.modalShown;
+    console.log('toggled')
+    ModalsFactory.toggleActive();
   };
 
   $scope.createProject = function(project) {
