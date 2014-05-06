@@ -28,7 +28,7 @@ exports.create = function(req, res) {
   })
   .catch(function(err){
     res.send(400, err.toString());
-  })
+  });
 }
 
 exports.delete = function(req, res) {
@@ -154,12 +154,22 @@ exports.getFile = function(req, res) {
     })
     .catch(function(err){
       res.send(400, err.toString());
-    })
+    });
   }
 }
 
 exports.getZip = function(req, res) {
   console.log(req.query);
+
+  var filepath = 'user_data/' + req.query.username + '/' + req.query.repo + '/';
+  var read = Promise.promisify(fs.readFile);
+  read(filepath + 'content.md', 'utf-8')
+  .then(function(data) {
+    console.log(data);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  });
 
   res.send(200);
 }
