@@ -2,7 +2,7 @@
    DEFAULTS
    ================= */
 
-.wrapper { max-width: 1020px; margin: 0 auto; overflow: hidden; }
+.wrapper { max-width: 1020px; margin: 0 auto; overflow: hidden; position:relative; }
 
 /* Navigation classes */
 .nav       { list-style: none; margin: 0; font-weight: 300; }
@@ -132,7 +132,7 @@ html {
 }
 
 .page .wrapper {
-  min-height: 480px;
+  min-height: 35em;
 }
 
 .page .control {
