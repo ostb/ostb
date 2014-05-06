@@ -26,8 +26,8 @@ ostb.controller('IndexController', function($scope) {
 })
 
 .controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
-    var init = function() {
-    var converter = new Showdown.converter();
+  var init = function() {
+    var converter = new Showdown.converter({ extensions: ['ostb'] });
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
     editor.setReadOnly(true);
