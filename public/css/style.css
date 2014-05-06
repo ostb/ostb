@@ -41,7 +41,7 @@ a:visited { color: #6e8a9f; }
 /* Two column layouts */
 
 .content { margin-right: 220px; }
-.control { width: 200px; top: 0; right: 0; }  /*position:absolute WAS DISABLED FOR MODALS*/ 
+.control { width: 200px; top: 0; right: 0; position: absolute;}  /*position:absolute WAS DISABLED FOR MODALS*/ 
 
 /* Buttons */
 
