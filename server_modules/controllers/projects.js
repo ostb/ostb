@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
-var jszip = require('jszip');
+var JSZip = require('jszip');
 var fs = require('fs');
 
 exports.create = function(req, res) {
@@ -159,19 +159,22 @@ exports.getFile = function(req, res) {
 }
 
 exports.getZip = function(req, res) {
-  console.log(req.query);
 
+  var zip = new JSZip();
   var filepath = 'user_data/' + req.query.username + '/' + req.query.repo + '/';
   var read = Promise.promisify(fs.readFile);
   read(filepath + 'content.md', 'utf-8')
   .then(function(data) {
     console.log(data);
+    zip.file('content.md', data);
+    console.log(zip);
+    res.send(zip);
   })
   .catch(function(err){
     res.send(400, err.toString());
   });
 
-  res.send(200);
+  // res.send(200);
 }
 
 

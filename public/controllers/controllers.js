@@ -80,7 +80,30 @@ ostb.controller('IndexController', function($scope) {
 .controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
 
   $scope.getZip = function() {
-    ProjectsFactory.getZip({username: $stateParams.username, repo: $stateParams.repo});
+    ProjectsFactory.getZip({username: $stateParams.username, repo: $stateParams.repo})
+    .then(function(data) {
+      console.log('rec data ', data);
+      download();
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+
+    var download = function() {
+
+      var zip = new JSZip();
+      zip.file("Hello.txt", "Hello world\n");
+
+      try {
+        var blob = zip.generate({type:"blob"});
+        // see FileSaver.js
+        saveAs(blob, "hello.zip");
+      } catch(e) {
+        // blobLink.innerHTML += " " + e;
+        console.log(e);
+      }
+      return false;
+    }
   }
 
 //   (function () {
