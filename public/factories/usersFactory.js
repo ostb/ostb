@@ -6,16 +6,8 @@ angular.module('factories.users', [])
 
     create: function(user) {
       var dfd = $q.defer();
-      $http.post('/api/users', user)
-      .success(function(data, status, headers, config) {
-
-        console.log('hit usersFactoryjs create');
-        console.log('user', user);
-        console.log('data', data);
-        console.log('status', status);
-        console.log('headers', headers);
-        console.log('config', config);
-        
+      $http.post('/auth/signup', user)
+      .success(function(data, status, headers, config) {        
         dfd.resolve();
       })
       .error(function(data, status, headers, config) {
@@ -26,7 +18,7 @@ angular.module('factories.users', [])
 
     post: function(user){
       var dfd = $q.defer();
-      $http.post('/login', user)
+      $http.post('/auth/login', user)
       .success(function(data, status, headers, config) {
 
 

@@ -11,8 +11,8 @@ var fs = require('fs');
 var flash = require('connect-flash');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var session = require('express-session');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 
 var users = require('./server_modules/controllers/users');
@@ -21,6 +21,8 @@ var projects = require('./server_modules/controllers/projects');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/userdb');
+
+var collection = db.get('usercollection');
 
 var app = express();
 
@@ -116,13 +118,14 @@ share.server.attach(app, options);
 // });
 
 app.get('/', function(req, res) {
+  // checkUser(req, res);
   res.render('index');
 });
 
 // ----- api requests -----
-app.route('/api/users')
-.post(users.create)
-.delete(users.delete);
+// app.route('/api/users')
+// .post(users.create)
+// .delete(users.delete);
 
 app.route('/api/projects')
 .post(projects.create)
@@ -139,21 +142,33 @@ app.route('/api/projects/commit')
 app.route('/api/projects/checkout')
 .get(projects.getFile);
 
-// app.route('/auth/signup')
-// .post(users.signup);
+app.route('/auth/signup')
+.post(users.signup);
 
-// app.route('/auth/login')
-// .post(users.login);
+app.route('/auth/login')
+// .all(function(req, res) {
+//   checkUser(req, res);
+//   res.render('index');
+// })
+.post(users.login);
 // .get(users.currentUser);
+// passport.authenticate('local')
 
+
+// app.post('/auth/login', function(req, res){
+//   var user = {};
+//   user.email = req.user.email;
+//   user.id = req.user._id;
+//   res.json(user);
+// });
 
 
 //30aprAdrian setup passport config
 app.use(cookieParser());
 app.use(session({ secret: 'ostbRules' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); 
+// app.use(passport.initialize());
+// app.use(passport.session()); // persistent login sessions
+// app.use(flash()); 
 
 // app.post('/login', passport.authenticate('local'), function(req, res) {
 //     var user = {};
@@ -204,78 +219,58 @@ app.use(flash());
 
 
 //2mayAdrian
-passport.serializeUser(function(user, done) {
-  console.log('User serialize');
-  console.log(user);  
-  console.log(user.email);
-  done(null, user.email);
-});
+// passport.serializeUser(function(user, done) {
+//   console.log('User serialize');
+//   console.log(user);  
+//   console.log(user.email);
+//   done(null, user.email);
+// });
 
-passport.deserializeUser(function(email, done) {
-  console.log('User deserialize');
-  User.findOne({email: email}, function (err, user) {
-    done(err, user);
-  });
-});
-
-passport.use('local-signup', new LocalStrategy({
-  // by default, local strategy uses username and password, we will override with email
-  usernameField : 'email',
-  passwordField : 'password',
-  passReqToCallback : true // allows us to pass back the entire request to the callback
-},
-  function(req, email, password, done) {
-    // asynchronous
-    // User.findOne wont fire unless data is sent back
-    process.nextTick(function() {
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-      users.findOne({ 'local.email' :  email }, function(err, user) {
-        // if there are any errors, return the error
-        if (err)
-          return done(err);
-        // check to see if theres already a user with that email
-        if (user) {
-          return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-        } else {
-        // if there is no user with that email
-          // create the user
-          var newUser            = new User();
-          // set the user's local credentials
-          newUser.local.email    = email;
-          newUser.local.password = newUser.generateHash(password);
-
-        // save the user
-          newUser.save(function(err) {
-              if (err)
-                  throw err;
-              return done(null, newUser);
-          });
-        }
-
-      });    
-
-    });
-}));
+// passport.deserializeUser(function(email, done) {
+//   console.log('User deserialize');
+//   collection.findOne({email: email}, function (err, user) {
+//     done(err, user);
+//   });
+// });
 
 // passport.use(new LocalStrategy({
-//     usernameField: 'email',
-//     passwordField: 'password'
-//   },
+//     usernameField: 'email',
+//     passwordField: 'password'
+//   },
+//   function(req, username, password, done) {
+//     collection.findOne({'local.username' : username}, function(err, user) {
+//       //console.log('*****', err, user);
+//       if(err){
+//         return done(err);
+//       }
+//       if(!user){
+//         return done(null, false, req.flash('loginMessage', 'No user found.'));
+//       }
+//       if(!user.validPassword(password)){
+//         return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+//       }
+//       return done(null, user);
+//     });
+//   })
+// );
+
+// passport.use('local-login', new LocalStrategy({
+//   usernameField: 'email',
+//   passwordField: 'password'
+// },
 //   function(req, email, password, done) {
 
-//     process.nextTick(function(){
-//       users.findOne({'local.email' : email}, function(err, user){
-//         if(err){
-//           return done(err);
-//         }
-//         if(user){
-//           return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-//         } else {
-//           console.log('hit serverjs inside passport dot use');
-//           users.create(req.body);
-//         }
-//       });
+//     users.findOne({'local.email' : email}, function(err, user){
+//       if(err){
+//         return done(err);
+//       }
+//       if(!user){
+//         return done(null, false, req.flash('loginMessage', 'No user found.'));
+//       } 
+//       if(!users.validPassword(password)){
+//         return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+//       }
+//       return done(null, user);
 //     });
 //   })
 //     // users.login(username, password, function(err, user) {
@@ -284,31 +279,35 @@ passport.use('local-signup', new LocalStrategy({
 //     // });
 // );
 
-  passport.use('local-login', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  function(req, email, password, done) {
+// app.use(function (req, res, next) {
+//   // check if client sent cookie
+//   var cookie = req.cookies.loggedIn;
+//   if (cookie === undefined)
+//   {
+//     res.cookie('loggedIn', false, {maxAge: 900000, httpOnly: true});
+//     //res.cookie('cookieName',randomNumber, { maxAge: 900000, httpOnly: true });
+//     console.log('cookie have created successfully');
+//   } 
+//   else
+//   {
+//     // yes, cookie was already present 
+//     if(cookie === true){
+//       res.cookie('loggedIn', hashedUsername, {maxAge: 900000, httpOnly: true});
+//       console.log('cookie exists', cookie);
+//     }
+//     console.log('cookie exists', cookie);
+//   } 
+//   next(); // <-- important!
+// });
 
-      users.findOne({'local.email' : email}, function(err, user){
-        if(err){
-          return done(err);
-        }
-        if(!user){
-          return done(null, false, req.flash('loginMessage', 'No user found.'));
-        } 
-        if(!users.validPassword(password)){
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-        }
-        return done(null, user);
-      });
-    })
-    // users.login(username, password, function(err, user) {
-    //   //console.log('*****', err, user);
-    //   return done(null, user);
-    // });
-);
-
+// function checkUser(req, res, next){
+//   console.log('req!!!', req);
+//   if(!req.session.user_id){
+//     console.log('Yippeeee!!!');
+//   }else{
+//     next();
+//   }
+// };
 
 app.listen(3000);
 
