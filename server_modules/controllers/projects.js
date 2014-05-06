@@ -1,12 +1,12 @@
 var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
+var jszip = require('jszip');
+var fs = require('fs');
 
 exports.create = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
-
-  console.log(req.body);
 
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
@@ -158,6 +158,11 @@ exports.getFile = function(req, res) {
   }
 }
 
+exports.getZip = function(req, res) {
+  console.log(req.query);
+
+  res.send(200);
+}
 
 
 

@@ -77,6 +77,55 @@ ostb.controller('IndexController', function($scope) {
   $scope.projectName = $stateParams.repo;
 })
 
+.controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
+
+  $scope.getZip = function() {
+    ProjectsFactory.getZip({username: $stateParams.username, repo: $stateParams.repo});
+  }
+
+//   (function () {
+//   var zip = new JSZip();
+//   zip.file("Hello.txt", "Hello world\n");
+
+//   function bindEvent(el, eventName, eventHandler) {
+//     if (el.addEventListener){
+//       // standard way
+//       el.addEventListener(eventName, eventHandler, false);
+//     } else if (el.attachEvent){
+//       // old IE
+//       el.attachEvent('on'+eventName, eventHandler);
+//     }
+//   }
+
+//   // Blob
+//   var blobLink = document.getElementById('blob');
+//   if (JSZip.support.blob) {
+//     function downloadWithBlob() {
+//       try {
+//         var blob = zip.generate({type:"blob"});
+//         // see FileSaver.js
+//         saveAs(blob, "hello.zip");
+//       } catch(e) {
+//         blobLink.innerHTML += " " + e;
+//       }
+//       return false;
+//     }
+//     bindEvent(blobLink, 'click', downloadWithBlob);
+//   } else {
+//     blobLink.innerHTML += " (not supported on this browser)";
+//   }
+
+//   // data URI
+//   function downloadWithDataURI() {
+//     window.location = "data:application/zip;base64," + zip.generate({type:"base64"});
+//   }
+//   var dataUriLink = document.getElementById('data_uri');
+//   bindEvent(dataUriLink, 'click', downloadWithDataURI);
+
+// })();
+
+})
+
 
 // ----- project CRUD controllers -----
 
