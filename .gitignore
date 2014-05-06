@@ -5,6 +5,7 @@ npm-debug.log
 bower_components/
 
 user_data/
+mongo/
 mongo_data/
 
 .DS_Store
