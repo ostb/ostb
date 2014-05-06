@@ -2,11 +2,6 @@ var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt-nodejs');
-var passport = require('passport');
-
-// exports.generateHash = function(password) {
-//   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-// };
 
 var validPassword = function(password, hash) {
   return bcrypt.compareSync(password, hash);
@@ -15,16 +10,6 @@ var validPassword = function(password, hash) {
 var generateHash = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
-// exports.signup = function(req, res){
-//   console.log('req!!! : ', req);
-//   console.log('res!!! : ', res);
-//   passport.authenticate( {
-//   // successRedirect : '/profile', // redirect to the secure profile section
-//   // failureRedirect : '/signup', // redirect back to the signup page if there is an error
-//     failureFlash : true // allow flash messages
-//   });
-// };
-
 
 exports.signup = function(req, res) {
   var db = req.db;
@@ -38,10 +23,6 @@ exports.signup = function(req, res) {
     collection.insert({
       username: req.body.username,
       meta: {},
-      // email: '',
-      // pwHash: '',
-
-      //2MayAdrian
       email: req.body.email,
       pwHash: generateHash(req.body.password)
     });
@@ -72,15 +53,10 @@ exports.login = function(req, res) {
           req.session.user = undefined;
           res.send(401);
         }
-        // console.log('validPassword', validPassword(req.body.password, data.pwHash));
         console.log('req.session.user', req.session.user);
         console.log('req.session', req.session);
       }
     });
-  // })
-  // .catch(function(err){
-  //   res.send(400, err.toString());
-  // })
 };
 
 exports.delete = function(req, res) {
