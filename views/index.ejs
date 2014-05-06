@@ -15,7 +15,7 @@
       <div class="wrapper" ng-controller="IndexController">
         <h1 class="logo left"><a href="/">OSTB</a></h1>
         <ul class="nav meta right">
-          <li><a ui-sref="dashboard({username: 'adrian'})">Dashboard</a></li>
+          <li><a ui-sref="dashboard({username: currentUser})">Dashboard</a></li>
           <li><a ui-sref="account">Account</a></li>
           <li><a ui-sref="login">Sign In</a></li>
         </ul>
@@ -38,5 +38,6 @@
     <script src="/channel/bcsocket.js"></script>
     <script src="/share/share.uncompressed.js"></script>
     <script src="/share/ace.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
   </body>
 </html>

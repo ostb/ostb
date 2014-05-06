@@ -1,7 +1,35 @@
-ostb.controller('IndexController', function($scope) {
+ostb.controller('IndexController', function($rootScope, $location, $state, UsersFactory) {
+    $rootScope.checkUser = function() {
+      UsersFactory.getCurrentUser(function(user) {
+        $rootScope.currentUser = user.username || 'public';
+        if ($rootScope.currentUser !== 'public') {
+          $rootScope.showLogin = false;
+          return $rootScope.currentUser;
+        } else {
+          //checks route on refresh
+          var restricted = ['/listAGame', '/myGames', '/userProfile'];
+          if (_.contains(restricted, $location.$$path)) {
+            $state.go('login');
+          }
+        }
+      });
+    };
+
+    $rootScope.checkUser();
+    //checks if requested route is restricted on route change event, redirects to login if it is and user not logged in.
+    $rootScope.$on('$stateChangeStart', function(e, goTo) {
+      var restricted = ['listAGame', 'myGames', 'seeGame', 'userProfile'];
+      if (_.contains(restricted, goTo.name) && $rootScope.currentUser === 'public') {
+        $rootScope.redirectToState = goTo.name;
+        e.preventDefault();
+        $state.go('login');
+      }
+    });
 })
 
-.controller('Login', function($scope, UsersFactory) {
+.controller('Login', function($rootScope, $state, $scope, UsersFactory) {
+  $rootScope.currentUser = $rootScope.currentUser || undefined;
+
   $scope.user = {
     username: undefined,
     // email: undefined,
@@ -17,8 +45,17 @@ ostb.controller('IndexController', function($scope) {
   };
 
   $scope.postUser = function(user) {
-    UsersFactory.post(user)
+    UsersFactory.post(user, function(data){
+      console.log('inside login controller', data);
+      if(data){
+        $rootScope.currentUserInfo = data;
+        $rootScope.currentUser = data.username;
+        // $state.go('sign-up');
+      }
+      console.log('$rootScope.currentUser', $rootScope.currentUser);
+    })
     .then(function() {
+    //should store user info to rootscope currentuser
       console.log('success');
     })
     .catch(function(err) {
@@ -151,7 +188,9 @@ ostb.controller('IndexController', function($scope) {
   };
 
   $scope.createProject = function(project) {
+    
     project.username = project.username || $stateParams.username;
+
     ProjectsFactory.create(project)
     .then(function() {
       console.log('success');

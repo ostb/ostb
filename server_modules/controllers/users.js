@@ -35,28 +35,36 @@ exports.signup = function(req, res) {
 };
 
 exports.login = function(req, res) {
-  console.log('hit users js loggin');
+  // console.log('hit users js loggin');
   var db = req.db;
-  console.log('req.session', req.session);
-  console.log('req.session.user', req.session.user);
+  // console.log('req.session before', req.session);
+  // console.log('req.session.user before', req.session.user);
 
   var collection = db.get('usercollection');
     collection.findOne({
       username: req.body.username
     }).on('success', function(data){
-      console.log('data', data);
+      // console.log('data', data);
       if(data){
         if(validPassword(req.body.password, data.pwHash)){
-          req.session.user = req.body.username;
-          res.send(201);
+          req.session.user = data;
+          // req.session.user = req.body.username;
+          res.send(201, data);
         }else{
           req.session.user = undefined;
           res.send(401);
         }
-        console.log('req.session.user', req.session.user);
-        console.log('req.session', req.session);
+        // console.log('req.session after', req.session);
+        // console.log('req.session.user after', req.session.user);
       }
     });
+};
+
+exports.getCurrent = function(req, res){
+  // console.log('hit users js getCurrent', req.session.user);
+  if(req.session.user){
+    res.send(200, req.session.user);
+  }
 };
 
 exports.delete = function(req, res) {
