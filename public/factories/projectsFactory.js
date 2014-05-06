@@ -114,7 +114,7 @@ angular.module('factories.projects', [])
       return dfd.promise;
     },
 
-    getZip: function(project) {
+    getFolder: function(project) {
       var dfd = $q.defer();
       var queryString = '/api/projects/download?'
       if(project.username) {

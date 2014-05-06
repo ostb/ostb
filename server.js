@@ -131,7 +131,7 @@ app.route('/api/projects/checkout')
 .get(projects.getFile);
 
 app.route('/api/projects/download')
-.get(projects.getZip);
+.get(projects.getFolder);
 
 app.listen(3000);
 

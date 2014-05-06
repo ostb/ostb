@@ -78,75 +78,33 @@ ostb.controller('IndexController', function($scope) {
 })
 
 .controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
+  var converter = new Showdown.converter();
+  var render = function(data) {
+    return '<!DOCTYPE HTML>\n<html>\n<head></head>\n<body>\n' + converter.makeHtml(data) + '\n</body>\n</html>';
+  };
 
-  $scope.getZip = function() {
-    ProjectsFactory.getZip({username: $stateParams.username, repo: $stateParams.repo})
+  $scope.getFolder = function() {
+    ProjectsFactory.getFolder({username: $stateParams.username, repo: $stateParams.repo})
     .then(function(data) {
-      console.log('rec data ', data);
-      download();
+      saveZip(data);
     })
     .catch(function(err) {
       $scope.error = err;
     });
-
-    var download = function() {
-
-      var zip = new JSZip();
-      zip.file("Hello.txt", "Hello world\n");
-
-      try {
-        var blob = zip.generate({type:"blob"});
-        // see FileSaver.js
-        saveAs(blob, "hello.zip");
-      } catch(e) {
-        // blobLink.innerHTML += " " + e;
-        console.log(e);
-      }
-      return false;
-    }
   }
 
-//   (function () {
-//   var zip = new JSZip();
-//   zip.file("Hello.txt", "Hello world\n");
-
-//   function bindEvent(el, eventName, eventHandler) {
-//     if (el.addEventListener){
-//       // standard way
-//       el.addEventListener(eventName, eventHandler, false);
-//     } else if (el.attachEvent){
-//       // old IE
-//       el.attachEvent('on'+eventName, eventHandler);
-//     }
-//   }
-
-//   // Blob
-//   var blobLink = document.getElementById('blob');
-//   if (JSZip.support.blob) {
-//     function downloadWithBlob() {
-//       try {
-//         var blob = zip.generate({type:"blob"});
-//         // see FileSaver.js
-//         saveAs(blob, "hello.zip");
-//       } catch(e) {
-//         blobLink.innerHTML += " " + e;
-//       }
-//       return false;
-//     }
-//     bindEvent(blobLink, 'click', downloadWithBlob);
-//   } else {
-//     blobLink.innerHTML += " (not supported on this browser)";
-//   }
-
-//   // data URI
-//   function downloadWithDataURI() {
-//     window.location = "data:application/zip;base64," + zip.generate({type:"base64"});
-//   }
-//   var dataUriLink = document.getElementById('data_uri');
-//   bindEvent(dataUriLink, 'click', downloadWithDataURI);
-
-// })();
-
+  var saveZip = function(data) {
+    var zip = new JSZip();
+    zip.file('content.md', data['content.md']);
+    zip.file('index.html', render(data['content.md']));
+    try {
+      var blob = zip.generate({type:"blob"});
+      saveAs(blob, $stateParams.repo + ".zip");
+    }catch(e) {
+      console.log(e);
+    }
+    return false;
+  }
 })
 
 
