@@ -11,7 +11,7 @@
 
   <div ng-controller='ProjectsController'>
     <span style="float: right;"><ul class="editNav" style="float: left; -webkit-margin-end: 1em">
-      <li class="editButton" title="Save Version" ng-click='toggleModal()'><i class="fa fa-floppy-o fa-fw"></i></li>
+      <li class="editButton" title="Save Version" ng-click='toggleModal()'>{{isActive()}}<i class="fa fa-floppy-o fa-fw"></i></li>
     </ul></span>
   </div>
 
@@ -21,9 +21,9 @@
 </div>
 <div id="editor"></div>
 
+
 <div ng-controller='ProjectsController'>
   <a ng-click='toggleModal()'></a>
-
   <modal-dialog width='400px' height='60%' show='modalShown'>
     <h3>Save New Version</h3>
     <form ng-submit='commitProject(project)'>
@@ -34,4 +34,3 @@
     <div style="color:red;">{{error}}</div>
   </modal-dialog>
 </div>
-
