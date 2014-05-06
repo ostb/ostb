@@ -268,7 +268,7 @@ html {
 
 
 #header {
-  /*position: fixed; THIS WAS DISABLED FOR MODALS */
+  position: fixed;
   top: 100px;
   right: 0;
   height: 100px;
