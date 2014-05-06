@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "angular": "~1.2.16",
-    "angular-ui-router": "~0.2.8"
+    "angular-ui-router": "~0.2.8",
+    "jszip": "~2.0.0"
   },
   "directory": "public/bower_components"
 }

@@ -130,6 +130,9 @@ app.route('/api/projects/commit')
 app.route('/api/projects/checkout')
 .get(projects.getFile);
 
+app.route('/api/projects/download')
+.get(projects.getFolder);
+
 app.listen(3000);
 
 

@@ -1,12 +1,11 @@
 var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
 exports.create = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
-
-  console.log(req.body);
 
   var newRepo = Promise.promisify(shell.init);
   newRepo(req.body.username, req.body.repo)
@@ -28,7 +27,7 @@ exports.create = function(req, res) {
   })
   .catch(function(err){
     res.send(400, err.toString());
-  })
+  });
 }
 
 exports.delete = function(req, res) {
@@ -154,10 +153,31 @@ exports.getFile = function(req, res) {
     })
     .catch(function(err){
       res.send(400, err.toString());
-    })
+    });
   }
 }
 
+exports.getFolder = function(req, res) {
+  var folder = {};
+  var filepath = 'user_data/' + req.query.username + '/' + req.query.repo + '/';
+  var read = Promise.promisify(fs.readFile);
+  read(filepath + 'content.md', 'utf-8')
+  .then(function(data) {
+    folder['content.md'] = data;
+    return read('public/css/normalize.css', 'utf-8')
+  })
+  .then(function(data) {
+    folder['normalize.css'] = data;
+    return read('public/css/default.css', 'utf-8')
+  })
+  .then(function(data) {
+    folder['default.css'] = data;
+    res.send(folder);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  });
+}
 
 
 

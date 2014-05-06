@@ -77,6 +77,41 @@ ostb.controller('IndexController', function($scope) {
   $scope.projectName = $stateParams.repo;
 })
 
+.controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
+  var converter = new Showdown.converter();
+  var render = function(data) {
+    return '' +
+    '<!DOCTYPE HTML>\n<html>\n<head>\n' + 
+    '<link rel="stylesheet" type="text/css" href="css/normalize.css">\n' +
+    '<link rel="stylesheet" type="text/css" href="css/default.css">\n</head>\n<body>\n' + 
+    converter.makeHtml(data) + '\n</body>\n</html>';
+  };
+
+  $scope.getFolder = function() {
+    ProjectsFactory.getFolder({username: $stateParams.username, repo: $stateParams.repo})
+    .then(function(data) {
+      saveZip(data);
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
+
+  var saveZip = function(data) {
+    var zip = new JSZip();
+    zip.file('content.md', data['content.md']);
+    zip.file('index.html', render(data['content.md']));
+    zip.folder('css').file('normalize.css', data['normalize.css']).file('default.css', data['default.css']);
+    try {
+      var blob = zip.generate({type:"blob"});
+      saveAs(blob, $stateParams.repo + ".zip");
+    }catch(e) {
+      console.log(e);
+    }
+    return false;
+  }
+})
+
 
 // ----- project CRUD controllers -----
 

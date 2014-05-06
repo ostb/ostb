@@ -19,7 +19,9 @@
         </ul>
         <button>Add to Book...</button>
         <button>Fork</button>
-        <button>Download</button>
+        <div ng-controller='DownloadController'>
+          <button><a ng-click='getFolder()'>Download</a></button>
+        </div>
         <button>
           <div ng-controller='ProjectsController'>
             <a ng-click='toggleModal()'>Delete</a>
