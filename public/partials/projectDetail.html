@@ -13,7 +13,7 @@
         <button id="editButton" ng-hide='currentUser !== project.username'><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
 
         <ul class="nav">
-          <li ng-class="{current:isActive('project.document')}"><a ui-sref="project.document">Document</a></li>
+          <li ng-class="{current:isActive('project.preview')}"><a ui-sref="project.preview">Preview</a></li>
           <li ng-class="{current:isActive('project.versions')}"><a ui-sref="project.versions">Versions</a></li>
           <li ng-class="{current:isActive('project.contributors')}"><a ui-sref="project.contributors">Contributors</a></li>
           <li ng-class="{current:isActive('project.statistics')}"><a ui-sref="project.statistics">Statistics</a></li>

@@ -16,7 +16,7 @@
 
           <ul>
             <div ng-repeat='project in projects'>
-              <a ui-sref='project.document({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
+              <a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
             </div>
           </ul>
         </div>
