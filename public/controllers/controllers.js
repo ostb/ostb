@@ -1,12 +1,100 @@
-ostb.controller('IndexController', function($scope) {
+ostb.controller('IndexController', function($rootScope, $location, $state, UsersFactory) {
+    $rootScope.checkUser = function() {
+      UsersFactory.getCurrentUser(function(user) {
+        $rootScope.currentUser = user.username || 'public';
+        if ($rootScope.currentUser !== 'public') {
+          $rootScope.showLogin = false;
+          return $rootScope.currentUser;
+        } else {
+          //checks route on refresh
+          var restricted = ['/listAGame', '/myGames', '/userProfile'];
+          if (_.contains(restricted, $location.$$path)) {
+            $state.go('login');
+          }
+        }
+      });
+    };
+
+    $rootScope.checkUser();
+    //checks if requested route is restricted on route change event, redirects to login if it is and user not logged in.
+    $rootScope.$on('$stateChangeStart', function(e, goTo) {
+      var restricted = ['listAGame', 'myGames', 'seeGame', 'userProfile'];
+      if (_.contains(restricted, goTo.name) && $rootScope.currentUser === 'public') {
+        $rootScope.redirectToState = goTo.name;
+        e.preventDefault();
+        $state.go('login');
+      }
+    });
 })
 
-.controller('Login', function($scope) {
+.controller('Login', function($rootScope, $state, $scope, UsersFactory) {
+  $rootScope.currentUser = $rootScope.currentUser || undefined;
+
+  $scope.user = {
+    username: undefined,
+    // email: undefined,
+    password: undefined
+  };
+
+  $scope.submitTheForm = function(username, password) {
+    console.log('hit submitTheForm Login');
+    $scope.user.username = username;
+    // $scope.user.email = email;
+    $scope.user.password = password;
+    $scope.postUser($scope.user);
+  };
+
+  $scope.postUser = function(user) {
+    UsersFactory.post(user, function(data){
+      console.log('inside login controller', data);
+      if(data){
+        $rootScope.currentUserInfo = data;
+        $rootScope.currentUser = data.username;
+        // $state.go('sign-up');
+      }
+      console.log('$rootScope.currentUser', $rootScope.currentUser);
+    })
+    .then(function() {
+    //should store user info to rootscope currentuser
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
+
   console.log('Login controller');
 })
 
-.controller('Signup', function($scope) {
-  console.log('Sign up');
+.controller('Dashboard', function($scope) {
+  console.log('Dashboard');
+})
+
+.controller('Signup', function($scope, UsersFactory) {
+  //2mayAdrian
+  $scope.user = {
+    username: undefined,
+    email: undefined,
+    password: undefined
+  };
+
+  $scope.submitTheForm = function(username, email, password) {
+    console.log('hit submitTheForm Signup');
+    $scope.user.username = username;
+    $scope.user.email = email;
+    $scope.user.password = password;
+    $scope.createUser($scope.user);
+  };
+
+  $scope.createUser = function(user) {
+    UsersFactory.create(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  };
 })
 
 .controller('Account', function($scope) {
@@ -135,7 +223,9 @@ ostb.controller('IndexController', function($scope) {
   };
 
   $scope.createProject = function(project) {
+    
     project.username = project.username || $stateParams.username;
+
     ProjectsFactory.create(project)
     .then(function() {
       console.log('success');
@@ -198,6 +288,7 @@ ostb.controller('IndexController', function($scope) {
 })
 
 .controller('UsersController', function($scope, UsersFactory) {
+  
   $scope.modalShown = false;
   $scope.toggleModal = function() {
     $scope.modalShown = !$scope.modalShown;
@@ -212,7 +303,7 @@ ostb.controller('IndexController', function($scope) {
       $scope.error = err;
     });
   };
-
+  
   $scope.deleteUser = function(user) {
     UsersFactory.delete(user)
     .then(function() {

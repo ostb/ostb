@@ -4,12 +4,16 @@ angular.module('factories.projects', [])
 
   return {
     create: function(project) {
+
+      console.log('inside project factory', project);
+
       var dfd = $q.defer();
       $http.post('/api/projects', project)
       .success(function(data, status, headers, config) {
         dfd.resolve();
       })
       .error(function(data, status, headers, config) {
+        console.log('arguments',arguments);
         dfd.reject(data);
       });
       return dfd.promise;

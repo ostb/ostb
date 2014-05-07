@@ -125,6 +125,17 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+
+  //2mayAdrian
+  .state('create-account', {
+    url: "/sign-up",
+    views: {
+      'content': {
+        templateUrl: 'partials/sign-up.html',
+        controller: 'UsersController'
+      }
+    }
+  })
 });
 
 // This is test data.

@@ -5,13 +5,16 @@ var Promise = require('bluebird');
 var shell = require('./server_modules/shell_commands');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var users = require('./server_modules/controllers/users');
 var projects = require('./server_modules/controllers/projects');
 
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/userdb');
+
+var collection = db.get('usercollection');
 
 var app = express();
 
@@ -84,6 +87,10 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser());
 
+app.use(cookieParser());
+app.use(session({ secret: 'ostbRules' }));
+
+
 app.use(function(req,res,next){
   req.db = db;
   next();
@@ -91,28 +98,15 @@ app.use(function(req,res,next){
 
 var options = {
   db: {type: 'none'}
-  // auth: function(client, action) {}
 }
 share.server.attach(app, options);
 
-
-// ----- ROUTING -----
-// ----- webpage requests -----
-app.get('/editor', function(req, res) {
-  res.render('editor');
-});
-
-app.get('/navbar', function(req, res) {
-  res.render('navbar');
-});
 
 app.get('/', function(req, res) {
   res.render('index');
 });
 
-// ----- api requests -----
-app.route('/api/users')
-.post(users.create)
+app.route('/api/users/delete')
 .delete(users.delete);
 
 app.route('/api/projects')
@@ -130,13 +124,16 @@ app.route('/api/projects/commit')
 app.route('/api/projects/checkout')
 .get(projects.getFile);
 
+app.route('/auth/signup')
+.post(users.signup);
+
 app.route('/api/projects/download')
 .get(projects.getFolder);
 
+app.route('/auth/login')
+.post(users.login);
+
+app.route('/auth/current')
+.get(users.getCurrent)
+
 app.listen(3000);
-
-
-
-
-
-
