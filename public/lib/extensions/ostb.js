@@ -48,6 +48,16 @@
       }
       return aline;
     };
+    // Process case for multiple lines
+    var vertical = function(larr, qnum, qlen) {
+      var rand = shuffle(larr.length, qlen);
+      var result = [];
+      for (var i = 0; i < rand.length; i++) {
+        result[rand[i]] = '<input class="answer-tall" type="radio" id="' + toId(larr[i]) + '" name="question-' + qnum + '" />';
+        result[rand[i]] +='<label for="' + toId(larr[i]) + '">' + larr[i] + '</label><br>';
+      }
+      return result.join('\n');
+    };
     var filter = function(text) {
       var lines = text.split('\n');
       var output = [];
@@ -66,13 +76,12 @@
               line = horizontal(line, qnum, lines[i - 1].length);
             // If answers are on multiple lines
             } else {
+              var set = [];
               while (line.match(/^\(/)) {
-                var answer = line.slice(1, line.length - 1);
-                line = '<input class="answer-tall" type="radio" id="' + toId(answer) + '" name="question-' + qnum + '" />';
-                line +='<label for="' + toId(answer) + '">' + answer + '</label><br>';
-                output.push(line);
+                set.push(line.slice(1, line.length - 1));
                 line = lines[++i];
               }
+              output.push(vertical(set, qnum, lines[i - set.length - 1].length));
             }
             qnum++;
           }
