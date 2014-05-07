@@ -14,6 +14,7 @@
     <div class="metabar">
       <div class="wrapper" ng-controller="IndexController">
         <h1 class="logo left"><a href="/">OSTB</a></h1>
+        <div ng-show="!!currentUser">Welcome, {{currentUser}}</div>
         <ul class="nav meta right">
           <li><a ui-sref="dashboard({username: currentUser})">Dashboard</a></li>
           <li><a ui-sref="account">Account</a></li>
