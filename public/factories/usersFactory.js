@@ -71,6 +71,17 @@ angular.module('factories.users', [])
         dfd.reject(data);
       });
       return dfd.promise;
+    },
+    sessionOut: function(user) {
+      var dfd = $q.defer();
+      $http.get('/logout')
+      .success(function() {
+        dfd.resolve();
+      })
+      .error(function() {
+        dfd.reject();
+      });
+      return dfd.promise;
     }
   }
 });

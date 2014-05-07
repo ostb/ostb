@@ -136,4 +136,7 @@ app.route('/auth/login')
 app.route('/auth/current')
 .get(users.getCurrent)
 
+app.route('/logout')
+.get(users.logout)
+
 app.listen(3000);
