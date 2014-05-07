@@ -8,7 +8,11 @@ exports.authenticate = function(req){
   if(req.query && req.query.username){
     comparator = req.query.username;
   }
-  return comparator === req.session.user.username;
+  
+  if(req.session.user) {
+    return comparator === req.session.user.username;
+  }
+  return false;
 };
 
 exports.authRedirect = function(req, res){

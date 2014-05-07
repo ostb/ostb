@@ -84,16 +84,16 @@ var ostb = angular.module('ostb', [
     url: "/:username/:repo",
     views: {
       'content': {
-        templateUrl: 'partials/page.html',
+        templateUrl: 'partials/projectDetail.html',
         controller: 'ProjectDetailController'
       }
     }
   })
-  .state('project.document', {
-    url: "/document/:commitHash",
+  .state('project.preview', {
+    url: "/preview/:commitHash",
     views: {
       'projectDetail': {
-        templateUrl: 'partials/document.html',
+        templateUrl: 'partials/preview.html',
         controller: 'DocumentController'
       }
     }

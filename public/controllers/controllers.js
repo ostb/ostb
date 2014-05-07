@@ -207,7 +207,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 .controller('VersionsController', function($scope) {})
 
-.controller('ProjectsController', function($scope, $stateParams, ProjectsFactory, ModalsFactory) {
+.controller('ProjectsController', function($scope, $location, $stateParams, ProjectsFactory, ModalsFactory) {
 
   $scope.modalShown = false;
 
@@ -230,7 +230,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.create(project)
     .then(function() {
-      console.log('success');
+      $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;
@@ -238,9 +238,13 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 
   $scope.cloneProject = function(project) {
+
+    project.owner = project.username;
+    project.username = $scope.currentUser;
+
     ProjectsFactory.clone(project)
     .then(function() {
-      console.log('success');
+      $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;
@@ -250,7 +254,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.deleteProject = function(project) {
     ProjectsFactory.delete(project)
     .then(function() {
-      console.log('success');
+      $location.url('dashboard/' + project.username);
     })
     .catch(function(err) {
       $scope.error = err;
