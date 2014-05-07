@@ -238,6 +238,10 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 
   $scope.cloneProject = function(project) {
+
+    project.owner = project.username;
+    project.username = $scope.currentUser;
+
     ProjectsFactory.clone(project)
     .then(function() {
       console.log('success');

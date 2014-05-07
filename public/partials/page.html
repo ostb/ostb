@@ -19,8 +19,11 @@
           <li ng-class="{current:isActive('project.statistics')}"><a ui-sref="project.statistics">Statistics</a></li>
         </ul>
         <button>Add to Book...</button>
-        <button ng-hide='currentUser === project.username'>Fork</button>
+
+        <button ng-hide='currentUser === project.username' ng-controller='ProjectsController'><a ng-click='cloneProject(project)'>Fork</a></button>
+
         <button ng-controller='DownloadController'><a ng-click='getFolder()'>Download</a></button>
+
         <button ng-hide='currentUser !== project.username'>
           <div ng-controller='ProjectsController'>
             <a ng-click='toggleModal()'>Delete</a>
