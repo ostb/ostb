@@ -230,7 +230,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.create(project)
     .then(function() {
-      // console.log('success');
       $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
@@ -245,7 +244,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.clone(project)
     .then(function() {
-      console.log('success');
+      $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;
@@ -255,7 +254,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.deleteProject = function(project) {
     ProjectsFactory.delete(project)
     .then(function() {
-      console.log('success');
+      $location.url('dashboard/' + project.username);
     })
     .catch(function(err) {
       $scope.error = err;
