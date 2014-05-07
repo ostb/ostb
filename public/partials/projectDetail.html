@@ -10,7 +10,7 @@
 
       <div class="control">
 
-        <button id="editButton" ng-hide='currentUser !== project.username'><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
+        <button id="editButton"><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
 
         <ul class="nav">
           <li ng-class="{current:isActive('project.preview')}"><a ui-sref="project.preview">Preview</a></li>
