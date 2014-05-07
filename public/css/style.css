@@ -313,7 +313,6 @@ img {
 #editor { 
   margin: 0;
   position: fixed;
-  overflow: scroll;
   top: 200px;
   bottom: 0;
   right: 50%;
