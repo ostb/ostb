@@ -9,7 +9,7 @@
     <div class="right">
 
       <div class="control">
-        <button id="editButton"><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
+        <button id="editButton" ng-hide='currentUser !== project.username'><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
 
         <ul class="nav">
           <li ng-class="{current:isActive('project.document')}"><a ui-sref="project.document">Document</a></li>
@@ -18,9 +18,9 @@
           <li ng-class="{current:isActive('project.statistics')}"><a ui-sref="project.statistics">Statistics</a></li>
         </ul>
         <button>Add to Book...</button>
-        <button>Fork</button>
+        <button ng-hide='currentUser === project.username'>Fork</button>
         <button>Download</button>
-        <button>
+        <button ng-hide='currentUser !== project.username'>
           <div ng-controller='ProjectsController'>
             <a ng-click='toggleModal()'>Delete</a>
           </div>

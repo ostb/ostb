@@ -106,14 +106,11 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-// app.route('/api/users/delete')
-// .delete(users.delete);
+app.route('/api/users/delete')
+.delete(users.delete);
 
-app.route('/api/projects/')
-// .post(projects.create)
-.post(function(req, res) {
-  console.log('!-----------------------------!');
-})
+app.route('/api/projects')
+.post(projects.create)
 .delete(projects.delete)
 .get(projects.getProjects);
 
@@ -137,4 +134,3 @@ app.route('/auth/current')
 .get(users.getCurrent)
 
 app.listen(3000);
-

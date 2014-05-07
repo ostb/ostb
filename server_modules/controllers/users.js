@@ -2,6 +2,7 @@ var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt-nodejs');
+var authhelper = require('./authhelper');
 
 var validPassword = function(password, hash) {
   return bcrypt.compareSync(password, hash);
@@ -68,22 +69,24 @@ exports.getCurrent = function(req, res){
 };
 
 exports.delete = function(req, res) {
-  var db = req.db;
-  var collection = db.get('usercollection');
-  var projCollection = db.get('projectcollection');
+  if(authhelper.authenticate(req)){
+    var db = req.db;
+    var collection = db.get('usercollection');
+    var projCollection = db.get('projectcollection');
 
-  shell.deleteUser(req.query.username)
-  .then(function() {
-    console.log('deleted user ', req.query.username);
+    shell.deleteUser(req.query.username)
+    .then(function() {
+      console.log('deleted user ', req.query.username);
 
-    collection.remove({username: req.query.username});
-    projCollection.remove({username: req.query.username});
-    
-    res.send(204);
-  })
-  .catch(function(err){
-    console.log(err);
-    res.send(400, err.toString());
-  });
+      collection.remove({username: req.query.username});
+      projCollection.remove({username: req.query.username});
+      
+      res.send(204);
+    })
+    .catch(function(err){
+      console.log(err);
+      res.send(400, err.toString());
+    });
+  }
 }
 
