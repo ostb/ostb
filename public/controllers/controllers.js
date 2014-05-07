@@ -267,6 +267,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     project.commitBody['content.md'] = window.doc.getText();
     project.username = $stateParams.username;
     project.repo = $stateParams.repo;
+    project.user = $scope.currentUser;
 
     ProjectsFactory.commit(project)
     .then(function() {

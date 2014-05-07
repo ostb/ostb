@@ -21,7 +21,8 @@ exports.create = function(req, res) {
       var newProject = {
         repo: req.body.repo,
         username: req.body.username,
-        commits: {}
+        commits: {},
+        contributions: {}
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Created new project ' + req.body.repo,
@@ -95,12 +96,13 @@ exports.clone = function(req, res) {
 }
 
 exports.commit = function(req, res) {
-  if(authhelper.authenticate(req)){
-    var db = req.db;
-    var collection = db.get('projectcollection');
+  var db = req.db;
+  var collection = db.get('projectcollection');
+  var cmt = Promise.promisify(shell.commit);
+  
+  if(authhelper.authenticate(req)){         //authenticated, so commit as project
 
-    var cmt = Promise.promisify(shell.commit);
-    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
+    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, false)
     .then(function(commitHash){
 
       var commits = {}
@@ -115,8 +117,23 @@ exports.commit = function(req, res) {
     .catch(function(err){
       res.send(400, err.toString());
     })
-  }else{
-    authhelper.authRedirect(req, res);
+  }else{                                     //unathenticated, so commit as contribution
+    // authhelper.authRedirect(req, res);
+    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, true)
+    .then(function(commitHash){
+
+      var contributions = {}
+      contributions['contributions.' + commitHash] = {
+        commitMessage: req.body.commitMessage,
+        date: new Date()
+      }
+      collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
+
+      res.send(201);
+    })
+    .catch(function(err){
+      res.send(400, err.toString());
+    })
   }
 }
 

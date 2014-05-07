@@ -37,14 +37,14 @@ exports.init = function(username, repo, next) {
       'js/' : ''
     }
     var cmt = Promise.promisify(commit);
-    return cmt(username, repo, 'Created new project ' + repo, commitBody);
+    return cmt(username, repo, 'Created new project ' + repo, commitBody, false);
   })
   .then(function(hash) {
     next(null, hash);
   })
 }
 
-var commit = exports.commit = function(username, repo, commitMessage, commitBody, next) {
+var commit = exports.commit = function(username, repo, commitMessage, commitBody, contribution, next) {
   if(!isLegalCommitMessage(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
@@ -56,6 +56,7 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
       fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
     }
   }
+
   execute('cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
   .then(function() {
     return getCommitHash(username, repo);
