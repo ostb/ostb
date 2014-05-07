@@ -6,8 +6,8 @@
       <div class='invalid left' id="usernameValidator"></div>
       <input type="text" name="email" ng-model="userInfo.email" placeholder="Enter email address">
       <div class='invalid left' id="emailValidator"></div>
-      <input type="text" name="password" ng-model="userInfo.password" placeholder="Enter password">
-      <input type="text" name="password-verify" ng-model="userInfo.passwordVerify" placeholder="Enter password again">
+      <input type="password" name="password" ng-model="userInfo.password" placeholder="Enter password">
+      <input type="password" name="password-verify" ng-model="userInfo.passwordVerify" placeholder="Enter password again">
       <div class='invalid left' id="passwordValidator"></div>
       <button type="button" id="sign-upButton" ng-click="submitTheForm(userInfo.username, userInfo.email, userInfo.password)">Sign-up</button>
     </form>
