@@ -2,14 +2,15 @@
   <div class="wrapper">
     <h1>Sign up</h1>
     <form>
-      <input type="text" name="username" ng-model="userInfo.username" placeholder="Enter desired username">
+      <input type="text" name="username" ng-model="userInfo.username" placeholder="Enter desired username" required>
       <div class='invalid left' id="usernameValidator"></div>
-      <input type="text" name="email" ng-model="userInfo.email" placeholder="Enter email address">
+      <input type="text" name="email" ng-model="userInfo.email" placeholder="Enter email address" required>
       <div class='invalid left' id="emailValidator"></div>
-      <input type="password" name="password" ng-model="userInfo.password" placeholder="Enter password">
-      <input type="password" name="password-verify" ng-model="userInfo.passwordVerify" placeholder="Enter password again">
-      <div class='invalid left' id="passwordValidator"></div>
-      <button type="button" id="sign-upButton" ng-click="submitTheForm(userInfo.username, userInfo.email, userInfo.password)">Sign-up</button>
+      <input type="password" name="password" ng-model="userInfo.password" placeholder="Enter password" required>
+      <input type="password" name="password-verify" ng-model="userInfo.passwordVerify" placeholder="Enter password again" required>
+      <div style="color:red;">{{errorMsg}}</div>
+      <div class='invalid left' id="passwordValidator" ng-if="userInfo.password ? (userInfo.password === userInfo.passwordVerify) : false" style="color:blue;">password verified</div>
+      <button type="button" id="sign-upButton" ng-click="submitTheForm(userInfo.username, userInfo.email, userInfo.password, userInfo.passwordVerify)">Sign-up</button>
     </form>
   </div>
 </div>
