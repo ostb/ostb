@@ -1,6 +1,7 @@
 var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
 var authhelper = require('./authhelper');
 
@@ -36,6 +37,7 @@ exports.create = function(req, res) {
   }else{
     authhelper.authRedirect(req, res);
   }
+
 }
 
 exports.delete = function(req, res) {
@@ -159,32 +161,48 @@ exports.getProjects = function(req, res) {
 }
 
 exports.getFile = function(req, res) {
-  // if(authhelper.authenticate(req)){
+  var checkout = Promise.promisify(shell.checkout);
 
-    var checkout = Promise.promisify(shell.checkout);
-
-    if(req.query.commitHash) {
-      checkout(req.query.username, req.query.repo, req.query.commitHash)
-      .then(function(data) {
-        res.send(200, data);
-      })
-      .catch(function(err){
-        res.send(400, err.toString());
-      })
-    }else {
-      checkout(req.query.username, req.query.repo, null)
-      .then(function(data) {
-        res.send(200, data);
-      })
-      .catch(function(err){
-        res.send(400, err.toString());
-      })
-    }
-  // }else{
-  //   authhelper.authRedirect(req, res);
-  // }
+  if(req.query.commitHash) {
+    checkout(req.query.username, req.query.repo, req.query.commitHash)
+    .then(function(data) {
+      res.send(200, data);
+    })
+    .catch(function(err){
+      res.send(400, err.toString());
+    })
+  }else {
+    checkout(req.query.username, req.query.repo, null)
+    .then(function(data) {
+      res.send(200, data);
+    })
+    .catch(function(err){
+      res.send(400, err.toString());
+    });
+  }
 }
 
+exports.getFolder = function(req, res) {
+  var folder = {};
+  var filepath = 'user_data/' + req.query.username + '/' + req.query.repo + '/';
+  var read = Promise.promisify(fs.readFile);
+  read(filepath + 'content.md', 'utf-8')
+  .then(function(data) {
+    folder['content.md'] = data;
+    return read('public/css/normalize.css', 'utf-8')
+  })
+  .then(function(data) {
+    folder['normalize.css'] = data;
+    return read('public/css/default.css', 'utf-8')
+  })
+  .then(function(data) {
+    folder['default.css'] = data;
+    res.send(folder);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  });
+}
 
 
 

@@ -117,6 +117,28 @@ angular.module('factories.projects', [])
       });
       return dfd.promise;
     },
+
+    getFolder: function(project) {
+      var dfd = $q.defer();
+      var queryString = '/api/projects/download?'
+      if(project.username) {
+        queryString += 'username=' + project.username;
+      }else if(project.id){
+        queryString += 'id=' + project.id;
+      }
+      if(project.repo) {
+        queryString += '&repo=' + project.repo
+      }
+
+      $http.get(queryString)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    }
   }
 });
 

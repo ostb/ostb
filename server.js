@@ -127,6 +127,9 @@ app.route('/api/projects/checkout')
 app.route('/auth/signup')
 .post(users.signup);
 
+app.route('/api/projects/download')
+.get(projects.getFolder);
+
 app.route('/auth/login')
 .post(users.login);
 
