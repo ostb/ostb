@@ -176,6 +176,8 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 
   $scope.getFolder = function() {
+    console.log('hit download');
+
     ProjectsFactory.getFolder({username: $stateParams.username, repo: $stateParams.repo})
     .then(function(data) {
       saveZip(data);
@@ -315,7 +317,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 })
 
-//NOTE!! 'adrian' is hardcoded until auth/users complete! ///////////////////////////////
 .controller('ProjectDetailController', function($scope, $state, $stateParams, ProjectsFactory) {
 
   $scope.isActive = function(link) {
