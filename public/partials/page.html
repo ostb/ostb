@@ -40,7 +40,7 @@
 
   <modal-dialog width='400px' height='60%' show='modalShown'>
     <h3>Delete Project</h3>
-    <form ng-submit='deleteProject(project)'>
+    <form ng-submit='deleteProject(project); toggleModal()'>
       Are you sure you want to delete {{project.repo}}?
       <br>
       <br>
