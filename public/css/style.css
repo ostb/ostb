@@ -269,6 +269,9 @@ html {
    EDITOR
    ================= */
 
+img {
+  max-width: 500px;
+}
 
 #header {
   position: fixed;
@@ -310,6 +313,7 @@ html {
 #editor { 
   margin: 0;
   position: fixed;
+  overflow: scroll;
   top: 200px;
   bottom: 0;
   right: 50%;
