@@ -53,8 +53,11 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
         }else{
           $scope.error = filtered.join(', ') + ' needs to be greater than or equal to 4 characters';
         }
-    }else{
-      $scope.error = 'check your input';
+    }else if(!username){
+      $scope.error = 'check your username';
+    }
+    else{
+      $scope.error = 'check your password';
     }
   };
 
