@@ -267,7 +267,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     project.commitBody['content.md'] = window.doc.getText();
     project.username = $stateParams.username;
     project.repo = $stateParams.repo;
-    project.user = $scope.currentUser;
 
     ProjectsFactory.commit(project)
     .then(function() {
@@ -341,6 +340,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   
   var preview = document.getElementById('preview');
   var converter = new Showdown.converter();
+  var md;
 
   var render = function(data) {
     preview.innerHTML = converter.makeHtml(data);
@@ -353,11 +353,28 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
   ProjectsFactory.checkout(queryObj)
   .then(function(data) {
+    md = data;
     render(data);
   })
   .catch(function(err) {
     $scope.error = err;
   });
+
+  $scope.acceptContribution = function() {
+    var project = {};
+    project.commitBody = {}
+    project.commitBody['content.md'] = md;
+    project.username = $stateParams.username;
+    project.repo = $stateParams.repo;
+
+    ProjectsFactory.commit(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
 })
 
 
