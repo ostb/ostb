@@ -370,7 +370,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.commit(project)
     .then(function() {
-      console.log('success');
+      $scope.removeContribution();
     })
     .catch(function(err) {
       $scope.error = err;
