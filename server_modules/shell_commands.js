@@ -101,7 +101,10 @@ var getCommitHash = exports.getCommitHash = function(username, repo, branch) {
 }
 
 exports.checkout = function(username, repo, hash, branch, next) {
-  hash = hash || 'master';
+  // hash = hash || 'HEAD';
+  hash = "HEAD"
+
+  console.log(arguments)
 
   execute('cd user_data/' + username + '/' + repo + ' && ' +
           'git checkout ' + branch + ' && ' +
