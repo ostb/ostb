@@ -115,7 +115,6 @@ exports.commit = function(req, res) {
       res.send(400, err.toString());
     })
   }else{                                     //unathenticated, so commit as contribution
-    // authhelper.authRedirect(req, res);
     cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'contributions')
     .then(function(commitHash){
 

@@ -117,6 +117,8 @@ exports.checkout = function(username, repo, hash, branch, next) {
 }
 
 exports.clone = function(username, owner, repo, next) {
+  var savedHash;
+
   switchToMaster(owner, repo)
   .then(function() {
     return execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
@@ -125,7 +127,12 @@ exports.clone = function(username, owner, repo, next) {
     return getCommitHash(owner, repo);
   })
   .then(function(hash) {
-    next(null, hash[0].trim());
+    savedHash = hash;
+    return execute('cd user_data/' + username + '/' + repo + ' && ' +
+                   'git branch contributions')
+  })
+  .then(function() {
+    next(null, savedHash);
   })
 }
 
