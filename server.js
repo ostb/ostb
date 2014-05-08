@@ -135,6 +135,6 @@ app.route('/auth/login')
 .post(users.login);
 
 app.route('/auth/current')
-.get(users.getCurrent)
+.get(users.getCurrent);
 
 app.listen(3000);

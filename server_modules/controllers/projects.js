@@ -129,6 +129,9 @@ exports.commit = function(req, res) {
       }
       collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
 
+      return shell.switchToMaster()
+    })
+    .then(function() {
       res.send(201);
     })
     .catch(function(err){
@@ -147,7 +150,7 @@ exports.removeContribution = function(req, res) {
     contributions['contributions.' + req.query.commitHash] = {};
     collection.update({username: req.query.username, repo: req.query.repo}, {$unset: contributions});
 
-    res.send(201);
+    res.send(204);
   }else{                                     //unauthenticated, so commit as contribution
     authhelper.authRedirect(req, res);
   }

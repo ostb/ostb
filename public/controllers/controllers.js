@@ -131,6 +131,8 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
         console.error(error);
         return;
       }
+
+      // ProjectsFactory.
       ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
         if(doc.getLength() === 0) {
