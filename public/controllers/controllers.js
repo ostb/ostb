@@ -176,7 +176,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 .controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
   var init = function() {
-    var converter = new Showdown.converter({ extensions: ['ostb'] });
+    var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
     editor.setReadOnly(true);

@@ -2,7 +2,7 @@
 <html ng-app="ostb">
 
   <head>
-    <title>Open Source Textbooks</title>
+    <title>textbooks.io</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -13,7 +13,7 @@
   <body>
     <div class="metabar">
       <div class="wrapper" ng-controller="IndexController">
-        <h1 class="logo left"><a ui-sref="home">OSTB</a></h1>
+        <h1 class="logo left"><a ui-sref="home">textbooks.io</a></h1>
         <div ng-show="!!currentUser">Welcome, {{currentUser}}</div>
         <ul class="nav meta right">
           <li><a ui-sref="dashboard({username: currentUser})" ng-show="!showLogin">Dashboard</a></li>
@@ -29,6 +29,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/lib/showdown.js"></script>
     <script src="/lib/extensions/ostb.js"></script>
+    <script src="/lib/extensions/table.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="../bower_components/jszip/jszip.js"></script>
