@@ -2,8 +2,8 @@
   <div class="wrapper">
     <h1>Login</h1>
     <form>
-      <input type="text" name="username" placeholder="Username" ng-model="userInfo.username">
-      <input type="password" name="password" placeholder="Password" ng-model="userInfo.password">
+      <input type="text" name="username" placeholder="Username" ng-model="userInfo.username" required>
+      <input type="password" name="password" placeholder="Password" ng-model="userInfo.password" required>
       <button type="button" class="left" ng-click="submitTheForm(userInfo.username, userInfo.password)">Login</button>
       <a ui-sref="sign-up" class="left">Create Account</a>
     </form>
