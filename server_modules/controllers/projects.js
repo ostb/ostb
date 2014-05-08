@@ -2,9 +2,7 @@ var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-
 var authhelper = require('./authhelper');
-
 
 exports.create = function(req, res) {
   console.log('req.body inside project js', req.body);
@@ -38,7 +36,6 @@ exports.create = function(req, res) {
   }else{
     authhelper.authRedirect(req, res);
   }
-
 }
 
 exports.delete = function(req, res) {
@@ -129,7 +126,7 @@ exports.commit = function(req, res) {
       }
       collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
 
-      return shell.switchToMaster()
+      return shell.switchToMaster(req.body.username, req.body.repo);
     })
     .then(function() {
       res.send(201);

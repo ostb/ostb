@@ -126,13 +126,15 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     var connection = new sharejs.Connection('/channel');
 
     var connectionName = $stateParams.username + '-' + $stateParams.repo;       //unique connection generated
+    if($scope.currentUser !== $stateParams.username) {
+      connectionName += '-' + $scope.currentUser;
+    }
     connection.open(connectionName, function(error, doc) {
       if (error) {
         console.error(error);
         return;
       }
 
-      // ProjectsFactory.
       ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
         if(doc.getLength() === 0) {

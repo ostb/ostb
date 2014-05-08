@@ -53,15 +53,6 @@ var ostb = angular.module('ostb', [
       }
     }
   })
-  .state('page', {
-    url: "/page",
-    views: {
-      'content': {
-        templateUrl: 'partials/page.html',
-        controller: 'Page'
-      }
-    }
-  })
   .state('editor', {
     url: "/editor/:username/:repo",
     views: {
