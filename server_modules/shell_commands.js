@@ -117,13 +117,22 @@ exports.checkout = function(username, repo, hash, branch, next) {
 }
 
 exports.clone = function(username, owner, repo, next) {
-  execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
+  switchToMaster(owner, repo)
+  .then(function() {
+    return execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
+  })
   .then(function() {
     return getCommitHash(owner, repo);
   })
   .then(function(hash) {
     next(null, hash[0].trim());
   })
+}
+
+var switchToMaster = exports.switchToMaster = function(username, repo) {
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' +
+                'git checkout master';
+  return execute(command);
 }
 
 exports.deleteRepo = function(username, repo) {
