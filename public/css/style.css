@@ -45,7 +45,12 @@ a:hover   { color: #73a6cd; }
 
 /* Two column layouts */
 .content { margin-right: 220px; }
-.control { width: 200px; top: 0; right: 0; position: absolute;}  /*position:absolute WAS DISABLED FOR MODALS*/ 
+.control { width: 200px; top: 0; right: 0; position: absolute; }
+
+/* Three columns */
+.column { width: 30%; margin: 2.5%; float: left; }
+.column:first-child { margin-left: 0; }
+.column:last-child { margin-right: 0; }
 
 /* Buttons */
 button {
@@ -90,6 +95,32 @@ html {
 
 .meta li {
   float: left;
+}
+
+.splash {
+  /*background: #99c3e3;*/
+  padding: 3em 0 3em;
+}
+
+.splash h1 {
+  font-size: 2.25em;
+  font-weight: 300;
+  margin: 0;
+}
+
+.splash button {
+  width: 14em;
+  height: 3em;
+  margin: 1.5em auto 0;
+  text-align: center;
+  background: #ee9911;
+  border: 0;
+  color: #fff;
+  box-shadow: inset 0px -3px 1px rgba(0,0,0,.1);
+}
+
+.splash button:hover {
+  background: #ffaa22;
 }
 
 .login .wrapper, .sign-up .wrapper {
@@ -378,4 +409,6 @@ img {
 .removeButton:active {
   background-color: red;
 }
+
+
 

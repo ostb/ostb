@@ -1,29 +1,34 @@
-ostb.controller('IndexController', function($rootScope, $location, $state, UsersFactory) {
-    $rootScope.showLogin = true;
-    $rootScope.checkUser = function() {
-      console.log('hit inside controller checkUser');
-      UsersFactory.getCurrentUser(function(user) {
-        $rootScope.currentUser = user.username || 'public';
-          if ($rootScope.currentUser !== 'public') {
-            $rootScope.showLogin = false;
-            return $rootScope.currentUser;
-          } else {
-            console.log('hit inside index cont');
-            $state.go('dashboard');
-          }
+ostb.controller('IndexController', function($rootScope, $scope, $location, $state, UsersFactory) {
+  $rootScope.showLogin = true;
+  $rootScope.checkUser = function() {
+    console.log('hit inside controller checkUser');
+    UsersFactory.getCurrentUser(function(user) {
+      $rootScope.currentUser = user.username || 'public';
+        if ($rootScope.currentUser !== 'public') {
+          $rootScope.showLogin = false;
+          return $rootScope.currentUser;
+        } else {
+          console.log('hit inside index cont');
+          $state.go('dashboard');
         }
-      );
-    };
+      }
+    );
+  };
+  $rootScope.checkUser();
+  $rootScope.logoutUser = function(){
+    UsersFactory.sessionOut($rootScope.currentUser);
+    $rootScope.showLogin = true;
+    $rootScope.currentUser = undefined;
+    // $state.go('home');
+    console.log('hit Dashboard logoutUser');
+  };
+  $scope.isActive = function(link) {
+    return $state.$current.includes[link];
+  };
+})
 
-    $rootScope.checkUser();
-
-    $rootScope.logoutUser = function(){
-      UsersFactory.sessionOut($rootScope.currentUser);
-      $rootScope.showLogin = true;
-      $rootScope.currentUser = undefined;
-      // $state.go('home');
-      console.log('hit Dashboard logoutUser');
-    }
+.controller('Splash', function($rootScope, $scope) {
+  console.log('Splash');
 })
 
 .controller('Login', function($rootScope, $state, $scope, UsersFactory) {

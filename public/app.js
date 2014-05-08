@@ -9,7 +9,13 @@ var ostb = angular.module('ostb', [
   console.log($stateProvider);
   $stateProvider
   .state('home', {
-    url: "/"
+    url: "/",
+    views: {
+      'content': {
+        templateUrl: 'partials/splash.html',
+        controller: 'Splash'
+      }
+    }
   })
   .state('login', {
     url: "/login",

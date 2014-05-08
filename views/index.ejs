@@ -14,10 +14,10 @@
     <div class="metabar">
       <div class="wrapper" ng-controller="IndexController">
         <h1 class="logo left"><a ui-sref="home">textbooks.io</a></h1>
-        <div ng-show="!!currentUser">Welcome, {{currentUser}}</div>
+        <!-- <div ng-show="!!currentUser">Welcome, {{currentUser}}</div> -->
         <ul class="nav meta right">
-          <li><a ui-sref="dashboard({username: currentUser})" ng-show="!showLogin">Dashboard</a></li>
-          <li><a ui-sref="account({username: currentUser})" ng-show="!showLogin">Account</a></li>
+          <li><a ui-sref="dashboard({username: currentUser})" ng-class="{current:isActive('dashboard')}" ng-show="!showLogin">Dashboard</a></li>
+          <li><a ui-sref="account({username: currentUser})" ng-class="{current:isActive('account')}" ng-show="!showLogin">Account</a></li>
           <li><a ui-sref="login" ng-show="showLogin">Sign In</a></li>
           <li><a ui-sref="home" ng-show="!showLogin" ng-click="logoutUser()">Logout</a></li>
         </ul>
@@ -30,6 +30,7 @@
     <script src="/lib/showdown.js"></script>
     <script src="/lib/extensions/ostb.js"></script>
     <script src="/lib/extensions/table.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pixi.js/1.5.2/pixi.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="../bower_components/jszip/jszip.js"></script>
