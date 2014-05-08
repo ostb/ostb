@@ -8,6 +8,9 @@ var ostb = angular.module('ostb', [
 .config(function($stateProvider) {
   console.log($stateProvider);
   $stateProvider
+  .state('home', {
+    url: "/"
+  })
   .state('login', {
     url: "/login",
     views: {

@@ -1,30 +1,29 @@
 ostb.controller('IndexController', function($rootScope, $location, $state, UsersFactory) {
+    $rootScope.showLogin = true;
     $rootScope.checkUser = function() {
+      console.log('hit inside controller checkUser');
       UsersFactory.getCurrentUser(function(user) {
         $rootScope.currentUser = user.username || 'public';
-        if ($rootScope.currentUser !== 'public') {
-          $rootScope.showLogin = false;
-          return $rootScope.currentUser;
-        } else {
-          //checks route on refresh
-          var restricted = ['/listAGame', '/myGames', '/userProfile'];
-          if (_.contains(restricted, $location.$$path)) {
-            $state.go('login');
+          if ($rootScope.currentUser !== 'public') {
+            $rootScope.showLogin = false;
+            return $rootScope.currentUser;
+          } else {
+            console.log('hit inside index cont');
+            $state.go('dashboard');
           }
         }
-      });
+      );
     };
 
     $rootScope.checkUser();
-    //checks if requested route is restricted on route change event, redirects to login if it is and user not logged in.
-    $rootScope.$on('$stateChangeStart', function(e, goTo) {
-      var restricted = ['listAGame', 'myGames', 'seeGame', 'userProfile'];
-      if (_.contains(restricted, goTo.name) && $rootScope.currentUser === 'public') {
-        $rootScope.redirectToState = goTo.name;
-        e.preventDefault();
-        $state.go('login');
-      }
-    });
+
+    $rootScope.logoutUser = function(){
+      UsersFactory.sessionOut($rootScope.currentUser);
+      $rootScope.showLogin = true;
+      $rootScope.currentUser = undefined;
+      // $state.go('home');
+      console.log('hit Dashboard logoutUser');
+    }
 })
 
 .controller('Login', function($rootScope, $state, $scope, UsersFactory) {
@@ -39,9 +38,27 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.submitTheForm = function(username, password) {
     console.log('hit submitTheForm Login');
     $scope.user.username = username;
-    // $scope.user.email = email;
     $scope.user.password = password;
-    $scope.postUser($scope.user);
+    if(password && username){
+      var signupInfo = {username: username, password: password};
+      var filtered = [];
+        _.each(signupInfo, function(value, key){
+          if(value.length < 4){
+            filtered.push(key);
+          }
+        });
+        console.log('filtered', filtered);
+        if(!filtered.length){
+          $scope.postUser($scope.user);
+        }else{
+          $scope.error = filtered.join(', ') + ' needs to be greater than or equal to 4 characters';
+        }
+    }else if(!username){
+      $scope.error = 'check your username';
+    }
+    else{
+      $scope.error = 'check your password';
+    }
   };
 
   $scope.postUser = function(user) {
@@ -50,9 +67,11 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
       if(data){
         $rootScope.currentUserInfo = data;
         $rootScope.currentUser = data.username;
-        // $state.go('sign-up');
+        console.log('data received after login request', data);
+        $rootScope.showLogin = false;
+        $state.go('dashboard');
+        // $state.go('home');
       }
-      console.log('$rootScope.currentUser', $rootScope.currentUser);
     })
     .then(function() {
     //should store user info to rootscope currentuser
@@ -66,43 +85,88 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   console.log('Login controller');
 })
 
-.controller('Dashboard', function($scope) {
-  console.log('Dashboard');
+.controller('Dashboard', function($rootScope, $scope) {
+  // console.log('Dashboard');
+  // $scope.logoutUser = function(){
+  //   $rootScope.currentUser = 'public';
+  //   console.log('hit Dashboard logoutUser');
+  // }
 })
 
-.controller('Signup', function($scope, UsersFactory) {
-  //2mayAdrian
+.controller('Signup', function($rootScope, $scope, UsersFactory, $state) {
+
   $scope.user = {
     username: undefined,
     email: undefined,
     password: undefined
   };
 
-  $scope.submitTheForm = function(username, email, password) {
+  $scope.submitTheForm = function(username, email, password, passwordVerify) {
     console.log('hit submitTheForm Signup');
     $scope.user.username = username;
     $scope.user.email = email;
     $scope.user.password = password;
-    $scope.createUser($scope.user);
+    if((username && email && password) && (password === passwordVerify)){
+      var signupInfo = {username: username, email: email, password: password};
+      var filtered = [];
+        _.each(signupInfo, function(value, key){
+          if(value.length < 4){
+            filtered.push(key);
+          }
+        });
+        if(!filtered.length){
+          $scope.createUser($scope.user);
+        }else{
+          $scope.errorMsg = filtered.join(', ') + ' needs to be greater than or equal to 4 characters';
+        }
+    }else if(!username){
+      $scope.errorMsg = 'check your username';
+    }else if(!email){
+      $scope.errorMsg = 'check your email';
+    }else if(!password || !(password === passwordVerify)){
+      $scope.errorMsg = 'check your password';
+    }
   };
 
   $scope.createUser = function(user) {
     UsersFactory.create(user)
     .then(function() {
+      $scope.postUser($scope.user);
+      // $state.go('dashboard');
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+      $scope.errorMsg = err || 'check your input';
+    });
+  };
+
+  
+  $scope.postUser = function(user) {
+    UsersFactory.post(user, function(data){
+      console.log('inside login controller', data);
+      if(data){
+        $rootScope.currentUserInfo = data;
+        $rootScope.currentUser = data.username;
+        console.log('data received after login request', data);
+        $rootScope.showLogin = false;
+        $state.go('dashboard');
+      }
+    })
+    .then(function() {
+    //should store user info to rootscope currentuser
       console.log('success');
     })
     .catch(function(err) {
       $scope.error = err;
     });
   };
+
+
 })
 
 .controller('Account', function($scope) {
   console.log('Account');
-})
-
-.controller('Dashboard', function($scope) {
-  console.log('Dashboard');
 })
 
 .controller('Page', function($scope) {
@@ -115,7 +179,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 .controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
   var init = function() {
-    var converter = new Showdown.converter({ extensions: ['ostb'] });
+    var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
     editor.setReadOnly(true);
