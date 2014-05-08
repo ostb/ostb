@@ -137,6 +137,28 @@ exports.commit = function(req, res) {
   }
 }
 
+exports.removeContribution = function(req, res) {
+  var db = req.db;
+  var collection = db.get('projectcollection');
+  
+  if(authhelper.authenticate(req)){         //authenticated, so commit as project
+
+    // var commits = {}
+    // commits['commits.' + commitHash] = {
+    //   commitMessage: req.body.commitMessage,
+    //   date: new Date()
+    // }
+    // collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
+
+    console.log(req.query);
+
+    res.send(201);
+
+  }else{                                     //unauthenticated, so commit as contribution
+    authhelper.authRedirect(req, res);
+  }
+}
+
 exports.getVersions = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');

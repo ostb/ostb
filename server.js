@@ -119,6 +119,7 @@ app.route('/api/projects/clone')
 
 app.route('/api/projects/commit')
 .post(projects.commit)
+.delete(projects.removeContribution)
 .get(projects.getVersions);
 
 app.route('/api/projects/checkout')

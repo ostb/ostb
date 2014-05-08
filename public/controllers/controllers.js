@@ -366,8 +366,24 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     project.commitBody['content.md'] = md;
     project.username = $stateParams.username;
     project.repo = $stateParams.repo;
+    project.commitMessage = 'Accepted user contribution';
 
     ProjectsFactory.commit(project)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
+
+  $scope.removeContribution = function() {
+    var project = {};
+    project.username = $stateParams.username;
+    project.repo = $stateParams.repo;
+    project.commitHash = $stateParams.commitHash;
+
+    ProjectsFactory.removeContribution(project)
     .then(function() {
       console.log('success');
     })
