@@ -29,7 +29,10 @@ exports.init = function(username, repo, next) {
     throw 'You already have a project named ' + repo + '!';
   }
 
-  execute('git init user_data/' + username + '/' + repo)
+  execute('git init user_data/' + username + '/' + repo + ' && ' +
+          'cd user_data/' + username + '/' + repo + ' && ' +
+          'git checkout -b contributions' + ' && ' +
+          'git checkout -b master')
   .then(function() {
     var commitBody = {
       'content.md': '#Welcome\nThis is the first version of your new project.',
@@ -37,14 +40,14 @@ exports.init = function(username, repo, next) {
       'js/' : ''
     }
     var cmt = Promise.promisify(commit);
-    return cmt(username, repo, 'Created new project ' + repo, commitBody, false);
+    return cmt(username, repo, 'Created new project ' + repo, commitBody, null);
   })
   .then(function(hash) {
     next(null, hash);
   })
 }
 
-var commit = exports.commit = function(username, repo, commitMessage, commitBody, contribution, next) {
+var commit = exports.commit = function(username, repo, commitMessage, commitBody, branch, next) {
   if(!isLegalCommitMessage(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
@@ -57,23 +60,38 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
     }
   }
 
-  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ';
+  if(branch) {
+    command += 'git checkout ' + branch + ' && '
+  }
+  command += 'git commit -m "' + commitMessage + '"'
+
+  execute(command)
   .then(function() {
-    return getCommitHash(username, repo);
+    return getCommitHash(username, repo, branch);
   })
   .then(function(hash) {
     next(null, hash[0].trim());
   })
 }
 
-var getCommitHash = exports.getCommitHash = function(username, repo) {
-  return execute('cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD');
+var getCommitHash = exports.getCommitHash = function(username, repo, branch) {
+  
+  var command = 'cd user_data/' + username + '/' + repo + ' && '
+  if(branch) {
+    command += 'git checkout ' + branch + ' && '
+  }
+  command += 'git rev-parse HEAD'
+
+  return execute(command);
 }
 
-exports.checkout = function(username, repo, hash, next) {
+exports.checkout = function(username, repo, hash, branch, next) {
   hash = hash || 'master';
 
-  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
+  execute('cd user_data/' + username + '/' + repo + ' && ' +
+          'git checkout ' + branch + ' && ' +
+          'git checkout ' + hash)
   .then(function() {
     fs.readFile('user_data/' + username + '/' + repo + '/' + 'content.md', 'utf-8', function(err, data) {
       if(err){

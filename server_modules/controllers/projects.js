@@ -102,7 +102,7 @@ exports.commit = function(req, res) {
   
   if(authhelper.authenticate(req)){         //authenticated, so commit as project
 
-    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, false)
+    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'master')
     .then(function(commitHash){
 
       var commits = {}
@@ -119,7 +119,7 @@ exports.commit = function(req, res) {
     })
   }else{                                     //unathenticated, so commit as contribution
     // authhelper.authRedirect(req, res);
-    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, true)
+    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'contributions')
     .then(function(commitHash){
 
       var contributions = {}
@@ -154,8 +154,6 @@ exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
-  // if(req.session.user.username === req.query.username){
-
   var queryObj = {};
 
     if(req.query.username){
@@ -181,7 +179,7 @@ exports.getFile = function(req, res) {
   var checkout = Promise.promisify(shell.checkout);
 
   if(req.query.commitHash) {
-    checkout(req.query.username, req.query.repo, req.query.commitHash)
+    checkout(req.query.username, req.query.repo, req.query.commitHash, 'contributions')
     .then(function(data) {
       res.send(200, data);
     })
@@ -189,7 +187,7 @@ exports.getFile = function(req, res) {
       res.send(400, err.toString());
     })
   }else {
-    checkout(req.query.username, req.query.repo, null)
+    checkout(req.query.username, req.query.repo, null, 'master')
     .then(function(data) {
       res.send(200, data);
     })
