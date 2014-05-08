@@ -56,21 +56,31 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
 
-  for(var key in commitBody) {      //iterate through all file/dir changes and write to disk
-    if(key[key.length - 1] === '/') {   //directory
-      fs.mkdirSync('user_data/' + username + '/' + repo + '/' + key);
-    }else {                             //file
-      fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
+  var buildDir = function() {
+    for(var key in commitBody) {      //iterate through all file/dir changes and write to disk
+      if(key[key.length - 1] === '/') {   //directory
+        fs.mkdirSync('user_data/' + username + '/' + repo + '/' + key);
+      }else {                             //file
+        fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
+      }
     }
   }
 
-  var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ';
-  if(branch) {
-    command += 'git checkout ' + branch + ' && '
+  if(branch){
+    branch = ' && git checkout ' + branch;
+  }else {
+    branch = '';
   }
-  command += 'git commit -m "' + commitMessage + '"'
+  var branchCmd = 'cd user_data/' + username + '/' + repo + 
+                  branch;
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 
+                'git commit -m "' + commitMessage + '"'
 
-  execute(command)
+  execute(branchCmd)
+  .then(function() {
+    buildDir();
+    return execute(command)
+  })
   .then(function() {
     return getCommitHash(username, repo, branch);
   })
