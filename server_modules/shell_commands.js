@@ -20,6 +20,8 @@ exports.createUser = function(username, next) {
 }
 
 exports.init = function(username, repo, next) {
+  var savedHash;
+
   if(!isLegalName(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
@@ -29,10 +31,7 @@ exports.init = function(username, repo, next) {
     throw 'You already have a project named ' + repo + '!';
   }
 
-  execute('git init user_data/' + username + '/' + repo + ' && ' +
-          'cd user_data/' + username + '/' + repo + ' && ' +
-          'git checkout -b contributions' + ' && ' +
-          'git checkout -b master')
+  execute('git init user_data/' + username + '/' + repo)
   .then(function() {
     var commitBody = {
       'content.md': '#Welcome\nThis is the first version of your new project.',
@@ -43,7 +42,12 @@ exports.init = function(username, repo, next) {
     return cmt(username, repo, 'Created new project ' + repo, commitBody, null);
   })
   .then(function(hash) {
-    next(null, hash);
+    savedHash = hash;
+    return execute('cd user_data/' + username + '/' + repo + ' && ' +
+                   'git branch contributions')
+  })
+  .then(function() {
+    next(null, savedHash);
   })
 }
 
