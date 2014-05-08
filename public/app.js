@@ -98,6 +98,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('project.contribution', {
+    url: "/contribution/:commitHash",
+    views: {
+      'projectDetail': {
+        templateUrl: 'partials/contributionPreview.html',
+        controller: 'DocumentController'
+      }
+    }
+  })
   .state('project.versions', {
     url: "/versions",
     views: {
