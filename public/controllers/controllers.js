@@ -340,7 +340,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   });
 })
 
-.controller('DocumentController', function($scope, $stateParams, ProjectsFactory) {
+.controller('DocumentController', function($scope, $location, $stateParams, ProjectsFactory) {
   
   var preview = document.getElementById('preview');
   var converter = new Showdown.converter();
@@ -390,6 +390,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     ProjectsFactory.removeContribution(project)
     .then(function() {
       console.log('success');
+      $location.url(project.username + '/' + project.repo + '/versions');
     })
     .catch(function(err) {
       $scope.error = err;
