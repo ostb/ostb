@@ -177,6 +177,10 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.indexContent = 'test';
 })
 
+.controller('ContributorsController', function($scope) {
+  
+})
+
 .controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
   var init = function() {
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
