@@ -69,8 +69,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
         $rootScope.currentUser = data.username;
         console.log('data received after login request', data);
         $rootScope.showLogin = false;
-        $state.go('dashboard');
-        // $state.go('home');
+        $state.go('dashboard', {username: data.username});
       }
     })
     .then(function() {
