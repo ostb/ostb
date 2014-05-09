@@ -204,7 +204,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   }
 })
 
-.controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
+.controller('EditorController', function($scope, $q, $stateParams, ProjectsFactory) {
   var init = function() {
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
@@ -216,28 +216,34 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     
     var connection = new sharejs.Connection('/channel');
 
-    var connectionName = $stateParams.username + '-' + $stateParams.repo;       //unique connection generated
-    if($scope.currentUser !== $stateParams.username) {
-      connectionName += '-' + $scope.currentUser;
-    }
-    connection.open(connectionName, function(error, doc) {
-      if (error) {
-        console.error(error);
-        return;
+    ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
+    .then(function(data) {
+      var permissions = data.indexOf($scope.currentUser) !== -1;
+      var connectionName = $stateParams.username + '-' + $stateParams.repo;       //unique connection generated
+      if(!permissions) {
+        connectionName += '-' + $scope.currentUser;
       }
 
-      ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
-      .then(function(data) {
-        if(doc.getLength() === 0) {
-          doc.insert(0, data);
+      var dfd = $q.defer();
+      connection.open(connectionName, function(err, data) {
+        if(err) {
+          dfd.reject(err);
         }
-
-        doc.attach_ace(editor);
-        editor.setReadOnly(false);
-      })
-      .catch(function(err) {
-        $scope.error = err;
+        dfd.resolve(data);
       });
+      return dfd.promise;
+    })
+    .then(function(data) {
+      doc = data;
+      return ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+    })
+    .then(function(data) {
+      if(doc.getLength() === 0) {
+        doc.insert(0, data);
+      }
+
+      doc.attach_ace(editor);
+      editor.setReadOnly(false);
 
       var render = function() {
         view.innerHTML = converter.makeHtml(doc.snapshot);
@@ -247,14 +253,18 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
       render();
       doc.on('change', render);
-
+      
       editor.getSession().on('changeScrollTop',function(scroll){
         var lengthScroll = $('#right')[0].scrollHeight - $('#right').height();
         $('#right').scrollTop(scroll);
-        // console.log('editor scroll hit', scroll);
       });
+    })
+    .catch(function(err) {
+      $scope.error = err;
     });
   };
+
+  var doc;
   init();
 
   $scope.projectName = $stateParams.repo;
