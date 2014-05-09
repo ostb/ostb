@@ -177,8 +177,18 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.indexContent = 'test';
 })
 
-.controller('ContributorsController', function($scope) {
-  
+.controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
+
+  ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
+  .then(function(data) {
+    $scope.members = data;
+
+    console.log(data);
+
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('EditorController', function($scope, $stateParams, ProjectsFactory) {

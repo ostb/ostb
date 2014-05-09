@@ -83,6 +83,18 @@ angular.module('factories.projects', [])
       return dfd.promise;
     },
 
+    getMembers: function(project) {
+      var dfd = $q.defer();
+      $http.get('/api/projects/member?username=' + project.username + '&repo=' + project.repo)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
+
     getProjects: function(project) {
       var dfd = $q.defer();
       var queryString = '/api/projects?'

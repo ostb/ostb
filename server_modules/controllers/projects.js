@@ -20,7 +20,8 @@ exports.create = function(req, res) {
         repo: req.body.repo,
         username: req.body.username,
         commits: {},
-        contributions: {}
+        contributions: {},
+        members: [req.body.username]
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Created new project ' + req.body.repo,
@@ -224,7 +225,18 @@ exports.getFolder = function(req, res) {
   });
 }
 
-
+exports.getMembers = function(req, res) {
+  var db = req.db;
+  var collection = db.get('projectcollection');
+  
+  collection.findOne({username: req.query.username}, function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      res.send(data.members);
+    }
+  })
+}
 
 
 

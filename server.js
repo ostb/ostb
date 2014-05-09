@@ -131,6 +131,9 @@ app.route('/auth/signup')
 app.route('/api/projects/download')
 .get(projects.getFolder);
 
+app.route('/api/projects/member')
+.get(projects.getMembers);
+
 app.route('/auth/login')
 .post(users.login);
 
