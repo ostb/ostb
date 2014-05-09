@@ -2,9 +2,7 @@ var Promise = require('bluebird');
 var shell = require('./../shell_commands');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-
 var authhelper = require('./authhelper');
-
 
 exports.create = function(req, res) {
   console.log('req.body inside project js', req.body);
@@ -21,7 +19,8 @@ exports.create = function(req, res) {
       var newProject = {
         repo: req.body.repo,
         username: req.body.username,
-        commits: {}
+        commits: {},
+        contributions: {}
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Created new project ' + req.body.repo,
@@ -37,7 +36,6 @@ exports.create = function(req, res) {
   }else{
     authhelper.authRedirect(req, res);
   }
-
 }
 
 exports.delete = function(req, res) {
@@ -95,12 +93,13 @@ exports.clone = function(req, res) {
 }
 
 exports.commit = function(req, res) {
-  if(authhelper.authenticate(req)){
-    var db = req.db;
-    var collection = db.get('projectcollection');
+  var db = req.db;
+  var collection = db.get('projectcollection');
+  var cmt = Promise.promisify(shell.commit);
+  
+  if(authhelper.authenticate(req)){         //authenticated, so commit as project
 
-    var cmt = Promise.promisify(shell.commit);
-    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody)
+    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'master')
     .then(function(commitHash){
 
       var commits = {}
@@ -115,7 +114,40 @@ exports.commit = function(req, res) {
     .catch(function(err){
       res.send(400, err.toString());
     })
-  }else{
+  }else{                                     //unathenticated, so commit as contribution
+    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'contributions')
+    .then(function(commitHash){
+
+      var contributions = {}
+      contributions['contributions.' + commitHash] = {
+        commitMessage: req.body.commitMessage,
+        date: new Date()
+      }
+      collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
+
+      return shell.switchToMaster(req.body.username, req.body.repo);
+    })
+    .then(function() {
+      res.send(201);
+    })
+    .catch(function(err){
+      res.send(400, err.toString());
+    })
+  }
+}
+
+exports.removeContribution = function(req, res) {
+  var db = req.db;
+  var collection = db.get('projectcollection');
+  
+  if(authhelper.authenticate(req)){         //authenticated, so commit as project
+    
+    var contributions = {};
+    contributions['contributions.' + req.query.commitHash] = {};
+    collection.update({username: req.query.username, repo: req.query.repo}, {$unset: contributions});
+
+    res.send(204);
+  }else{                                     //unauthenticated, so commit as contribution
     authhelper.authRedirect(req, res);
   }
 }
@@ -136,8 +168,6 @@ exports.getVersions = function(req, res) {
 exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
-
-  // if(req.session.user.username === req.query.username){
 
   var queryObj = {};
 
@@ -163,23 +193,13 @@ exports.getProjects = function(req, res) {
 exports.getFile = function(req, res) {
   var checkout = Promise.promisify(shell.checkout);
 
-  if(req.query.commitHash) {
-    checkout(req.query.username, req.query.repo, req.query.commitHash)
-    .then(function(data) {
-      res.send(200, data);
-    })
-    .catch(function(err){
-      res.send(400, err.toString());
-    })
-  }else {
-    checkout(req.query.username, req.query.repo, null)
-    .then(function(data) {
-      res.send(200, data);
-    })
-    .catch(function(err){
-      res.send(400, err.toString());
-    });
-  }
+  checkout(req.query.username, req.query.repo, req.query.commitHash)
+  .then(function(data) {
+    res.send(200, data);
+  })
+  .catch(function(err){
+    res.send(400, err.toString());
+  })
 }
 
 exports.getFolder = function(req, res) {

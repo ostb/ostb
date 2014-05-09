@@ -48,20 +48,11 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('dashboard', {
-    url: "/dashboard/:username",
+    url: "/:username/dashboard",
     views: {
       'content': {
         templateUrl: 'partials/dashboard.html',
         controller: 'Dashboard'
-      }
-    }
-  })
-  .state('page', {
-    url: "/page",
-    views: {
-      'content': {
-        templateUrl: 'partials/page.html',
-        controller: 'Page'
       }
     }
   })
@@ -101,6 +92,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('project.contribution', {
+    url: "/contribution/:commitHash",
+    views: {
+      'projectDetail': {
+        templateUrl: 'partials/contributionPreview.html',
+        controller: 'DocumentController'
+      }
+    }
+  })
   .state('project.versions', {
     url: "/versions",
     views: {
@@ -129,7 +129,6 @@ var ostb = angular.module('ostb', [
     }
   })
 
-  //2mayAdrian
   .state('create-account', {
     url: "/sign-up",
     views: {

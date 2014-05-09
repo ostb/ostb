@@ -190,11 +190,15 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     var connection = new sharejs.Connection('/channel');
 
     var connectionName = $stateParams.username + '-' + $stateParams.repo;       //unique connection generated
+    if($scope.currentUser !== $stateParams.username) {
+      connectionName += '-' + $scope.currentUser;
+    }
     connection.open(connectionName, function(error, doc) {
       if (error) {
         console.error(error);
         return;
       }
+
       ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
       .then(function(data) {
         if(doc.getLength() === 0) {
@@ -400,10 +404,11 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   });
 })
 
-.controller('DocumentController', function($scope, $stateParams, ProjectsFactory) {
+.controller('DocumentController', function($scope, $location, $stateParams, ProjectsFactory) {
   
   var preview = document.getElementById('preview');
   var converter = new Showdown.converter();
+  var md;
 
   var render = function(data) {
     preview.innerHTML = converter.makeHtml(data);
@@ -416,11 +421,45 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
   ProjectsFactory.checkout(queryObj)
   .then(function(data) {
+    md = data;
     render(data);
   })
   .catch(function(err) {
     $scope.error = err;
   });
+
+  $scope.acceptContribution = function() {
+    var project = {};
+    project.commitBody = {}
+    project.commitBody['content.md'] = md;
+    project.username = $stateParams.username;
+    project.repo = $stateParams.repo;
+    project.commitMessage = 'Accepted user contribution';
+
+    ProjectsFactory.commit(project)
+    .then(function() {
+      $scope.removeContribution();
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
+
+  $scope.removeContribution = function() {
+    var project = {};
+    project.username = $stateParams.username;
+    project.repo = $stateParams.repo;
+    project.commitHash = $stateParams.commitHash;
+
+    ProjectsFactory.removeContribution(project)
+    .then(function() {
+      console.log('success');
+      $location.url(project.username + '/' + project.repo + '/versions');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
 })
 
 

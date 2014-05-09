@@ -1,8 +1,11 @@
 var sys = require('sys')
 var exec = require('child_process').exec;
 var fs = require('fs');
+var ncp = require('ncp').ncp;
 var Promise = require('bluebird');
 var execute = Promise.promisify(exec);
+
+ncp.limit = 16;
 
 exports.createUser = function(username, next) {
   if(!isLegalName(username)) {
@@ -20,6 +23,8 @@ exports.createUser = function(username, next) {
 }
 
 exports.init = function(username, repo, next) {
+  var savedHash;
+
   if(!isLegalName(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
@@ -37,26 +42,48 @@ exports.init = function(username, repo, next) {
       'js/' : ''
     }
     var cmt = Promise.promisify(commit);
-    return cmt(username, repo, 'Created new project ' + repo, commitBody);
+    return cmt(username, repo, 'Created new project ' + repo, commitBody, null);
   })
   .then(function(hash) {
-    next(null, hash);
+    savedHash = hash;
+    return execute('cd user_data/' + username + '/' + repo + ' && ' +
+                   'git branch contributions')
+  })
+  .then(function() {
+    next(null, savedHash);
   })
 }
 
-var commit = exports.commit = function(username, repo, commitMessage, commitBody, next) {
+var commit = exports.commit = function(username, repo, commitMessage, commitBody, branch, next) {
   if(!isLegalCommitMessage(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
 
-  for(var key in commitBody) {      //iterate through all file/dir changes and write to disk
-    if(key[key.length - 1] === '/') {   //directory
-      fs.mkdirSync('user_data/' + username + '/' + repo + '/' + key);
-    }else {                             //file
-      fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
+  var buildDir = function() {
+    for(var key in commitBody) {      //iterate through all file/dir changes and write to disk
+      if(key[key.length - 1] === '/') {   //directory
+        fs.mkdirSync('user_data/' + username + '/' + repo + '/' + key);
+      }else {                             //file
+        fs.writeFileSync('user_data/' + username + '/' + repo + '/' + key, commitBody[key]);
+      }
     }
   }
-  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 'git commit -m "' + commitMessage +'"')
+
+  if(branch){
+    branch = ' && git checkout ' + branch;
+  }else {
+    branch = '';
+  }
+  var branchCmd = 'cd user_data/' + username + '/' + repo + 
+                  branch;
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git add --all' + ' && ' + 
+                'git commit -m "' + commitMessage + '"'
+
+  execute(branchCmd)
+  .then(function() {
+    buildDir();
+    return execute(command)
+  })
   .then(function() {
     return getCommitHash(username, repo);
   })
@@ -66,13 +93,19 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
 }
 
 var getCommitHash = exports.getCommitHash = function(username, repo) {
-  return execute('cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD');
+  
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD'
+
+  return execute(command);
 }
 
 exports.checkout = function(username, repo, hash, next) {
   hash = hash || 'master';
 
-  execute('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
+  console.log('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
+
+  execute('cd user_data/' + username + '/' + repo + ' && ' +
+          'git checkout ' + hash)
   .then(function() {
     fs.readFile('user_data/' + username + '/' + repo + '/' + 'content.md', 'utf-8', function(err, data) {
       if(err){
@@ -84,13 +117,37 @@ exports.checkout = function(username, repo, hash, next) {
 }
 
 exports.clone = function(username, owner, repo, next) {
-  execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
+  var copy = Promise.promisify(ncp);
+  var savedHash;
+
+  switchToMaster(owner, repo)
   .then(function() {
-    return getCommitHash(owner, repo);
+    fs.mkdirSync('user_data/' + username + '/' + repo);
+    return copy('user_data/' + owner + '/' + repo, 'user_data/' + username + '/' + repo)
+  })
+  .then(function() {
+    return execute('git init user_data/' + username + '/' + repo)
+  })
+  .then(function() {
+    var commitBody = {
+      'meta.txt': 'parent: ' + owner + ' // ' + repo
+    };
+    var cmt = Promise.promisify(commit);
+    return cmt(username, repo, 'Cloned project ' + repo + ' from ' + owner, commitBody, null);
   })
   .then(function(hash) {
-    next(null, hash[0].trim());
+    savedHash = hash;
+    return execute('cd user_data/' + username + '/' + repo);
   })
+  .then(function() {
+    next(null, savedHash);
+  })
+}
+
+var switchToMaster = exports.switchToMaster = function(username, repo) {
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' +
+                'git checkout master';
+  return execute(command);
 }
 
 exports.deleteRepo = function(username, repo) {

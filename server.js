@@ -119,6 +119,7 @@ app.route('/api/projects/clone')
 
 app.route('/api/projects/commit')
 .post(projects.commit)
+.delete(projects.removeContribution)
 .get(projects.getVersions);
 
 app.route('/api/projects/checkout')
@@ -134,7 +135,7 @@ app.route('/auth/login')
 .post(users.login);
 
 app.route('/auth/current')
-.get(users.getCurrent)
+.get(users.getCurrent);
 
 app.route('/logout')
 .get(users.logout)

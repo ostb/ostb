@@ -58,6 +58,19 @@ angular.module('factories.projects', [])
       return dfd.promise;
     },
 
+    removeContribution: function(project) {
+      var dfd = $q.defer();
+      $http.delete('/api/projects/commit?username=' + project.username + '&repo=' + project.repo + '&commitHash=' + project.commitHash)
+      .success(function(data, status, headers, config) {
+        dfd.resolve();
+      })
+      .error(function(data, status, headers, config) {
+        console.log('fail', arguments);
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
+
     getVersions: function(project) {
       var dfd = $q.defer();
       $http.get('/api/projects/commit?username=' + project.username + '&repo=' + project.repo)
