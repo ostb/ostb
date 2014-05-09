@@ -193,7 +193,7 @@ exports.getProjects = function(req, res) {
 exports.getFile = function(req, res) {
   var checkout = Promise.promisify(shell.checkout);
 
-  checkout(req.query.username, req.query.repo, req.query.commitHash, 'master')
+  checkout(req.query.username, req.query.repo, req.query.commitHash)
   .then(function(data) {
     res.send(200, data);
   })
