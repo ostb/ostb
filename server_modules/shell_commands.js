@@ -1,8 +1,11 @@
 var sys = require('sys')
 var exec = require('child_process').exec;
 var fs = require('fs');
+var ncp = require('ncp').ncp;
 var Promise = require('bluebird');
 var execute = Promise.promisify(exec);
+
+ncp.limit = 16;
 
 exports.createUser = function(username, next) {
   if(!isLegalName(username)) {
@@ -82,32 +85,27 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
     return execute(command)
   })
   .then(function() {
-    return getCommitHash(username, repo, branch);
+    return getCommitHash(username, repo);
   })
   .then(function(hash) {
     next(null, hash[0].trim());
   })
 }
 
-var getCommitHash = exports.getCommitHash = function(username, repo, branch) {
+var getCommitHash = exports.getCommitHash = function(username, repo) {
   
-  var command = 'cd user_data/' + username + '/' + repo + ' && '
-  if(branch) {
-    command += 'git checkout ' + branch + ' && '
-  }
-  command += 'git rev-parse HEAD'
+  var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD'
 
   return execute(command);
 }
 
 exports.checkout = function(username, repo, hash, branch, next) {
-  // hash = hash || 'HEAD';
-  hash = "HEAD"
+  hash = hash || 'master';
 
-  console.log(arguments)
+  console.log('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
 
   execute('cd user_data/' + username + '/' + repo + ' && ' +
-          'git checkout ' + branch + ' && ' +
+          // 'git checkout ' + branch + ' && ' +
           'git checkout ' + hash)
   .then(function() {
     fs.readFile('user_data/' + username + '/' + repo + '/' + 'content.md', 'utf-8', function(err, data) {
@@ -120,23 +118,34 @@ exports.checkout = function(username, repo, hash, branch, next) {
 }
 
 exports.clone = function(username, owner, repo, next) {
-  var savedHash;
+  var copy = Promise.promisify(ncp);
 
   switchToMaster(owner, repo)
   .then(function() {
-    return execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
+    fs.mkdirSync('user_data/' + username + '/' + repo);
+    return copy('user_data/' + owner + '/' + repo, 'user_data/' + username + '/' + repo)
   })
-  .then(function() {
-    return getCommitHash(owner, repo);
-  })
-  .then(function(hash) {
-    savedHash = hash;
-    return execute('cd user_data/' + username + '/' + repo + ' && ' +
-                   'git branch contributions')
-  })
-  .then(function() {
-    next(null, savedHash);
-  })
+
+  // var savedHash;
+
+  // switchToMaster(owner, repo)
+  // .then(function() {
+  //   console.log('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
+  //   return execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
+  // })
+  // .then(function() {
+  //   return getCommitHash(owner, repo);
+  // })
+  // .then(function(hash) {
+  //   savedHash = hash;
+  //   return execute('cd user_data/' + username + '/' + repo + ' && ' +
+  //                  'git branch contributions')
+  // })
+  // .then(function() {
+  //   next(null, savedHash);
+  // })
+
+
 }
 
 var switchToMaster = exports.switchToMaster = function(username, repo) {
