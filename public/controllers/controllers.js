@@ -181,7 +181,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
   ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
   .then(function(data) {
-    $scope.members = data;
+    $scope.membersList = data;
   })
   .catch(function(err) {
     $scope.error = err;
