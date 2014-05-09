@@ -119,31 +119,49 @@ exports.checkout = function(username, repo, hash, branch, next) {
 
 exports.clone = function(username, owner, repo, next) {
   var copy = Promise.promisify(ncp);
+  var savedHash;
 
   switchToMaster(owner, repo)
   .then(function() {
     fs.mkdirSync('user_data/' + username + '/' + repo);
     return copy('user_data/' + owner + '/' + repo, 'user_data/' + username + '/' + repo)
   })
-
-  // var savedHash;
-
-  // switchToMaster(owner, repo)
-  // .then(function() {
-  //   console.log('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
-  //   return execute('cd user_data/' + username + ' && ' + 'git clone ../' + owner + '/' + repo)
-  // })
-  // .then(function() {
-  //   return getCommitHash(owner, repo);
-  // })
-  // .then(function(hash) {
-  //   savedHash = hash;
-  //   return execute('cd user_data/' + username + '/' + repo + ' && ' +
-  //                  'git branch contributions')
-  // })
-  // .then(function() {
-  //   next(null, savedHash);
-  // })
+  .then(function() {
+    return execute('git init user_data/' + username + '/' + repo)
+  })
+  .then(function() {
+    var commitBody = {
+      'meta.txt': 'parent: ' + owner + ' // ' + repo
+    };
+    var cmt = Promise.promisify(commit);
+    return cmt(username, repo, 'Cloned project ' + repo + ' from ' + owner, commitBody, null);
+  })
+  .then(function(hash) {
+    savedHash = hash;
+    return execute('cd user_data/' + username + '/' + repo)
+  })
+  .then(function() {
+    next(null, savedHash);
+  })
+// execute('git init user_data/' + username + '/' + repo)
+//   .then(function() {
+//     var commitBody = {
+//       'content.md': '#Welcome\nThis is the first version of your new project.',
+//       'index.html': '<!DOCTYPE HTML>',
+//       'js/' : ''
+//     }
+//     var cmt = Promise.promisify(commit);
+//     return cmt(username, repo, 'Created new project ' + repo, commitBody, null);
+//   })
+//   .then(function(hash) {
+//     savedHash = hash;
+//     return execute('cd user_data/' + username + '/' + repo + ' && ' +
+//                    'git branch contributions')
+//   })
+//   .then(function() {
+//     next(null, savedHash);
+//   })
+// }
 
 
 }
