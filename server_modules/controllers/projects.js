@@ -238,6 +238,17 @@ exports.getMembers = function(req, res) {
   })
 }
 
+exports.addMember = function(req, res) {
+  if(authhelper.authenticate(req)){
+    var db = req.db;
+    var collection = db.get('projectcollection');
 
+    collection.update({username: req.body.username, repo: req.body.repo}, {$push: {members: req.body.member}});
+    res.send(201);
+    
+  }else{
+    authhelper.authRedirect(req, res);
+  }
+}
 
 

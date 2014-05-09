@@ -182,13 +182,26 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
   .then(function(data) {
     $scope.members = data;
-
-    console.log(data);
-
   })
   .catch(function(err) {
     $scope.error = err;
   });
+
+  $scope.addMember = function(member) {
+    var project = {
+      username: $stateParams.username, 
+      repo: $stateParams.repo,
+      member: member
+    };
+
+    ProjectsFactory.addMember(project)
+    .then(function(data) {
+      $scope.members = data;
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
 })
 
 .controller('EditorController', function($scope, $stateParams, ProjectsFactory) {
