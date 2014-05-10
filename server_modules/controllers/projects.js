@@ -253,4 +253,17 @@ exports.addMember = function(req, res) {
   }
 }
 
+exports.deleteMember = function(req, res) {
+  if(authhelper.authenticate(req)){
+    var db = req.db;
+    var collection = db.get('projectcollection');
+
+    collection.update({username: req.query.username, repo: req.query.repo}, {$pull: {members: req.query.member}});
+    res.send(204);
+
+  }else{
+    authhelper.authRedirect(req, res);
+  }
+}
+
 

@@ -133,6 +133,7 @@ app.route('/api/projects/download')
 
 app.route('/api/projects/member')
 .post(projects.addMember)
+.delete(projects.deleteMember)
 .get(projects.getMembers);
 
 app.route('/auth/login')

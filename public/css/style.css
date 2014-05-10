@@ -362,4 +362,20 @@ img {
   background-color: #E8F2FD;
 }
 
+.removeButton {
+  display: inline-block;
+  border: 1px solid white;
+  height: 30px;
+  width: 30px;
+  padding: 10px 0 0 10px;
+}
+
+.removeButton:hover {
+  border: 1px solid red;
+  cursor: pointer;
+}
+
+.removeButton:active {
+  background-color: red;
+}
 

@@ -5,6 +5,7 @@
 
 <ul style="float:left">
   <li ng-repeat='member in membersList track by $index'>
+      <div ng-hide="member === project.username" class="removeButton"><i ng-click="deleteMember(member)" class="fa fa-times-circle fa-lg"></i></div>
       <a ui-sref="dashboard({username: member})">{{member}}</a>
     </div>
   </li>
