@@ -200,6 +200,10 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.indexContent = 'test';
 })
 
+.controller('DiscoverController', function($scope){
+  
+})
+
 .controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
 
   var updateMembers = function() {
