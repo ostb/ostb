@@ -102,7 +102,6 @@ angular.module('factories.users', [])
       var dfd = $q.defer();
       $http.get('/search/' + user)
       .success(function(data, status, headers, config) {
-        console.log(data);
         dfd.resolve(data);
       })
       .error(function(data, status, headers, config) {

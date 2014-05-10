@@ -10,7 +10,7 @@
 
       <div class="control">
 
-        <button id="editButton"><a ui-sref="editor({username: project.username, repo: project.repo})">Edit</a></button>
+        <a ui-sref="editor({username: project.username, repo: project.repo})"><button id="editButton">Edit</button></a>
 
         <ul class="nav">
           <li ng-class="{current:isActive('project.preview')}"><a ui-sref="project.preview">Preview</a></li>
@@ -20,20 +20,17 @@
         </ul>
         <button>Add to Book...</button>
 
-        <button ng-hide='currentUser === project.username' ng-controller='ProjectsController'><a ng-click='cloneProject(project)'>Clone Project</a></button>
+        <a ng-controller='ProjectsController' ng-click='cloneProject(project)'><button ng-hide='currentUser === project.username'>Clone Project</button></a>
 
-        <button ng-controller='DownloadController'><a ng-click='getFolder()'>Download</a></button>
+        <a ng-controller='DownloadController' ng-click='getFolder()'><button>Download</button></a>
 
-        <button ng-hide='currentUser !== project.username'>
-          <div ng-controller='ProjectsController'>
-            <a ng-click='toggleModal()'>Delete</a>
-          </div>
-        </button>
+        <div ng-controller='ProjectsController'>
+          <button ng-click='toggleModal()' ng-hide='currentUser !== project.username'>Delete</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <div ng-controller='ProjectsController'>
   <a ng-click='toggleModal()'></a>
