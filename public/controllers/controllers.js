@@ -84,12 +84,8 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   console.log('Login controller');
 })
 
-.controller('Dashboard', function($rootScope, $scope) {
-  // console.log('Dashboard');
-  // $scope.logoutUser = function(){
-  //   $rootScope.currentUser = 'public';
-  //   console.log('hit Dashboard logoutUser');
-  // }
+.controller('Dashboard', function($scope) {
+  var hash = CryptoJS.MD5("Message");
 })
 
 .controller('Signup', function($rootScope, $scope, UsersFactory, $state) {
