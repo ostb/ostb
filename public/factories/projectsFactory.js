@@ -95,6 +95,18 @@ angular.module('factories.projects', [])
       return dfd.promise;
     },
 
+    deleteMember: function(project) {
+      var dfd = $q.defer();
+      $http.delete('/api/projects/member?username=' + project.username + '&repo=' + project.repo + '&member=' + project.member)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        dfd.reject(data);
+      });
+      return dfd.promise;
+    },
+
     getMembers: function(project) {
       var dfd = $q.defer();
       $http.get('/api/projects/member?username=' + project.username + '&repo=' + project.repo)

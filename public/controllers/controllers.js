@@ -186,6 +186,22 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     $scope.error = err;
   });
 
+  $scope.deleteMember = function(member) {
+    var project = {
+      username: $stateParams.username, 
+      repo: $stateParams.repo,
+      member: member
+    };
+
+    ProjectsFactory.deleteMember(project)
+    .then(function(data) {
+      $scope.members = data;
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
+
   $scope.addMember = function(member) {
     var project = {
       username: $stateParams.username, 
