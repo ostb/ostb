@@ -191,8 +191,8 @@ exports.getProjects = function(req, res) {
     queryObj.repo = req.query.repo;
   }
 
-  if(queryObj === {}) {
-    collection.find(queryObj, respond);
+  if(Object.keys(queryObj).length === 0) {
+    collection.find(queryObj, {limit: 1}, respond);
   }else {
     collection.find(queryObj, respond);
   }
