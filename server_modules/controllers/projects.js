@@ -20,7 +20,8 @@ exports.create = function(req, res) {
         username: req.body.username,
         commits: {},
         contributions: {},
-        members: [req.body.username]
+        members: [req.body.username],
+        lastUpdate: new Date()
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Created new project ' + req.body.repo,
@@ -192,7 +193,7 @@ exports.getProjects = function(req, res) {
   }
 
   if(Object.keys(queryObj).length === 0) {
-    collection.find(queryObj, {limit: 1}, respond);
+    collection.find(queryObj, {sort: {lastUpdate: -1}, limit: 1}, respond);
   }else {
     collection.find(queryObj, respond);
   }
