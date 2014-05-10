@@ -195,7 +195,7 @@ exports.getProjects = function(req, res) {
   }
 
   if(Object.keys(queryObj).length === 0) {
-    collection.find(queryObj, {sort: {lastUpdate: -1}, limit: 1}, respond);
+    collection.find(queryObj, {sort: {lastUpdate: -1}, limit: 15}, respond);
   }else {
     collection.find(queryObj, respond);
   }
