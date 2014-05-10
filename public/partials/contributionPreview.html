@@ -1,6 +1,8 @@
 <h3>Preview Contribution</h3>
 
-<div>
+<div ng-hide="currentUser === project.username">This contribution is pending review from the project owner.</div>
+
+<div ng-show="currentUser === project.username">
   <span style="float: left;">Save this contribution as<br>the current master version.
     <button><a ng-click="acceptContribution()">Accept Changes</a></button>
   </span>
