@@ -331,7 +331,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 .controller('VersionsController', function($scope) {})
 
-.controller('ProjectsController', function($scope, $location, $stateParams, ProjectsFactory, ModalsFactory) {
+.controller('ProjectsController', function($scope, $state, $stateParams, ProjectsFactory, ModalsFactory) {
 
   $scope.modalShown = false;
 
@@ -354,7 +354,8 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.create(project)
     .then(function() {
-      $location.url(project.username + '/' + project.repo);
+      $state.go('project', {username: project.username, repo: project.repo});
+      // $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;
@@ -368,7 +369,8 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.clone(project)
     .then(function() {
-      $location.url(project.username + '/' + project.repo);
+      $state.go('project', {username: project.username, repo: project.repo});
+      // $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;
@@ -378,7 +380,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.deleteProject = function(project) {
     ProjectsFactory.delete(project)
     .then(function() {
-      $location.url('dashboard/' + project.username);
+      $state.go('dashboard', {username: project.username});
     })
     .catch(function(err) {
       $scope.error = err;
@@ -460,7 +462,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   });
 })
 
-.controller('DocumentController', function($scope, $location, $stateParams, ProjectsFactory) {
+.controller('DocumentController', function($scope, $state, $stateParams, ProjectsFactory) {
   
   var preview = document.getElementById('preview');
   var converter = new Showdown.converter();
@@ -510,7 +512,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     ProjectsFactory.removeContribution(project)
     .then(function() {
       console.log('success');
-      $location.url(project.username + '/' + project.repo + '/versions');
+      $state.go('project.versions', {username: project.username, repo: project.repo});
     })
     .catch(function(err) {
       $scope.error = err;
