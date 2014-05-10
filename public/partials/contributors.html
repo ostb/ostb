@@ -4,7 +4,7 @@
 <p>Members can collaboratively edit your<br>project in real time, and save new<br>versions.</p>
 
 <ul style="float:left">
-  <li ng-repeat='member in membersList'>
+  <li ng-repeat='member in membersList track by $index'>
       <a ui-sref="dashboard({username: member})">{{member}}</a>
     </div>
   </li>
