@@ -422,7 +422,8 @@ img {
 }
 
 #preview {
-  background-color: #E8F2FD;
+  background: #f6f7f9;
+  padding: 1px 1em;
 }
 
 .removeButton {
