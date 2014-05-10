@@ -82,6 +82,20 @@ angular.module('factories.users', [])
         dfd.reject();
       });
       return dfd.promise;
+    },
+    getUser: function(user, cb) {
+      console.log('query user in userFactoryjs', user);
+      var dfd = $q.defer();
+      $http.get('/search/' + user)
+      .success(function(data, status, headers, config) {
+        cb(data);
+        dfd.resolve();
+      })
+      .error(function(data, status, headers, config) {
+        console.log('fail', arguments);
+        dfd.reject(data);
+      });
+      return dfd.promise;
     }
   }
 });

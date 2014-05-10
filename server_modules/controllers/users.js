@@ -99,5 +99,31 @@ exports.delete = function(req, res) {
       res.send(400, err.toString());
     });
   }
-}
+};
 
+exports.searchUser = function(req, res) {
+  console.log('req params name', req.params.name)
+  // if(authhelper.authenticate(req)){
+    var db = req.db;
+    var collection = db.get('usercollection');
+    var regex = new RegExp('^' + req.params.name, 'i');
+    collection.find({username: regex})
+    .on('success', function(data){
+      console.log('data', data);
+      if(data){
+        res.send(201, data);
+      }else{
+        res.send(401);
+      }
+    });
+
+    // if(user.length){
+    //   console.log('user inside users js server side:', user);
+    //   res.send(201, user);
+    // }else{
+    //   res.send(400);
+    // }
+  // }else{
+  //   authhelper.authRedirect(req, res);
+  // }
+};
