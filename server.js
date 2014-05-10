@@ -106,8 +106,9 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-app.route('/api/users/delete')
-.delete(users.delete);
+app.route('/api/users')
+.delete(users.delete)
+.get(users.getUser);
 
 app.route('/api/projects')
 .post(projects.create)

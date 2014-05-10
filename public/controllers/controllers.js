@@ -84,8 +84,18 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   console.log('Login controller');
 })
 
-.controller('Dashboard', function($scope) {
+.controller('Dashboard', function($scope, $stateParams, UsersFactory) {
+
   var hash = CryptoJS.MD5("Message");
+  var profile = document.getElementById('profile');
+
+  UsersFactory.getUser({username: $stateParams.username})
+  .then(function(data) {
+    $scope.user = data[0];
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('Signup', function($rootScope, $scope, UsersFactory, $state) {
