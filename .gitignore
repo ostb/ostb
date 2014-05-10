@@ -13,3 +13,6 @@ mongo_data/
 .*~
 .swp
 *.swp
+
+public/lib/background.js
+public/lib/index.js

@@ -45,7 +45,12 @@ a:hover   { color: #73a6cd; }
 
 /* Two column layouts */
 .content { margin-right: 220px; }
-.control { width: 200px; top: 0; right: 0; position: absolute;}  /*position:absolute WAS DISABLED FOR MODALS*/ 
+.control { width: 200px; top: 0; right: 0; position: absolute; }
+
+/* Three columns */
+.column { width: 30%; margin: 2.5%; float: left; }
+.column:first-child { margin-left: 0; }
+.column:last-child { margin-right: 0; }
 
 /* Buttons */
 button {
@@ -90,6 +95,35 @@ html {
 
 .meta li {
   float: left;
+}
+
+.splash {
+  background: #99c3e3;
+  padding: 3em 0 3em;
+}
+
+.splash h1 {
+  font-size: 2.25em;
+  font-weight: 300;
+  margin: 0;
+}
+
+.splash button {
+  width: 11em;
+  height: 2.2em;
+  margin: 1.5em auto 0;
+  text-align: center;
+  background: #ee9911;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.5em;
+  box-shadow: inset 0px -3px 1px rgba(0,0,0,.1);
+  transition: .2s ease;
+}
+
+.splash button:hover {
+  background: #ffaa22;
 }
 
 .login .wrapper, .sign-up .wrapper {
@@ -278,17 +312,22 @@ img {
 
 #header {
   position: fixed;
-  top: 100px;
+  top: 52px;
   right: 0;
-  height: 100px;
+  height: 63px;
   width: 100%;
-  background-color: black;
+  background: #99c3e3;
+}
+
+#header > .left, #header > .right {
+  width: 46%;
+  margin: 0 2%;
 }
 
 #htext {
+  display: none;
   line-height: 30px;
   vertical-align: middle;
-
   padding-left: 10px;
   color: white;
   font-family: baskerville, palatino, 'palatino linotype', georgia,serif; 
@@ -299,13 +338,17 @@ img {
   position: fixed;
   overflow: scroll;
   float: right;
-  background-color: #E8F2FD;
-  top: 200px;
+  background-color: #f6f7f9;
+  top: 115px;
   bottom: 0;
   right: 0;
   left: 50%;
   width: 50%;
-  height: 100%;
+  border-left: 1px solid #99c3e3;
+}
+
+#right p {
+  font-family: 'Open Sans', sans-serif;
 }
 
 #view {
@@ -314,32 +357,52 @@ img {
 }
 
 #editor { 
-  margin: 0;
+  margin: 0 0 0 1%;
   position: fixed;
-  top: 200px;
+  top: 115px;
   bottom: 0;
   right: 50%;
   left: 0;
-  width: 50%;
-  height: 100%;
+  width: 49%;
+  color: #576c82;
+  font-size: .8em;
+  line-height: 1.6em;
+  font-family: Menlo, Consolas, 'Courier New', Courier, monospace;
+}
+
+.ace_active-line {
+  background-color: #f6f7f9 !important;
+
+}
+
+.editNav {
+  padding-left: 0;
+  margin: 10px 0px;
 }
 
 .editButton {
-  color: white;
+  color: black;
   display: inline-block;
-  border: 1px solid black;
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .1);
   height: 30px;
   width: 30px;
   padding: 10px 0 0 10px;
 }
 
 .editButton:hover {
-  border: 1px solid cyan;
+  border: 1px solid rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, .2);
   cursor: pointer;
 }
 
 .editButton:active {
-  background-color: cyan;
+  background-color: #99c3e3;
+}
+
+.save {
+  width: 72px;
 }
 
 .question {
@@ -359,7 +422,8 @@ img {
 }
 
 #preview {
-  background-color: #E8F2FD;
+  background: #f6f7f9;
+  padding: 1px 1em;
 }
 
 .removeButton {
@@ -378,4 +442,6 @@ img {
 .removeButton:active {
   background-color: red;
 }
+
+
 

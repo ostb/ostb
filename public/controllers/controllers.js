@@ -1,29 +1,36 @@
-ostb.controller('IndexController', function($rootScope, $location, $state, UsersFactory) {
-    $rootScope.showLogin = true;
-    $rootScope.checkUser = function() {
-      console.log('hit inside controller checkUser');
-      UsersFactory.getCurrentUser(function(user) {
-        $rootScope.currentUser = user.username || 'public';
-          if ($rootScope.currentUser !== 'public') {
-            $rootScope.showLogin = false;
-            return $rootScope.currentUser;
-          } else {
-            console.log('hit inside index cont');
-            $state.go('dashboard');
-          }
+ostb.controller('IndexController', function($rootScope, $scope, $location, $state, UsersFactory) {
+  $rootScope.showLogin = true;
+  $rootScope.checkUser = function() {
+    console.log('hit inside controller checkUser');
+    UsersFactory.getCurrentUser(function(user) {
+      $rootScope.currentUser = user.username || 'public';
+        if ($rootScope.currentUser !== 'public') {
+          $rootScope.showLogin = false;
+          return $rootScope.currentUser;
+        } else {
+          console.log('hit inside index cont');
+          $state.go('dashboard');
         }
-      );
-    };
-
-    $rootScope.checkUser();
-
-    $rootScope.logoutUser = function(){
-      UsersFactory.sessionOut($rootScope.currentUser);
-      $rootScope.showLogin = true;
-      $rootScope.currentUser = undefined;
-      // $state.go('home');
-      console.log('hit Dashboard logoutUser');
+      }
+    );
+  };
+  $rootScope.checkUser();
+  $rootScope.logoutUser = function(){
+    UsersFactory.sessionOut($rootScope.currentUser);
+    $rootScope.showLogin = true;
+    $rootScope.currentUser = undefined;
+    // $state.go('home');
+    console.log('hit Dashboard logoutUser');
+  };
+  $rootScope.isActive = function(link) {
+    if ($state.$current.includes[$rootScope.currentUser]) {
+      return $state.$current.includes[link];
     }
+  };
+})
+
+.controller('Splash', function($rootScope, $scope) {
+  console.log('Splash');
 })
 
 .controller('Login', function($rootScope, $state, $scope, UsersFactory) {
@@ -280,6 +287,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
+    editor.renderer.setShowGutter(false);
     editor.setReadOnly(true);
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
@@ -339,6 +347,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   init();
 
   $scope.projectName = $stateParams.repo;
+  $scope.projectOwner = $stateParams.username;
 })
 
 .controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {

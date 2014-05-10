@@ -1,20 +1,20 @@
-<div id="header">
-  <div id="htext">editing <strong>{{projectName}}</strong>
+<div id="header" ng-controller='ProjectsController'>
+  <div class="left">
+    <ul class="editNav left">
+      <li class="editButton"><em class="fa fa-bold fa-fw"></em></li>
+      <li class="editButton"><em class="fa fa-italic fa-fw"></em></li>
+      <li class="editButton"><em class="fa fa-globe fa-fw"></em></li>
+      <li class="editButton"><em class="fa fa-indent fa-fw"></em></li>
+      <li class="editButton"><em class="fa fa-picture-o fa-fw"></em></li>
+    </ul>
+    <h4 class="right"><span style="font-weight: 300">Owner:</span> {{projectOwner}}</h4>
   </div>
-  <span style="float: left;"><ul class="editNav">
-    <li class="editButton"><i class="fa fa-bold fa-fw"></i></li>
-    <li class="editButton"><i class="fa fa-italic fa-fw"></i></li>
-    <li class="editButton"><i class="fa fa-globe fa-fw"></i></li>
-    <li class="editButton"><i class="fa fa-indent fa-fw"></i></li>
-    <li class="editButton"><i class="fa fa-picture-o fa-fw"></i></li>
-  </ul></span>
-
-  <div ng-controller='ProjectsController'>
-    <span style="float: right;"><ul class="editNav" style="float: left; -webkit-margin-end: 1em">
-      <li class="editButton" title="Save Version" ng-click='toggleModal()'><i class="fa fa-floppy-o fa-fw"></i></li>
-    </ul></span>
+  <div class="right">
+    <h4 class="left"><span style="font-weight: 300">Document:</span> {{projectName}}</h4>
+    <ul class="editNav right">
+      <li class="editButton save" title="Save Version" ng-click='toggleModal()'><em class="fa fa-floppy-o fa-fw"></em><span class="">&nbsp;Save</span></li>
+    </ul>
   </div>
-
 </div>
 <div id="right">
   <div id="view" class="content"></div>
@@ -30,6 +30,7 @@
       Version Name:
       <br>
       <input style="width: 300px;" type="text" placeholder="use a name that describes your changes..." ng-model="project.commitMessage"><br>
+      <button type="submit">Save Version</button>
     </form>
     <div style="color:red;">{{error}}</div>
   </modal-dialog>

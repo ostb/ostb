@@ -5,6 +5,7 @@
     <title>textbooks.io</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -14,10 +15,10 @@
     <div class="metabar">
       <div class="wrapper" ng-controller="IndexController">
         <h1 class="logo left"><a ui-sref="home">textbooks.io</a></h1>
-        <div ng-show="!!currentUser">Welcome, {{currentUser}}</div>
+        <!-- <div ng-show="!!currentUser">Welcome, {{currentUser}}</div> -->
         <ul class="nav meta right">
-          <li><a ui-sref="dashboard({username: currentUser})" ng-show="!showLogin">Dashboard</a></li>
-          <li><a ui-sref="account({username: currentUser})" ng-show="!showLogin">Account</a></li>
+          <li><a ui-sref="dashboard({username: currentUser})" ng-class="{current:isActive('dashboard')}" ng-show="!showLogin">Dashboard</a></li>
+          <li><a ui-sref="account({username: currentUser})" ng-class="{current:isActive('account')}" ng-show="!showLogin">Account</a></li>
           <li><a ui-sref="login" ng-show="showLogin">Sign In</a></li>
           <li><a ui-sref="home" ng-show="!showLogin" ng-click="logoutUser()">Logout</a></li>
         </ul>
@@ -25,8 +26,11 @@
     </div>
     <!-- Content is served in the div below -->
     <div ui-view="content"></div>
+    <div class="footer">
 
+    </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
     <script src="/lib/showdown.js"></script>
     <script src="/lib/extensions/ostb.js"></script>
     <script src="/lib/extensions/table.js"></script>
@@ -43,7 +47,6 @@
     <script src="/channel/bcsocket.js"></script>
     <script src="/share/share.uncompressed.js"></script>
     <script src="/share/ace.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
     <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
     <script src="/lib/FileSaver.js"></script>
 
