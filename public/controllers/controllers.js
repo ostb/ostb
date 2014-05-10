@@ -86,12 +86,16 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 .controller('Dashboard', function($scope, $stateParams, UsersFactory) {
 
-  var hash = CryptoJS.MD5("Message");
   var profile = document.getElementById('profile');
 
   UsersFactory.getUser({username: $stateParams.username})
   .then(function(data) {
     $scope.user = data[0];
+    // var email = $scope.user.email;
+    var email = 'ethoreby@gmail.com'
+    var gravatarHash = CryptoJS.MD5(email).toString();
+    console.log('http://www.gravatar.com/avatar/' + gravatarHash);
+    profile.src = 'http://www.gravatar.com/avatar/' + gravatarHash;
   })
   .catch(function(err) {
     $scope.error = err;
