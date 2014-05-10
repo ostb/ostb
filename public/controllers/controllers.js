@@ -178,13 +178,15 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 .controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
 
-  ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
-  .then(function(data) {
-    $scope.membersList = data;
-  })
-  .catch(function(err) {
-    $scope.error = err;
-  });
+  var updateMembers = function() {
+    ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
+    .then(function(data) {
+      $scope.membersList = data;
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
 
   $scope.deleteMember = function(member) {
     var project = {
@@ -194,8 +196,8 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     };
 
     ProjectsFactory.deleteMember(project)
-    .then(function(data) {
-      $scope.members = data;
+    .then(function() {
+      updateMembers();
     })
     .catch(function(err) {
       $scope.error = err;
@@ -211,12 +213,14 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
     ProjectsFactory.addMember(project)
     .then(function(data) {
-      $scope.members = data;
+      updateMembers();
     })
     .catch(function(err) {
       $scope.error = err;
     });
   }
+
+  updateMembers();
 })
 
 .controller('EditorController', function($scope, $q, $stateParams, ProjectsFactory) {
