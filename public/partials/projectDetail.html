@@ -1,7 +1,7 @@
 <div class="page">
   <div class="wrapper">
     <div class="content">
-    <h1>Project: {{project.repo}}</h1>
+    <h1><span><a ui-sref="dashboard{{project.username}}">{{project.username}}:</a></span> {{project.repo}}</h1>
     <div>
       <div ui-view="projectDetail"></div>
     </div>

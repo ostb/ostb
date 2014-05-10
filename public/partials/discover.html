@@ -5,7 +5,15 @@
 
     <ul>
       <div ng-repeat='project in projects'>
-        <a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
+
+        <div style="margin: 5px; border: 1px solid black; width: 200px;">
+            <a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
+          <br> by <br>
+          <a ui-sref='dashboard({username: project.username})'>{{project.username}}<a/>
+          <br>
+          last update: {{project.lastUpdate}}
+        </div>
+
       </div>
     </ul>
   </div>

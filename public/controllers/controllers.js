@@ -1,29 +1,36 @@
-ostb.controller('IndexController', function($rootScope, $location, $state, UsersFactory) {
-    $rootScope.showLogin = true;
-    $rootScope.checkUser = function() {
-      console.log('hit inside controller checkUser');
-      UsersFactory.getCurrentUser(function(user) {
-        $rootScope.currentUser = user.username || 'public';
-          if ($rootScope.currentUser !== 'public') {
-            $rootScope.showLogin = false;
-            return $rootScope.currentUser;
-          } else {
-            console.log('hit inside index cont');
-            $state.go('dashboard');
-          }
+ostb.controller('IndexController', function($rootScope, $scope, $location, $state, UsersFactory) {
+  $rootScope.showLogin = true;
+  $rootScope.checkUser = function() {
+    // console.log('hit inside controller checkUser');
+    UsersFactory.getCurrentUser(function(user) {
+      $rootScope.currentUser = user.username || 'public';
+        if ($rootScope.currentUser !== 'public') {
+          $rootScope.showLogin = false;
+          return $rootScope.currentUser;
+        } else {
+          console.log('hit inside index cont');
+          $state.go('dashboard');
         }
-      );
-    };
-
-    $rootScope.checkUser();
-
-    $rootScope.logoutUser = function(){
-      UsersFactory.sessionOut($rootScope.currentUser);
-      $rootScope.showLogin = true;
-      $rootScope.currentUser = undefined;
-      // $state.go('home');
-      console.log('hit Dashboard logoutUser');
+      }
+    );
+  };
+  $rootScope.checkUser();
+  $rootScope.logoutUser = function(){
+    UsersFactory.sessionOut($rootScope.currentUser);
+    $rootScope.showLogin = true;
+    $rootScope.currentUser = undefined;
+    // $state.go('home');
+    // console.log('hit Dashboard logoutUser');
+  };
+  $rootScope.isActive = function(link) {
+    if ($state.$current.includes[$rootScope.currentUser]) {
+      return $state.$current.includes[link];
     }
+  };
+})
+
+.controller('Splash', function($rootScope, $scope) {
+  console.log('Splash');
 })
 
 .controller('Login', function($rootScope, $state, $scope, UsersFactory) {
@@ -36,7 +43,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 
   $scope.submitTheForm = function(username, password) {
-    console.log('hit submitTheForm Login');
+    // console.log('hit submitTheForm Login');
     $scope.user.username = username;
     $scope.user.password = password;
     if(password && username){
@@ -47,7 +54,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
             filtered.push(key);
           }
         });
-        console.log('filtered', filtered);
+        // console.log('filtered', filtered);
         if(!filtered.length){
           $scope.postUser($scope.user);
         }else{
@@ -63,11 +70,11 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
   $scope.postUser = function(user) {
     UsersFactory.post(user, function(data){
-      console.log('inside login controller', data);
+      // console.log('inside login controller', data);
       if(data){
         $rootScope.currentUserInfo = data;
         $rootScope.currentUser = data.username;
-        console.log('data received after login request', data);
+        // console.log('data received after login request', data);
         $rootScope.showLogin = false;
         $state.go('dashboard', {username: data.username});
       }
@@ -80,8 +87,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
       $scope.error = err;
     });
   };
-
-  console.log('Login controller');
 })
 
 .controller('Dashboard', function($scope, $stateParams, UsersFactory) {
@@ -109,7 +114,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 
   $scope.submitTheForm = function(username, email, password, passwordVerify) {
-    console.log('hit submitTheForm Signup');
+    // console.log('hit submitTheForm Signup');
     $scope.user.username = username;
     $scope.user.email = email;
     $scope.user.password = password;
@@ -151,13 +156,13 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   
   $scope.postUser = function(user) {
     UsersFactory.post(user, function(data){
-      console.log('inside login controller', data);
+      // console.log('inside login controller', data);
       if(data){
         $rootScope.currentUserInfo = data;
         $rootScope.currentUser = data.username;
-        console.log('data received after login request', data);
+        // console.log('data received after login request', data);
         $rootScope.showLogin = false;
-        $state.go('dashboard');
+        $state.go('dashboard', {username: data.username});
       }
     })
     .then(function() {
@@ -200,8 +205,15 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.indexContent = 'test';
 })
 
-.controller('DiscoverController', function($scope){
+.controller('DiscoverController', function($scope, ProjectsFactory){
   
+  ProjectsFactory.getProjects()
+  .then(function(data) {
+    $scope.projects = data;
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
@@ -214,7 +226,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     .catch(function(err) {
       $scope.error = err;
     });
-  }
+  };
 
   $scope.deleteMember = function(member) {
     var project = {
@@ -230,23 +242,51 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     .catch(function(err) {
       $scope.error = err;
     });
-  }
+  };
 
   $scope.addMember = function(member) {
+    
     var project = {
       username: $stateParams.username, 
       repo: $stateParams.repo,
       member: member
     };
+    if(_.contains($scope.membersList, member)){
+      $scope.response = 'member already in the list';
+    }else{
 
-    ProjectsFactory.addMember(project)
-    .then(function(data) {
-      updateMembers();
-    })
-    .catch(function(err) {
-      $scope.error = err;
+      ProjectsFactory.addMember(project)
+      .then(function(data) {
+        updateMembers();
+      })
+      .catch(function(err) {
+        $scope.error = err;
+      }); 
+    }
+  };
+
+  $scope.queryUser = [];
+  $scope.response = undefined;
+
+  $scope.query = function (user) {
+    $scope.response = undefined;
+    $scope.queryUser = [];
+    UsersFactory.getUser(user, function(returnedUser, response) {
+      // console.log('returnedUser in controller js getUser', returnedUser);
+        var userList = returnedUser;
+        userList = _.reject(userList, function(userObj){    
+          return _.contains($scope.membersList, userObj.username) || userObj.username === $rootScope.currentUser;
+        });
+        if (userList.length) {
+          $scope.queryUser = userList;
+        } else {
+          // console.log('response', response);
+          $scope.response = response || 'No users found';
+          // console.log('$scope.response', $scope.response);
+        }
+      
     });
-  }
+  };
 
   updateMembers();
 })
@@ -256,6 +296,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
+    editor.renderer.setShowGutter(false);
     editor.setReadOnly(true);
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
@@ -315,6 +356,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   init();
 
   $scope.projectName = $stateParams.repo;
+  $scope.projectOwner = $stateParams.username;
 })
 
 .controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
@@ -328,7 +370,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   };
 
   $scope.getFolder = function() {
-    console.log('hit download');
+    // console.log('hit download');
 
     ProjectsFactory.getFolder({username: $stateParams.username, repo: $stateParams.repo})
     .then(function(data) {
@@ -370,7 +412,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   });
 
   $scope.toggleModal = function() {
-    console.log('toggled')
     ModalsFactory.toggleActive();
   };
 
