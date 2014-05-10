@@ -8,7 +8,11 @@
           <li><a ui-sref="project">Concrete Mathematics</a></li>
           <li><a ui-sref="project">A Perspective on the Human Condition</a></li>
         </ul> -->
+        <h2>{{user.username}}</h2>
         <img id="profile">
+        <ul>
+          <li>Member since: {{user.meta.createdAt}}</li>
+        </ul>
       </div>
       <div class="pages left">
         <h2>Pages</h2>

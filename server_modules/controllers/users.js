@@ -23,7 +23,9 @@ exports.signup = function(req, res) {
 
     collection.insert({
       username: req.body.username,
-      meta: {},
+      meta: {
+        createdAt: new Date()
+      },
       email: req.body.email,
       pwHash: generateHash(req.body.password)
     });

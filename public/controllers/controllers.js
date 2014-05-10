@@ -91,11 +91,9 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   UsersFactory.getUser({username: $stateParams.username})
   .then(function(data) {
     $scope.user = data[0];
-    // var email = $scope.user.email;
-    var email = 'ethoreby@gmail.com'
+    var email = $scope.user.email;
     var gravatarHash = CryptoJS.MD5(email).toString();
-    console.log('http://www.gravatar.com/avatar/' + gravatarHash);
-    profile.src = 'http://www.gravatar.com/avatar/' + gravatarHash;
+    profile.src = 'http://www.gravatar.com/avatar/' + gravatarHash + '?s=200';
   })
   .catch(function(err) {
     $scope.error = err;
