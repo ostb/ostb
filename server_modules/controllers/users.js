@@ -23,7 +23,9 @@ exports.signup = function(req, res) {
 
     collection.insert({
       username: req.body.username,
-      meta: {},
+      meta: {
+        createdAt: new Date()
+      },
       email: req.body.email,
       pwHash: generateHash(req.body.password)
     });
@@ -40,7 +42,7 @@ exports.login = function(req, res) {
   var db = req.db;
   // console.log('req.session before', req.session);
   // console.log('req.session.user before', req.session.user);
-  console.log('req.body', req.body);
+  // console.log('req.body', req.body);
 
   var collection = db.get('usercollection');
     collection.findOne({
@@ -116,14 +118,26 @@ exports.searchUser = function(req, res) {
         res.send(401);
       }
     });
-
-    // if(user.length){
-    //   console.log('user inside users js server side:', user);
-    //   res.send(201, user);
-    // }else{
-    //   res.send(400);
-    // }
-  // }else{
-  //   authhelper.authRedirect(req, res);
-  // }
 };
+
+exports.getUser = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+  collection.find({username: req.query.username}, function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      res.send(data);
+    }
+  });
+} 
+
+exports.updateUser = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+  collection.update({username: req.body.username}, {$set: {meta: req.body.meta}});
+  res.send(201);
+} 
+

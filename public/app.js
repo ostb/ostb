@@ -39,7 +39,7 @@ var ostb = angular.module('ostb', [
     }
   })
   .state('account', {
-    url: "/account",
+    url: "/:username/account",
     views: {
       'content': {
         templateUrl: 'partials/account.html',
@@ -106,7 +106,7 @@ var ostb = angular.module('ostb', [
     views: {
       'projectDetail': {
         templateUrl: '/partials/versions.html',
-        controller: 'VersionsController'
+        controller: 'ProjectDetailController'
       }
     }
   })
