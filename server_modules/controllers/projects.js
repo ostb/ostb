@@ -20,7 +20,8 @@ exports.create = function(req, res) {
         username: req.body.username,
         commits: {},
         contributions: {},
-        members: [req.body.username]
+        members: [req.body.username],
+        lastUpdate: new Date()
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Created new project ' + req.body.repo,
@@ -109,6 +110,7 @@ exports.commit = function(req, res) {
             date: new Date()
           }
           collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
+          collection.update({username: req.body.username, repo: req.body.repo}, {$set: {lastUpdate: new Date()}})
 
           res.send(201);
         })
@@ -125,6 +127,7 @@ exports.commit = function(req, res) {
             date: new Date()
           }
           collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
+          collection.update({username: req.body.username, repo: req.body.repo}, {$set: {lastUpdate: new Date()}})
 
           return shell.switchToMaster(req.body.username, req.body.repo);
         })
@@ -172,25 +175,30 @@ exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
+  var respond = function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      res.send(data);
+    }
+  }
+
   var queryObj = {};
 
-    if(req.query.username){
-      queryObj.username = req.query.username;
-    }else if(req.query.id){
-      queryObj._id = req.query.id;
-    }
-    if(req.query.repo) {
-      queryObj.repo = req.query.repo;
-    }
+  if(req.query.username){
+    queryObj.username = req.query.username;
+  }else if(req.query.id){
+    queryObj._id = req.query.id;
+  }
+  if(req.query.repo) {
+    queryObj.repo = req.query.repo;
+  }
 
-    collection.find(queryObj, function(err, data) {
-      if(err) {
-        res.send(404, err.toString());
-      }else {
-        res.send(data);
-      }
-    });
-    
+  if(Object.keys(queryObj).length === 0) {
+    collection.find(queryObj, {sort: {lastUpdate: -1}, limit: 15}, respond);
+  }else {
+    collection.find(queryObj, respond);
+  }
 }
 
 exports.getFile = function(req, res) {

@@ -1,30 +1,18 @@
 <div class="discover">
   <div class="wrapper">
-    <div>
-      <div>
-        <ul>
-          <input type="text" name="search" placeholder="Search...">
-          <h3>
-            <input type="checkbox" name="pagesCheckbox" value="pages" checked>Pages
-            <input type="checkbox" name="booksCheckbox" value="books" checked>Books
-          </h3>
-        </ul>
+
+    <h1>Discover Projects</h1>
+
+    <ul>
+      <div ng-repeat='project in projects'>
+        <div style="margin: 5px; border: 1px solid black; width: 200px;">
+            <a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
+          <br> by <br>
+          <a ui-sref='dashboard({username: project.username})'>{{project.username}}<a/>
+          <br>
+          last update: {{project.lastUpdate}}
+        </div>
       </div>
-      <div>
-        <ul>
-          <!-- Some kind of practical filter controls should go here. -->
-        </ul>
-      </div>
-    </div>
-    <div>
-      <select class="right">
-        <option selected="selected" value="mostRecent">Recent Activity</option>
-        <option value="mostBookmarked">Most Bookmarked</option>
-        <option value="name">Name</option>
-      </select>
-      <div>
-          <!--  This is where result documents should display, using ng-repeat probably-->
-      </div>
-    </div>
+    </ul>
   </div>
 </div>
