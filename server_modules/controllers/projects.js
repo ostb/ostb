@@ -5,7 +5,6 @@ var fs = require('fs');
 var authhelper = require('./authhelper');
 
 exports.create = function(req, res) {
-  console.log('req.body inside project js', req.body);
   
   if(authhelper.authenticate(req)){
 
@@ -46,8 +45,6 @@ exports.delete = function(req, res) {
 
     shell.deleteRepo(req.query.username, req.query.repo)
     .then(function() {
-      console.log('deleted repo ', req.query.repo);
-
       collection.remove({username: req.query.username, repo: req.query.repo});
 
       res.send(204);
@@ -65,12 +62,9 @@ exports.clone = function(req, res) {
     var db = req.db;
     var collection = db.get('projectcollection');
 
-    console.log(req.body);
-
     var copy = Promise.promisify(shell.clone);
     copy(req.body.username, req.body.owner, req.body.repo)
     .then(function(commitHash) {
-      console.log('cloned repo ' + req.body.repo + ' into ' + req.body.username);
 
       var newProject = {
         repo: req.body.repo,
@@ -97,44 +91,52 @@ exports.commit = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
   var cmt = Promise.promisify(shell.commit);
-  
-  if(authhelper.authenticate(req)){         //authenticated, so commit as project
 
-    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'master')
-    .then(function(commitHash){
+  var auth = false;
 
-      var commits = {}
-      commits['commits.' + commitHash] = {
-        commitMessage: req.body.commitMessage,
-        date: new Date()
+  collection.findOne({username: req.body.username, repo: req.body.repo}, function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      var members = data.members;
+      if(req.session.user && members.indexOf(req.session.user.username) !== -1) {
+        cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'master')
+        .then(function(commitHash){
+
+          var commits = {}
+          commits['commits.' + commitHash] = {
+            commitMessage: req.body.commitMessage,
+            date: new Date()
+          }
+          collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
+
+          res.send(201);
+        })
+        .catch(function(err){
+          res.send(400, err.toString());
+        })
+      }else {
+        cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'contributions')
+        .then(function(commitHash){
+
+          var contributions = {}
+          contributions['contributions.' + commitHash] = {
+            commitMessage: req.body.commitMessage,
+            date: new Date()
+          }
+          collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
+
+          return shell.switchToMaster(req.body.username, req.body.repo);
+        })
+        .then(function() {
+          res.send(201);
+        })
+        .catch(function(err){
+          res.send(400, err.toString());
+        })
       }
-      collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
-
-      res.send(201);
-    })
-    .catch(function(err){
-      res.send(400, err.toString());
-    })
-  }else{                                     //unathenticated, so commit as contribution
-    cmt(req.body.username, req.body.repo, req.body.commitMessage, req.body.commitBody, 'contributions')
-    .then(function(commitHash){
-
-      var contributions = {}
-      contributions['contributions.' + commitHash] = {
-        commitMessage: req.body.commitMessage,
-        date: new Date()
-      }
-      collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
-
-      return shell.switchToMaster(req.body.username, req.body.repo);
-    })
-    .then(function() {
-      res.send(201);
-    })
-    .catch(function(err){
-      res.send(400, err.toString());
-    })
-  }
+    }
+  })
 }
 
 exports.removeContribution = function(req, res) {
@@ -229,7 +231,7 @@ exports.getMembers = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
   
-  collection.findOne({username: req.query.username}, function(err, data) {
+  collection.findOne({username: req.query.username, repo: req.query.repo}, function(err, data) {
     if(err) {
       res.send(404, err.toString());
     }else {
@@ -245,7 +247,7 @@ exports.addMember = function(req, res) {
 
     collection.update({username: req.body.username, repo: req.body.repo}, {$push: {members: req.body.member}});
     res.send(201);
-    
+
   }else{
     authhelper.authRedirect(req, res);
   }
