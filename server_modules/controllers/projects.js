@@ -172,25 +172,30 @@ exports.getProjects = function(req, res) {
   var db = req.db;
   var collection = db.get('projectcollection');
 
+  var respond = function(err, data) {
+    if(err) {
+      res.send(404, err.toString());
+    }else {
+      res.send(data);
+    }
+  }
+
   var queryObj = {};
 
-    if(req.query.username){
-      queryObj.username = req.query.username;
-    }else if(req.query.id){
-      queryObj._id = req.query.id;
-    }
-    if(req.query.repo) {
-      queryObj.repo = req.query.repo;
-    }
+  if(req.query.username){
+    queryObj.username = req.query.username;
+  }else if(req.query.id){
+    queryObj._id = req.query.id;
+  }
+  if(req.query.repo) {
+    queryObj.repo = req.query.repo;
+  }
 
-    collection.find(queryObj, function(err, data) {
-      if(err) {
-        res.send(404, err.toString());
-      }else {
-        res.send(data);
-      }
-    });
-    
+  if(queryObj === {}) {
+    collection.find(queryObj, respond);
+  }else {
+    collection.find(queryObj, respond);
+  }
 }
 
 exports.getFile = function(req, res) {

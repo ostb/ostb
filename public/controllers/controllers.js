@@ -207,9 +207,16 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.indexContent = 'test';
 })
 
+.controller('DiscoverController', function($scope, ProjectsFactory){
 
-.controller('DiscoverController', function($scope){
   
+  ProjectsFactory.getProjects()
+  .then(function(data) {
+    $scope.projects = data;
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
