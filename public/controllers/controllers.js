@@ -207,7 +207,13 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.indexContent = 'test';
 })
 
-.controller('ContributorsController', function($rootScope, $scope, $stateParams, ProjectsFactory, UsersFactory) {
+
+.controller('DiscoverController', function($scope){
+  
+})
+
+.controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
+
 
   var updateMembers = function() {
     ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
