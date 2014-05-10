@@ -84,6 +84,18 @@ angular.module('factories.users', [])
       return dfd.promise;
     },
 
+    updateUser: function(user) {
+      var dfd = $q.defer();
+      $http.post('/api/users', user)
+      .success(function(data) {
+        dfd.resolve(data);
+      })
+      .error(function() {
+        dfd.reject();
+      });
+      return dfd.promise;
+    },
+
     sessionOut: function(user) {
       var dfd = $q.defer();
       $http.get('/logout')

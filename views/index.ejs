@@ -17,7 +17,7 @@
         <div ng-show="!!currentUser">Welcome, {{currentUser}}</div>
         <ul class="nav meta right">
           <li><a ui-sref="dashboard({username: currentUser})" ng-show="!showLogin">Dashboard</a></li>
-          <li><a ui-sref="account" ng-show="!showLogin">Account</a></li>
+          <li><a ui-sref="account({username: currentUser})" ng-show="!showLogin">Account</a></li>
           <li><a ui-sref="login" ng-show="showLogin">Sign In</a></li>
           <li><a ui-sref="home" ng-show="!showLogin" ng-click="logoutUser()">Logout</a></li>
         </ul>

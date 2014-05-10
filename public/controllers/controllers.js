@@ -172,8 +172,24 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 })
 
-.controller('Account', function($scope) {
-  console.log('Account');
+.controller('Account', function($scope, UsersFactory) {
+  UsersFactory.getUser({username: $scope.currentUser})
+  .then(function(data) {
+    $scope.user = data[0];
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
+
+  $scope.updateUser = function(user) {
+    UsersFactory.updateUser(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
 })
 
 .controller('Page', function($scope) {

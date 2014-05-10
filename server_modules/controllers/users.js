@@ -116,3 +116,21 @@ exports.getUser = function(req, res) {
   });
 } 
 
+exports.updateUser = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+  console.log(req.body);
+
+  // collection.find({username: req.query.username}, function(err, data) {
+  //   if(err) {
+  //     res.send(400, err.toString());
+  //   }else {
+  //     res.send(data);
+  //   }
+  // });
+} 
+
+
+
+
