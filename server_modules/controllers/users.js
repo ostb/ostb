@@ -120,11 +120,8 @@ exports.updateUser = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
-  console.log(req.body);
-
   collection.update({username: req.body.username}, {$set: {meta: req.body.meta}});
   res.send(201);
-
 } 
 
 
