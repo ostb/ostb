@@ -22,8 +22,10 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     // $state.go('home');
     console.log('hit Dashboard logoutUser');
   };
-  $scope.isActive = function(link) {
-    return $state.$current.includes[link];
+  $rootScope.isActive = function(link) {
+    if ($state.$current.includes[$rootScope.currentUser]) {
+      return $state.$current.includes[link];
+    }
   };
 })
 
@@ -285,6 +287,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
     var editor = ace.edit("editor");
+    editor.renderer.setShowGutter(false);
     editor.setReadOnly(true);
     editor.session.setUseWrapMode(true);
     editor.setShowPrintMargin(false);
@@ -344,6 +347,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   init();
 
   $scope.projectName = $stateParams.repo;
+  $scope.projectOwner = $stateParams.username;
 })
 
 .controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
