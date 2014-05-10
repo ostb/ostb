@@ -110,6 +110,7 @@ exports.commit = function(req, res) {
             date: new Date()
           }
           collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
+          collection.update({username: req.body.username, repo: req.body.repo}, {$set: {lastUpdate: new Date()}})
 
           res.send(201);
         })
@@ -126,6 +127,7 @@ exports.commit = function(req, res) {
             date: new Date()
           }
           collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});
+          collection.update({username: req.body.username, repo: req.body.repo}, {$set: {lastUpdate: new Date()}})
 
           return shell.switchToMaster(req.body.username, req.body.repo);
         })
