@@ -329,8 +329,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 // ----- project CRUD controllers -----
 
-.controller('VersionsController', function($scope) {})
-
 .controller('ProjectsController', function($scope, $state, $stateParams, ProjectsFactory, ModalsFactory) {
 
   $scope.modalShown = false;
@@ -355,7 +353,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     ProjectsFactory.create(project)
     .then(function() {
       $state.go('project', {username: project.username, repo: project.repo});
-      // $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;
@@ -370,7 +367,6 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     ProjectsFactory.clone(project)
     .then(function() {
       $state.go('project', {username: project.username, repo: project.repo});
-      // $location.url(project.username + '/' + project.repo);
     })
     .catch(function(err) {
       $scope.error = err;

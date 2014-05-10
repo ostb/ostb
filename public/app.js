@@ -106,7 +106,7 @@ var ostb = angular.module('ostb', [
     views: {
       'projectDetail': {
         templateUrl: '/partials/versions.html',
-        controller: 'VersionsController'
+        controller: 'ProjectDetailController'
       }
     }
   })
