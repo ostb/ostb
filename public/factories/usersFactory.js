@@ -72,6 +72,30 @@ angular.module('factories.users', [])
       });
       return dfd.promise;
     },
+    getUser: function(user) {
+      var dfd = $q.defer();
+      $http.get('/api/users?username=' + user.username)
+      .success(function(data) {
+        dfd.resolve(data);
+      })
+      .error(function() {
+        dfd.reject();
+      });
+      return dfd.promise;
+    },
+
+    updateUser: function(user) {
+      var dfd = $q.defer();
+      $http.post('/api/users', user)
+      .success(function(data) {
+        dfd.resolve(data);
+      })
+      .error(function() {
+        dfd.reject();
+      });
+      return dfd.promise;
+    },
+
     sessionOut: function(user) {
       var dfd = $q.defer();
       $http.get('/logout')
@@ -83,5 +107,6 @@ angular.module('factories.users', [])
       });
       return dfd.promise;
     }
+
   }
 });

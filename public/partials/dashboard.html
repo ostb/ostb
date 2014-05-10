@@ -3,10 +3,19 @@
     <div class="content">
       <h1>Dashboard</h1>
       <div class="books left">
-        <h2>Books</h2>
+        <!-- <h2>Books</h2>
         <ul class="nav">
           <li><a ui-sref="project">Concrete Mathematics</a></li>
           <li><a ui-sref="project">A Perspective on the Human Condition</a></li>
+        </ul> -->
+        <h2>{{user.username}}</h2>
+        <img id="profile">
+        <ul>
+          <li><pre>Member since: {{user.meta.createdAt}}</pre></li>
+          <li><pre>Full Name:    {{user.meta.fullName}}</pre></li>
+          <li><pre>Email:        {{user.email}}</pre></li>
+          <li><pre>Title:        {{user.meta.title}}</pre></li>
+          <li><pre>Workplace:    {{user.meta.workplace}}</pre></li>
         </ul>
       </div>
       <div class="pages left">

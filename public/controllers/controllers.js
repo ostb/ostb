@@ -84,12 +84,20 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   console.log('Login controller');
 })
 
-.controller('Dashboard', function($rootScope, $scope) {
-  // console.log('Dashboard');
-  // $scope.logoutUser = function(){
-  //   $rootScope.currentUser = 'public';
-  //   console.log('hit Dashboard logoutUser');
-  // }
+.controller('Dashboard', function($scope, $stateParams, UsersFactory) {
+
+  var profile = document.getElementById('profile');
+
+  UsersFactory.getUser({username: $stateParams.username})
+  .then(function(data) {
+    $scope.user = data[0];
+    var email = $scope.user.email;
+    var gravatarHash = CryptoJS.MD5(email).toString();
+    profile.src = 'http://www.gravatar.com/avatar/' + gravatarHash + '?s=200';
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
 })
 
 .controller('Signup', function($rootScope, $scope, UsersFactory, $state) {
@@ -164,8 +172,24 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
 
 })
 
-.controller('Account', function($scope) {
-  console.log('Account');
+.controller('Account', function($scope, UsersFactory) {
+  UsersFactory.getUser({username: $scope.currentUser})
+  .then(function(data) {
+    $scope.user = data[0];
+  })
+  .catch(function(err) {
+    $scope.error = err;
+  });
+
+  $scope.updateUser = function(user) {
+    UsersFactory.updateUser(user)
+    .then(function() {
+      console.log('success');
+    })
+    .catch(function(err) {
+      $scope.error = err;
+    });
+  }
 })
 
 .controller('Page', function($scope) {
