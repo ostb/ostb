@@ -200,7 +200,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
   $scope.indexContent = 'test';
 })
 
-.controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
+.controller('ContributorsController', function($rootScope, $scope, $stateParams, ProjectsFactory, UsersFactory) {
 
   var updateMembers = function() {
     ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
@@ -210,7 +210,7 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     .catch(function(err) {
       $scope.error = err;
     });
-  }
+  };
 
   $scope.deleteMember = function(member) {
     var project = {
@@ -226,23 +226,51 @@ ostb.controller('IndexController', function($rootScope, $location, $state, Users
     .catch(function(err) {
       $scope.error = err;
     });
-  }
+  };
 
   $scope.addMember = function(member) {
+    
     var project = {
       username: $stateParams.username, 
       repo: $stateParams.repo,
       member: member
     };
+    if(_.contains($scope.membersList, member)){
+      $scope.response = 'member already in the list';
+    }else{
 
-    ProjectsFactory.addMember(project)
-    .then(function(data) {
-      updateMembers();
-    })
-    .catch(function(err) {
-      $scope.error = err;
+      ProjectsFactory.addMember(project)
+      .then(function(data) {
+        updateMembers();
+      })
+      .catch(function(err) {
+        $scope.error = err;
+      }); 
+    }
+  };
+
+  $scope.queryUser = [];
+  $scope.response = undefined;
+
+  $scope.query = function (user) {
+    $scope.response = undefined;
+    $scope.queryUser = [];
+    UsersFactory.getUser(user, function(returnedUser, response) {
+      console.log('returnedUser in controller js getUser', returnedUser);
+        var userList = returnedUser;
+        userList = _.reject(userList, function(userObj){    
+          return _.contains($scope.membersList, userObj.username) || userObj.username === $rootScope.currentUser;
+        });
+        if (userList.length) {
+          $scope.queryUser = userList;
+        } else {
+          console.log('response', response);
+          $scope.response = response || 'No users found';
+          console.log('$scope.response', $scope.response);
+        }
+      
     });
-  }
+  };
 
   updateMembers();
 })

@@ -101,7 +101,24 @@ exports.delete = function(req, res) {
       res.send(400, err.toString());
     });
   }
-}
+};
+
+exports.searchUser = function(req, res) {
+  console.log('req params name', req.params.name)
+  // if(authhelper.authenticate(req)){
+    var db = req.db;
+    var collection = db.get('usercollection');
+    var regex = new RegExp('^' + req.params.name, 'i');
+    collection.find({username: regex})
+    .on('success', function(data){
+      console.log('data', data);
+      if(data){
+        res.send(201, data);
+      }else{
+        res.send(401);
+      }
+    });
+};
 
 exports.getUser = function(req, res) {
   var db = req.db;
@@ -123,7 +140,4 @@ exports.updateUser = function(req, res) {
   collection.update({username: req.body.username}, {$set: {meta: req.body.meta}});
   res.send(201);
 } 
-
-
-
 

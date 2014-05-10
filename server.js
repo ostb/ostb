@@ -138,6 +138,9 @@ app.route('/api/projects/member')
 .delete(projects.deleteMember)
 .get(projects.getMembers);
 
+app.route('/search/:name')
+.get(users.searchUser);
+
 app.route('/auth/login')
 .post(users.login);
 

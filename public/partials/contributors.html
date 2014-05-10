@@ -11,6 +11,7 @@
   </li>
 </ul>
 
+<!-- 
 <div style="float:right">
   <form ng-submit='addMember(user)'>
     Add Members:
@@ -19,5 +20,27 @@
     <br>
     <div><input type="submit" value="Submit"></div>
     <div style="color:red;">{{error}}</div>
+  </form>
+</div>
+ -->
+
+
+<div style="float:right">
+  <form ng-submit='query(userSearch)'>
+    Find Members:
+    <br>
+    <input style="width: 300px;" type="text" placeholder="Username" ng-model="userSearch"><br>
+    <br>
+    <div><input type="submit" value="Find"></div>
+
+    <br>
+    Click on a username below to add to a members list
+    
+    <!-- <div ng-repeat='user in queryUser | filter' ng-click='addMember(user)'> -->
+    <div ng-repeat='user in queryUser | filter' ng-click='addMember(user.username)'>  
+        <h2 class"form-label"> {{user.username}} </h2> 
+    </div>
+
+    <div style="color:red;">{{response}}</div>
   </form>
 </div>
