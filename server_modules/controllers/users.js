@@ -122,13 +122,9 @@ exports.updateUser = function(req, res) {
 
   console.log(req.body);
 
-  // collection.find({username: req.query.username}, function(err, data) {
-  //   if(err) {
-  //     res.send(400, err.toString());
-  //   }else {
-  //     res.send(data);
-  //   }
-  // });
+  collection.update({username: req.body.username}, {$set: {meta: req.body.meta}});
+  res.send(201);
+
 } 
 
 
