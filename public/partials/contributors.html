@@ -1,0 +1,22 @@
+<h3>Contributors</h3>
+
+<h5>Project Members</h5>
+<p>Members can collaboratively edit your<br>project in real time, and save new<br>versions.</p>
+
+<ul style="float:left">
+  <li ng-repeat='member in membersList track by $index'>
+      <a ui-sref="dashboard({username: member})">{{member}}</a>
+    </div>
+  </li>
+</ul>
+
+<div style="float:right">
+  <form ng-submit='addMember(user)'>
+    Add Members:
+    <br>
+    <input style="width: 300px;" type="text" placeholder="Username" ng-model="user"><br>
+    <br>
+    <div><input type="submit" value="Submit"></div>
+    <div style="color:red;">{{error}}</div>
+  </form>
+</div>

@@ -95,14 +95,11 @@ var commit = exports.commit = function(username, repo, commitMessage, commitBody
 var getCommitHash = exports.getCommitHash = function(username, repo) {
   
   var command = 'cd user_data/' + username + '/' + repo + ' && ' + 'git rev-parse HEAD'
-
   return execute(command);
 }
 
 exports.checkout = function(username, repo, hash, next) {
   hash = hash || 'master';
-
-  console.log('cd user_data/' + username + '/' + repo + ' && ' + 'git checkout ' + hash)
 
   execute('cd user_data/' + username + '/' + repo + ' && ' +
           'git checkout ' + hash)

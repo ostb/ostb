@@ -114,8 +114,8 @@ var ostb = angular.module('ostb', [
     url: "/contributors",
     views: {
       'projectDetail': {
-        template: '<h1>project contributors</h1>',
-        controller: 'IndexController'
+        templateUrl: '/partials/contributors.html',
+        controller: 'ContributorsController'
       }
     }
   })
