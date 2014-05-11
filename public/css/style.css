@@ -75,6 +75,7 @@ button:focus { outline: 0; border-color: #999; }
    GENERAL
    ================= */
 
+/* Universal elements */
 html {
 	height: 100%;
 }
@@ -97,6 +98,7 @@ html {
   float: left;
 }
 
+/* Splash page */
 .splash {
   background: #99c3e3;
   padding: 3em 0 3em;
@@ -126,6 +128,7 @@ html {
   background: #ffaa22;
 }
 
+/* Login Page */
 .login .wrapper, .sign-up .wrapper {
   width: 20em;
 }
@@ -168,6 +171,7 @@ html {
   margin: 30px 0 0 28px;
 }
 
+/* Project details page for a pages */
 .page .wrapper {
   min-height: 35em;
 }
@@ -220,6 +224,7 @@ html {
   background: #fff;
 }
 
+/* Account page */
 .account .wrapper {
   width: 40em;
 }
@@ -233,6 +238,7 @@ html {
   padding-left: 0;
 }
 
+/* Dashboard */
 .dashboard .wrapper {
   min-height: 240px;
 }
@@ -249,7 +255,36 @@ html {
   width: 50%;
 }
 
+/* Discover page */
+.discover .project {
+  border-top: 1px solid #eee;
+  overflow: auto;
+  transition: .15s ease;
+}
 
+.discover .project:hover {
+  padding: 0 .5em;
+  background: #fafafa;
+}
+
+.discover .project h3 {
+  font-family: 'Roboto Slab', serif;
+  margin: .5em 0 0;
+}
+
+.discover .project h4.right {
+  font-family: 'Roboto', sans-serif;
+  margin: .75em 0 0;  
+  /*color: rgba(0, 0, 0, .3);*/
+}
+
+.discover .project .left {
+  margin-right: 20px;
+}
+
+.discover .time {
+  color: rgba(0, 0, 0, .4);
+}
 
 
 
@@ -444,7 +479,7 @@ img {
 }
 
 .dark {
-  background-color: gray;
+  background-color: slategray;
 }
 
 
