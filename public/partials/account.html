@@ -1,24 +1,20 @@
 <div class="account">
   <div class="wrapper">
     <h1>Settings</h1>
-    <div style="float:left; margin-right: 10px; border: 1px solid black; padding: 5px;">
+    <div class="left">
       <h3>Account Info</h3>
       <form ng-submit='updateUser(user)'>
-        Full Name:
-        <br>
-        <input style="width: 300px;" type="text" placeholder="your real name" ng-model="user.meta.fullName"><br>
-        Title:
-        <br>
-        <input style="width: 300px;" type="text" placeholder="professor of..." ng-model="user.meta.title"><br>
-        Workplace:
-        <br>
-        <input style="width: 300px;" type="text" placeholder="University of..." ng-model="user.meta.workplace"><br>
-        <br>
-        <div><input type="submit" value="Submit"></div>
+        <label for="full-name">Full Name</label>
+        <input type="text" id="full-name" placeholder="Name" ng-model="user.meta.fullName">
+        <label for="user-title">Title</label>
+        <input type="text" id="user-title" placeholder="Professor of..." ng-model="user.meta.title">
+        <label for="organization">Workplace</label>
+        <input type="text" id="organization" placeholder="University of..." ng-model="user.meta.workplace">
+        <button type="submit">Update Info</button>
       </form>
     </div>
 
-    <div style="float:left; border: 1px solid black; padding: 10px;">
+    <div class="right">
       <h3>Change Password</h3>
       <input type="text" name="oldPassword" placeholder="Old password">
       <input type="text" name="newPassword" placeholder="New password">
