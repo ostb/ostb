@@ -290,7 +290,8 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   updateMembers();
 })
 
-.controller('EditorController', function($scope, $q, $stateParams, ProjectsFactory) {
+.controller('EditorController', function($scope, $state, $q, $stateParams, ProjectsFactory) {
+
   var init = function() {
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
