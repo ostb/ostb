@@ -2,7 +2,7 @@
   <div class="wrapper">
     <h1>Sign up</h1>
     <form>
-      <input type="text" name="username" ng-model="userInfo.username" placeholder="Enter desired username" required>
+      <input type="text" name="username" ng-model="userInfo.username" placeholder="Enter desired username" autofocus="autofocus" required>
       <div class='invalid left' id="usernameValidator"></div>
       <input type="text" name="email" ng-model="userInfo.email" placeholder="Enter email address" required>
       <div class='invalid left' id="emailValidator"></div>
@@ -10,7 +10,7 @@
       <input type="password" name="password-verify" ng-model="userInfo.passwordVerify" placeholder="Enter password again" required>
       <div style="color:red;">{{errorMsg}}</div>
       <!-- <div class='invalid left' id="passwordValidator" ng-if="userInfo.password ? (userInfo.password === userInfo.passwordVerify) : false" style="color:blue;">password verified</div> -->
-      <button type="button" id="sign-upButton" ng-click="submitTheForm(userInfo.username, userInfo.email, userInfo.password, userInfo.passwordVerify)">Sign-up</button>
+      <button type="submit" id="sign-upButton" ng-click="submitTheForm(userInfo.username, userInfo.email, userInfo.password, userInfo.passwordVerify)">Sign-up</button>
     </form>
   </div>
 </div>
