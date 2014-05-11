@@ -37,7 +37,7 @@
     
     <!-- <div ng-repeat='user in queryUser | filter' ng-click='addMember(user)'> -->
     <div ng-repeat='user in queryUser | filter' ng-click='addMember(user.username)'>  
-        <h2 class"form-label"> {{user.username}} </h2> 
+        <h2 class"form-label"> {{user.username}}</h2>
     </div>
 
     <div style="color:red;">{{response}}</div>
