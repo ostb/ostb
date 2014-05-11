@@ -110,6 +110,7 @@ exports.searchUser = function(req, res) {
   collection.find({username: regex})
   .on('success', function(data){
     if(data){
+                                //need to purge pwHash
       res.send(201, data);
     }else{
       res.send(401);
