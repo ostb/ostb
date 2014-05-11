@@ -92,7 +92,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 
   var profile = document.getElementById('profile');
 
-  UsersFactory.getUser({username: $stateParams.username})
+  UsersFactory.get({username: $stateParams.username})
   .then(function(data) {
     $scope.user = data[0];
     var email = $scope.user.email;
@@ -370,7 +370,6 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   };
 
   $scope.getFolder = function() {
-    // console.log('hit download');
 
     ProjectsFactory.getFolder({username: $stateParams.username, repo: $stateParams.repo})
     .then(function(data) {

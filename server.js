@@ -108,7 +108,8 @@ app.get('/', function(req, res) {
 
 app.route('/api/users')
 .post(users.updateUser)
-.delete(users.delete);
+.delete(users.delete)
+.get(users.getUser);
 
 app.route('/api/projects')
 .post(projects.create)

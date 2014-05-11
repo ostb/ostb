@@ -104,18 +104,32 @@ exports.delete = function(req, res) {
 };
 
 exports.searchUser = function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    var regex = new RegExp('^' + req.params.name, 'i');
-    collection.find({username: regex})
-    .on('success', function(data){
-      if(data){
-        delete data[0].pwHash
-        res.send(201, data);
-      }else{
-        res.send(401);
-      }
-    });
+  var db = req.db;
+  var collection = db.get('usercollection');
+  var regex = new RegExp('^' + req.params.name, 'i');
+  collection.find({username: regex})
+  .on('success', function(data){
+    if(data){
+      res.send(201, data);
+    }else{
+      res.send(401);
+    }
+  });
+};
+
+exports.getUser = function(req, res) {
+  var db = req.db;
+  var collection = db.get('usercollection');
+
+  collection.find({username: req.query.username})
+  .on('success', function(data){
+    if(data){
+      delete data[0].pwHash;
+      res.send(201, data);
+    }else{
+      res.send(401);
+    }
+  });
 };
 
 exports.updateUser = function(req, res) {

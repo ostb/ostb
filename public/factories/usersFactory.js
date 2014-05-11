@@ -109,6 +109,19 @@ angular.module('factories.users', [])
         dfd.reject(data);
       });
       return dfd.promise;
+    },
+
+    get: function(user) {
+      var dfd = $q.defer();
+      $http.get('/api/users?username=' + user.username)
+      .success(function(data, status, headers, config) {
+        dfd.resolve(data);
+      })
+      .error(function(data, status, headers, config) {
+        console.log('fail', arguments);
+        dfd.reject(data);
+      });
+      return dfd.promise;
     }
 
   }
