@@ -16,11 +16,11 @@
   <body>
     <div ng-controller="IndexController" class="metabar" ng-class="{dark:isActive('editor')}">
       <div class="wrapper" ng-controller="IndexController">
-        <h1 class="logo left"><a ui-sref="home">textbooks.io</a></h1>
+        <h1 class="logo left"><a href="/">textbooks.io</a></h1>
         <!-- <div ng-show="!!currentUser">Welcome, {{currentUser}}</div> -->
         <ul class="nav meta right">
-          <li><a ui-sref="dashboard({username: currentUser})" ng-class="{current:isActive('dashboard')}" ng-show="!showLogin">Dashboard</a></li>
-          <li><a ui-sref="account({username: currentUser})" ng-class="{current:isActive('account')}" ng-show="!showLogin">Account</a></li>
+          <li><a ui-sref="dashboard({username: currentUser})" ng-show="!showLogin">Dashboard</a></li>
+          <li><a ui-sref="account({username: currentUser})" ng-show="!showLogin">Account</a></li>
           <li><a ui-sref="login" ng-show="showLogin">Sign In</a></li>
           <li><a ui-sref="home" ng-show="!showLogin" ng-click="logoutUser()">Logout</a></li>
         </ul>

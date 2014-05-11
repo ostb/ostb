@@ -377,7 +377,7 @@ img {
 
 .editNav {
   padding-left: 0;
-  margin: 10px 0px;
+  margin: 10px 0;
 }
 
 .editButton {
@@ -398,11 +398,11 @@ img {
 }
 
 .editButton:active {
-  background-color: #99c3e3;
+  background: rgba(255, 255, 255, .1);
 }
 
 .save {
-  width: 72px;
+  width: 4.65em;
 }
 
 .question {
