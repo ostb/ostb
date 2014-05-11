@@ -215,7 +215,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   });
 })
 
-.controller('ContributorsController', function($scope, $stateParams, ProjectsFactory) {
+.controller('ContributorsController', function($scope, $rootScope, $stateParams, ProjectsFactory, UsersFactory) {
 
   var updateMembers = function() {
     ProjectsFactory.getMembers({username: $stateParams.username, repo: $stateParams.repo})
@@ -268,23 +268,23 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.response = undefined;
 
   $scope.query = function (user) {
+
     $scope.response = undefined;
     $scope.queryUser = [];
-    UsersFactory.getUser(user, function(returnedUser, response) {
-      // console.log('returnedUser in controller js getUser', returnedUser);
-        var userList = returnedUser;
-        userList = _.reject(userList, function(userObj){    
-          return _.contains($scope.membersList, userObj.username) || userObj.username === $rootScope.currentUser;
-        });
-        if (userList.length) {
-          $scope.queryUser = userList;
-        } else {
-          // console.log('response', response);
-          $scope.response = response || 'No users found';
-          // console.log('$scope.response', $scope.response);
-        }
-      
-    });
+    UsersFactory.getUser(user)
+    .then(function(data) {
+      var userList = data;
+      userList = _.reject(userList, function(userObj){    
+        return _.contains($scope.membersList, userObj.username) || userObj.username === $rootScope.currentUser;
+      });
+      if (userList.length === 0) {
+        $scope.response = 'No users found';
+      }
+      $scope.queryUser = userList;
+    })
+    .catch(function(err) {
+      $scope.response = err;
+    })
   };
 
   updateMembers();

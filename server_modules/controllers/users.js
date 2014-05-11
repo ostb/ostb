@@ -110,6 +110,9 @@ exports.searchUser = function(req, res) {
   collection.find({username: regex})
   .on('success', function(data){
     if(data){
+      data.forEach(function(member){
+        delete member.pwHash;
+      })
       res.send(201, data);
     }else{
       res.send(401);
