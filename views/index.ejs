@@ -11,8 +11,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
 
+<!-- ng-class="{current:isActive('editor')}" -->
+
   <body>
-    <div class="metabar">
+    <div ng-controller="IndexController" class="metabar" ng-class="{dark:isActive('editor')}">
       <div class="wrapper" ng-controller="IndexController">
         <h1 class="logo left"><a ui-sref="home">textbooks.io</a></h1>
         <!-- <div ng-show="!!currentUser">Welcome, {{currentUser}}</div> -->

@@ -19,7 +19,7 @@ exports.signup = function(req, res) {
   var newUser = Promise.promisify(shell.createUser);
   newUser(req.body.username)
   .then(function() {
-    console.log('created user ', req.body.username);
+    // console.log('created user ', req.body.username);
 
     collection.insert({
       username: req.body.username,
@@ -48,7 +48,7 @@ exports.login = function(req, res) {
     collection.findOne({
       username: req.body.username
     }).on('success', function(data){
-      console.log('data', data);
+      // console.log('data', data);
       if(data){
         if(validPassword(req.body.password, data.pwHash)){
           req.session.user = data;
@@ -68,9 +68,9 @@ exports.login = function(req, res) {
 };
 
 exports.logout = function(req, res){
-  console.log('deleting', req.session.user);
+  // console.log('deleting', req.session.user);
   req.session.user = undefined;
-  console.log('check req.session.user', req.session.user);
+  // console.log('check req.session.user', req.session.user);
   res.send(200, 'Logged Out');
 };
 
@@ -89,7 +89,7 @@ exports.delete = function(req, res) {
 
     shell.deleteUser(req.query.username)
     .then(function() {
-      console.log('deleted user ', req.query.username);
+      // console.log('deleted user ', req.query.username);
 
       collection.remove({username: req.query.username});
       projCollection.remove({username: req.query.username});
@@ -104,15 +104,13 @@ exports.delete = function(req, res) {
 };
 
 exports.searchUser = function(req, res) {
-  console.log('req params name', req.params.name)
-  // if(authhelper.authenticate(req)){
     var db = req.db;
     var collection = db.get('usercollection');
     var regex = new RegExp('^' + req.params.name, 'i');
     collection.find({username: regex})
     .on('success', function(data){
-      console.log('data', data);
       if(data){
+        delete data[0].pwHash
         res.send(201, data);
       }else{
         res.send(401);
@@ -120,24 +118,11 @@ exports.searchUser = function(req, res) {
     });
 };
 
-exports.getUser = function(req, res) {
-  var db = req.db;
-  var collection = db.get('usercollection');
-
-  collection.find({username: req.query.username}, function(err, data) {
-    if(err) {
-      res.send(404, err.toString());
-    }else {
-      res.send(data);
-    }
-  });
-} 
-
 exports.updateUser = function(req, res) {
   var db = req.db;
   var collection = db.get('usercollection');
 
   collection.update({username: req.body.username}, {$set: {meta: req.body.meta}});
   res.send(201);
-} 
+};
 

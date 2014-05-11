@@ -72,17 +72,6 @@ angular.module('factories.users', [])
       });
       return dfd.promise;
     },
-    getUser: function(user) {
-      var dfd = $q.defer();
-      $http.get('/api/users?username=' + user.username)
-      .success(function(data) {
-        dfd.resolve(data);
-      })
-      .error(function() {
-        dfd.reject();
-      });
-      return dfd.promise;
-    },
 
     updateUser: function(user) {
       var dfd = $q.defer();
@@ -107,8 +96,9 @@ angular.module('factories.users', [])
       });
       return dfd.promise;
     },
+
     getUser: function(user) {
-      console.log('query user in userFactoryjs', user);
+      // console.log('query user in userFactoryjs', user);
       var dfd = $q.defer();
       $http.get('/search/' + user)
       .success(function(data, status, headers, config) {

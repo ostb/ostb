@@ -9,6 +9,7 @@
           <li><a ui-sref="project">A Perspective on the Human Condition</a></li>
         </ul> -->
         <h2>{{user.username}}</h2>
+
         <img id="profile">
         <ul>
           <li><pre>Member since: {{user.meta.createdAt}}</pre></li>
@@ -35,7 +36,7 @@
     <div class="right">
   
     <div class="control">
-      <button><a ui-sref="discover">Discover</a></button>
+      <a ui-sref="discover"><button>Discover</button></a>
 
       <button>New Book</button>
       <div ng-controller='ProjectsController'>

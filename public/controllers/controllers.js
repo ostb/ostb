@@ -22,10 +22,9 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     // $state.go('home');
     // console.log('hit Dashboard logoutUser');
   };
-  $rootScope.isActive = function(link) {
-    if ($state.$current.includes[$rootScope.currentUser]) {
-      return $state.$current.includes[link];
-    }
+
+  $scope.isActive = function(link) {
+    return $state.$current.includes[link];
   };
 })
 
@@ -89,7 +88,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   };
 })
 
-.controller('Dashboard', function($scope, $stateParams, UsersFactory) {
+.controller('Dashboard', function($scope, $state, $stateParams, UsersFactory) {
 
   var profile = document.getElementById('profile');
 
@@ -291,7 +290,8 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   updateMembers();
 })
 
-.controller('EditorController', function($scope, $q, $stateParams, ProjectsFactory) {
+.controller('EditorController', function($scope, $state, $q, $stateParams, ProjectsFactory) {
+
   var init = function() {
     var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
     var view = document.getElementById('view');
