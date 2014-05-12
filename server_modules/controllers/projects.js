@@ -107,6 +107,7 @@ exports.commit = function(req, res) {
           var commits = {}
           commits['commits.' + commitHash] = {
             commitMessage: req.body.commitMessage,
+            author: req.body.author,
             date: new Date()
           }
           collection.update({username: req.body.username, repo: req.body.repo}, {$set: commits});
@@ -124,6 +125,7 @@ exports.commit = function(req, res) {
           var contributions = {}
           contributions['contributions.' + commitHash] = {
             commitMessage: req.body.commitMessage,
+            author: req.body.author,
             date: new Date()
           }
           collection.update({username: req.body.username, repo: req.body.repo}, {$set: contributions});

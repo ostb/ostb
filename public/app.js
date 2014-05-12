@@ -176,7 +176,6 @@ console.log(window.documentsData);
 
 ostb.filter('orderObjectBy',function(){
   return function(items, field, reverse) {
-    console.log('field in orderObjectBy', field);
     var filtered = [];
     angular.forEach(items, function(item){
       filtered.push(item);

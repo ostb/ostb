@@ -461,6 +461,9 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     project.commitBody['content.md'] = window.doc.getText();
     project.username = $stateParams.username;
     project.repo = $stateParams.repo;
+    project.author = $scope.currentUser || 'anonymous_user';
+
+    console.log('commit: ------ ', project)
 
     ProjectsFactory.commit(project)
     .then(function() {
