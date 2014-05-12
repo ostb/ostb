@@ -173,3 +173,20 @@ window.documentsData = {
 };
 console.log(window.documentsData);
 
+
+ostb.filter('orderObjectBy',function(){
+  return function(items, field, reverse) {
+    console.log('field in orderObjectBy', field);
+    var filtered = [];
+    angular.forEach(items, function(item){
+      filtered.push(item);
+    });
+    filtered.sort(function(a, b){
+      return (a[field] > b[field] ? 1 : -1);
+    });
+    if(reverse){
+      filtered.reverse();
+      return filtered;
+    }
+  };
+});
