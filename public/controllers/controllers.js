@@ -420,7 +420,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 
     ProjectsFactory.create(project)
     .then(function() {
-      $state.go('project', {username: project.username, repo: project.repo});
+      $state.go('project.preview', {username: project.username, repo: project.repo});
     })
     .catch(function(err) {
       $scope.error = err;
