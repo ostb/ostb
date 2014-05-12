@@ -185,9 +185,8 @@ input:focus {
   border-bottom: 1px solid #ebebeb;
 }
 
-.page h1 span {
+.page h1 a {
   font-weight: 300;
-  color: #777;
 }
 
 .page .nav {
@@ -264,8 +263,25 @@ input:focus {
   text-align: right;
 }
 
-.books, .pages {
-  width: 50%;
+.books {
+  width: 30%;
+}
+
+.pages {
+  width: 66%;
+  margin: 0 2%;
+}
+
+.pages li {
+  padding: .5em 0;
+  border-top: 1px solid #eee;
+  font-weight: 400;
+}
+
+.pages span {
+  color: #aaa;
+  font-weight: 300;
+  font-size: .8em;
 }
 
 /* Discover page */

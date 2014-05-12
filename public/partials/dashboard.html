@@ -1,14 +1,14 @@
 <div class="dashboard">
   <div class="wrapper">
     <div class="content">
-      <h1>Dashboard: {{currentUser}}</h1>
+      <h1>Dashboard: {{user.username}}</h1>
       <div class="books left">
         <!-- <h2>Books</h2>
         <ul class="nav">
           <li><a ui-sref="project">Concrete Mathematics</a></li>
           <li><a ui-sref="project">A Perspective on the Human Condition</a></li>
         </ul> -->
-        <h2>{{user.username}}</h2>
+        <h2>Profile</h2>
 
         <img id="profile">
         <div class="profile">
@@ -32,12 +32,13 @@
         <h2>Pages</h2>
 
         <div ng-controller='ProjectsListController'>
-
-          <div ng-hide="projects" class="fyiBox">You don't have any projects yet.<br><br>Create a project to get started &#8594;</div>
-
-          <ul>
+          <div ng-hide="projects" class="fyiBox">
+            <p>You don't have any projects yet.</p>
+            <p>Create a project to get started &#8594;</p>
+          </div>
+          <ul class="nav">
             <div ng-repeat='project in projects'>
-              <a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
+              <li><a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/><span class="right">{{project.lastUpdate}}</span></li>
             </div>
           </ul>
         </div>
