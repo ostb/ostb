@@ -548,7 +548,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     md = data;
     render(data);
     if($scope.project.commits[$stateParams.commitHash]) {
-      $scope.commitMessage = $scope.project.commits[$stateParams.commitHash].commitMessage
+      $scope.commitMessage = $scope.project.commits[$stateParams.commitHash].commitMessage;
     }
   })
   .catch(function(err) {
