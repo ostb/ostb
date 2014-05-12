@@ -209,6 +209,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   ProjectsFactory.getProjects()
   .then(function(data) {
     $scope.projects = data;
+    console.log($scope.projects);
   })
   .catch(function(err) {
     $scope.error = err;
