@@ -414,12 +414,13 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     ModalsFactory.toggleActive();
   };
 
-  $scope.createProject = function(project) {
+  $scope.createProject = function(project, callback) {
     
     project.username = project.username || $stateParams.username;
 
     ProjectsFactory.create(project)
     .then(function() {
+      callback();
       $state.go('project.preview', {username: project.username, repo: project.repo});
     })
     .catch(function(err) {
