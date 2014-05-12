@@ -177,7 +177,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 })
 
 .controller('Account', function($scope, UsersFactory) {
-  UsersFactory.getUser({username: $scope.currentUser})
+  UsersFactory.get({username: $scope.currentUser})
   .then(function(data) {
     $scope.user = data[0];
   })
