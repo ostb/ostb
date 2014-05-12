@@ -133,7 +133,7 @@ html {
   width: 20em;
 }
 
-.login input, .sign-up input, .account input {
+input {
   display: block;
   width: 18em;
   height: 1em;
@@ -145,7 +145,7 @@ html {
   font-weight: 300;
 }
 
-.login input:focus, .sign-up input:focus, .account input:focus {
+input:focus {
   border: 1px solid #99c3e3;
   outline: 0;
 }
@@ -251,6 +251,19 @@ html {
   top: 6.5em;
 }
 
+.dashboard .profile ul {
+  list-style: none;
+  font-size: .875em;
+}
+
+.dashboard .labels {
+  color: #999;
+}
+
+.dashboard .labels li {
+  text-align: right;
+}
+
 .books, .pages {
   width: 50%;
 }
@@ -304,6 +317,7 @@ html {
   background-color:#000000;
   opacity: 0.6;
 }
+
 .ng-modal-dialog {
   /* A centered div above the overlay with a box shadow. */
   z-index:10000;
@@ -318,10 +332,24 @@ html {
   -moz-transform: translate(-50%, -50%);
 
   background-color: #fff;
-  box-shadow: 4px 4px 80px #000;
+  box-shadow: 4px 4px 80px rgba(0, 0, 0, .3);
+  border: 2px solid #73a6cd;
+  border-radius: 3px;
+  width: 400px;
 }
+
+.ng-modal-dialog input {
+  width: 340px;
+  padding: 1em;
+}
+
+.ng-modal-dialog button {
+  width: auto;
+  padding: 0 1em;
+}
+
 .ng-modal-dialog-content {
-  padding:10px;
+  padding: 1em;
   text-align: left;
 }
 .ng-modal-close {
@@ -333,7 +361,13 @@ html {
   font-size: 120%;
   display: inline-block;
   font-weight: bold;
-  font-family: 'arial', 'sans-serif';
+  font-family: 'Roboto', 'sans-serif';
+}
+
+.validation-error {
+  min-height: 3em;
+  margin: 1em 0;
+  color: red;
 }
 
 

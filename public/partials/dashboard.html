@@ -11,13 +11,22 @@
         <h2>{{user.username}}</h2>
 
         <img id="profile">
-        <ul>
-          <li><pre>Member since: {{user.meta.createdAt | date: yyyy-mm-dd}}</pre></li>
-          <li><pre>Full Name:    {{user.meta.fullName}}</pre></li>
-          <li><pre>Email:        {{user.email}}</pre></li>
-          <li><pre>Title:        {{user.meta.title}}</pre></li>
-          <li><pre>Workplace:    {{user.meta.workplace}}</pre></li>
-        </ul>
+        <div class="profile">
+          <ul class="left labels">
+            <li>Joined:</li>
+            <li>Name:</li>
+            <li>Email:</li>
+            <li>Title:</li>
+            <li>Org:</li>
+          </ul>
+          <ul class="left data">
+            <li>&nbsp;&nbsp;{{user.meta.createdAt}}</li>
+            <li>&nbsp;&nbsp;{{user.meta.fullName}}</li>
+            <li>&nbsp;&nbsp;{{user.email}}</li>
+            <li>&nbsp;&nbsp;{{user.meta.title}}</li>
+            <li>&nbsp;&nbsp;{{user.meta.workplace}}</li>
+          </ul>
+        </div>
       </div>
       <div class="pages left">
         <h2>Pages</h2>
@@ -34,12 +43,7 @@
         </div>
       </div>
     </div>
-
-    <div class="right">
-  
     <div class="control">
-      <a ui-sref="discover"><button>Discover</button></a>
-
       <button>New Book</button>
       <div ng-controller='ProjectsController'>
         <button ng-click='toggleModal()'>New Page</button>
@@ -50,16 +54,14 @@
 
 <div ng-controller='ProjectsController'>
   <a ng-click='toggleModal()'></a>
-  <modal-dialog width='400px' height='60%' show='modalShown'>
+  <modal-dialog show='modalShown'>
     <h3>Create New Project</h3>
-    <form ng-submit='createProject(project, toggleModal)'>
-      Project Name:
-      <br>
-      <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>
-      <br>
-      <div><input type="submit" value="Submit"></div>
+    <form ng-submit='createProject(project); toggleModal()'>
+      <label for="project-name">Project Name:</label>
+      <input type="text" id="project-name" placeholder="Your Project Name" ng-model="project.repo">
+      <button type="submit">Submit</button>
     </form>
-    <div style="color:red;">{{error}}</div>
+    <div class="validation-error">{{error}}</div>
   </modal-dialog>
 </div>
 

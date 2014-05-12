@@ -6,7 +6,6 @@
       <div ui-view="projectDetail"></div>
     </div>
 
-    <div class="right">
 
       <div class="control">
 
@@ -28,20 +27,16 @@
           <button ng-click='toggleModal()' ng-hide='currentUser !== project.username'>Delete</button>
         </div>
       </div>
-    </div>
   </div>
 </div>
 
 <div ng-controller='ProjectsController'>
   <a ng-click='toggleModal()'></a>
-
-  <modal-dialog width='400px' height='60%' show='modalShown'>
+  <modal-dialog show='modalShown'>
     <h3>Delete Project</h3>
     <form ng-submit='deleteProject(project); toggleModal()'>
-      Are you sure you want to delete {{project.repo}}?
-      <br>
-      <br>
-      <div><input type="submit" value="Delete"></div>
+      <p>Are you sure you want to delete {{project.repo}}?</p>
+      <button type="submit">Delete</button>
     </form>
     <div style="color:red;">{{error}}</div>
   </modal-dialog>
