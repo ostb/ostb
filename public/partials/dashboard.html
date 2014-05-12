@@ -24,6 +24,8 @@
 
         <div ng-controller='ProjectsListController'>
 
+          <div ng-hide="projects" class="fyiBox">You don't have any projects yet.<br><br>Create a project to get started &#8594;</div>
+
           <ul>
             <div ng-repeat='project in projects'>
               <a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/>
@@ -50,7 +52,7 @@
   <a ng-click='toggleModal()'></a>
   <modal-dialog width='400px' height='60%' show='modalShown'>
     <h3>Create New Project</h3>
-    <form ng-submit='createProject(project); toggleModal()'>
+    <form ng-submit='createProject(project, toggleModal)'>
       Project Name:
       <br>
       <input style="width: 300px;" type="text" placeholder="Your Project Name" ng-model="project.repo"><br>

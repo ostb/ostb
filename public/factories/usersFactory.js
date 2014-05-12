@@ -98,7 +98,6 @@ angular.module('factories.users', [])
     },
 
     getUser: function(user) {
-      // console.log('query user in userFactoryjs', user);
       var dfd = $q.defer();
       $http.get('/search/' + user)
       .success(function(data, status, headers, config) {

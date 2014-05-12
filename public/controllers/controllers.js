@@ -177,7 +177,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 })
 
 .controller('Account', function($scope, UsersFactory) {
-  UsersFactory.getUser({username: $scope.currentUser})
+  UsersFactory.get({username: $scope.currentUser})
   .then(function(data) {
     $scope.user = data[0];
   })
@@ -415,13 +415,14 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     ModalsFactory.toggleActive();
   };
 
-  $scope.createProject = function(project) {
+  $scope.createProject = function(project, callback) {
     
     project.username = project.username || $stateParams.username;
 
     ProjectsFactory.create(project)
     .then(function() {
-      $state.go('project', {username: project.username, repo: project.repo});
+      callback();
+      $state.go('project.preview', {username: project.username, repo: project.repo});
     })
     .catch(function(err) {
       $scope.error = err;
@@ -546,6 +547,9 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   .then(function(data) {
     md = data;
     render(data);
+    if($scope.project.commits[$stateParams.commitHash]) {
+      $scope.commitMessage = $scope.project.commits[$stateParams.commitHash].commitMessage;
+    }
   })
   .catch(function(err) {
     $scope.error = err;
