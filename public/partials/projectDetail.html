@@ -1,48 +1,33 @@
 <div class="page">
   <div class="wrapper">
     <div class="content">
-    <h1><span><a ui-sref="dashboard({username: project.username})">{{project.username}}:</a></span> {{project.repo}}</h1>
-    <div>
+      <h1><a ui-sref="dashboard({username: project.username})">{{project.username}}:</a> {{project.repo}}</h1>
       <div ui-view="projectDetail"></div>
     </div>
-
-    <div class="right">
-
-      <div class="control">
-
-        <a ui-sref="editor({username: project.username, repo: project.repo})"><button id="editButton">Edit</button></a>
-
-        <ul class="nav">
-          <li ng-class="{current:isActive('project.preview')}"><a ui-sref="project.preview">Preview</a></li>
-          <li ng-class="{current:isActive('project.versions')}"><a ui-sref="project.versions">Versions</a></li>
-          <li ng-if="currentUser === project.username" ng-class="{current:isActive('project.contributors')}"><a ui-sref="project.contributors">Contributors</a></li>
-          <li ng-class="{current:isActive('project.statistics')}"><a ui-sref="project.statistics">Statistics</a></li>
-        </ul>
-        <button>Add to Book...</button>
-
-        <a ng-controller='ProjectsController' ng-click='cloneProject(project)'><button ng-hide='currentUser === project.username'>Clone Project</button></a>
-
-        <a ng-controller='DownloadController' ng-click='getFolder()'><button>Download</button></a>
-
-        <div ng-controller='ProjectsController'>
-          <button ng-click='toggleModal()' ng-hide='currentUser !== project.username'>Delete</button>
-        </div>
-      </div>
+    <div class="control" ng-controller="ProjectsController">
+      <button ui-sref="editor({username: project.username, repo: project.repo})" id="editButton">Edit</button>
+      <ul class="nav">
+        <li ng-class="{current:isActive('project.preview')}"><a ui-sref="project.preview">Preview</a></li>
+        <li ng-class="{current:isActive('project.versions')}"><a ui-sref="project.versions">Versions</a></li>
+        <li ng-if="currentUser === project.username" ng-class="{current:isActive('project.contributors')}"><a ui-sref="project.contributors">Contributors</a></li>
+        <li ng-class="{current:isActive('project.statistics')}"><a ui-sref="project.statistics">Statistics</a></li>
+      </ul>
+      <button>Add to Book...</button>
+      <button ng-click="cloneProject(project)" ng-hide="currentUser === project.username">Clone Project</button>
+      <button ng-controller="DownloadController" ng-click="getFolder()">Download</button>
+      <button ng-click="toggleModal()" ng-hide="currentUser !== project.username">Delete</button>
     </div>
   </div>
 </div>
 
-<div ng-controller='ProjectsController'>
-  <a ng-click='toggleModal()'></a>
-
-  <modal-dialog width='400px' height='60%' show='modalShown'>
+<div ng-controller="ProjectsController">
+  <a ng-click="toggleModal()"></a>
+  <modal-dialog show="modalShown">
     <h3>Delete Project</h3>
-    <form ng-submit='deleteProject(project); toggleModal()'>
-      Are you sure you want to delete {{project.repo}}?
-      <br>
-      <br>
-      <div><input type="submit" value="Delete"></div>
+    <form ng-submit="deleteProject(project); toggleModal()">
+      <p>Are you sure you want to delete {{project.repo}}?</p>
+      <button type="submit">Delete</button>
     </form>
-    <div style="color:red;">{{error}}</div>
+    <div class="validation-error">{{error}}</div>
   </modal-dialog>
 </div>

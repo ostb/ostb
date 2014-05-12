@@ -403,12 +403,12 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 
   $scope.modalShown = false;
 
-  $scope.isActive = function() {
+  $scope.isActiveModals = function() {
     return ModalsFactory.isActive();
   }
 
-  $scope.$watch('isActive()', function() {
-    $scope.modalShown = $scope.isActive();
+  $scope.$watch('isActiveModals()', function() {
+    $scope.modalShown = $scope.isActiveModals();
   });
 
   $scope.toggleModal = function() {
