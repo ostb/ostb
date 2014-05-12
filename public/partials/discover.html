@@ -10,7 +10,7 @@
         <h4 class="right">Page</h4>
         <p class="left clear">Owner: <a ui-sref='dashboard({username: project.username})'>{{project.username}}<a/></p>
         <p class="left">Members: {{project.members}}</p>
-        <p class="time right">Last Update: {{project.lastUpdate}}</p>
+        <p class="time right">Last Update: {{project.lastUpdate | date: yyyy-mm-dd}}</p>
       </div>
 
     </div>

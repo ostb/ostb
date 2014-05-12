@@ -12,7 +12,7 @@
 
         <img id="profile">
         <ul>
-          <li><pre>Member since: {{user.meta.createdAt}}</pre></li>
+          <li><pre>Member since: {{user.meta.createdAt | date: yyyy-mm-dd}}</pre></li>
           <li><pre>Full Name:    {{user.meta.fullName}}</pre></li>
           <li><pre>Email:        {{user.email}}</pre></li>
           <li><pre>Title:        {{user.meta.title}}</pre></li>
