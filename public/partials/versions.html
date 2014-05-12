@@ -1,9 +1,8 @@
 <h3>Versions</h3>
 
 <ul>
-  <!-- <li ng-repeat='(key, value) in project.commits | orderBy: value.date: reverse'> -->
   <li ng-repeat='(key, value) in project.commits | orderObjectBy: "date": true'>
-      <a ui-sref="project.preview({username: project.username, repo: project.repo, commitHash: key})"> {{value.date | date: yyyy-mm-dd}} || {{value.commitMessage}}</a> {{value.date}}
+      <a ui-sref="project.preview({username: project.username, repo: project.repo, commitHash: key})"> {{value.date | date: yyyy-mm-dd}} || {{value.commitMessage}}</a>
     </div>
   </li>
 </ul>
@@ -11,8 +10,7 @@
 <h3>Pending Contributions</h3>
 
 <ul>
-  <!-- <li ng-repeat='(key, value) in project.contributions | orderBy: value.date: reverse'> -->
-  <li ng-repeat='(key, value) in project.contributions'>
+  <li ng-repeat='(key, value) in project.contributions | orderObjectBy: "date": true'>
       <a ui-sref="project.contribution({username: project.username, repo: project.repo, commitHash: key})"> {{value.date | date: yyyy-mm-dd}} || {{value.commitMessage}}</a>
     </div>
   </li>
