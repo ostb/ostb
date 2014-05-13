@@ -57,7 +57,7 @@
   <a ng-click='toggleModal()'></a>
   <modal-dialog show='modalShown'>
     <h3>Create New Project</h3>
-    <form ng-submit='createProject(project); toggleModal()'>
+    <form ng-submit='createProject(project, toggleModal)'>
       <label for="project-name">Project Name:</label>
       <input type="text" id="project-name" placeholder="Your Project Name" ng-model="project.repo">
       <button type="submit">Submit</button>
