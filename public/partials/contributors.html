@@ -1,11 +1,12 @@
 <h3>Contributors</h3>
 
-<div style="float: left; border: 2px solid rgb(92, 161, 250); padding: 0 20px; border-radius: 25px;">
+<div class="contributorList">
   <h5>Project Members</h5>
   <p>Members can collaboratively edit your<br>project in real time, and save new<br>versions.</p>
 
   <ul style="list-style: none;">
     <li ng-repeat='member in membersList track by $index'>
+        <span ng-show="member === project.username">owner: </span>
         <div ng-hide="member === project.username" class="removeButton"><i ng-click="deleteMember(member)" class="fa fa-times-circle fa-lg"></i></div>
         <a ng-class="{boldlink:member === project.username}" ui-sref="dashboard({username: member})">{{member}}</a>
       </div>
