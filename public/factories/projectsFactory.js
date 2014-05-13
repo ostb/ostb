@@ -5,7 +5,8 @@ angular.module('factories.projects', [])
   return {
     create: function(project) {
 
-      console.log('inside project factory', project);
+      project.reponame = project.repo;
+      project.repo = project.repo.trim().replace(/\s/g, '_');
 
       var dfd = $q.defer();
       $http.post('/api/projects', project)
