@@ -38,7 +38,7 @@
           </div>
           <ul class="nav">
             <div ng-repeat='project in projects'>
-              <li><a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/><span class="right">{{project.lastUpdate | date: yyyy-mm-dd}}</span></li>
+              <li><a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.reponame}}<a/><span class="right">{{project.lastUpdate | date: yyyy-mm-dd}}</span></li>
             </div>
           </ul>
         </div>

@@ -1,7 +1,7 @@
 <div class="page">
   <div class="wrapper">
     <div class="content">
-      <h1><a ui-sref="dashboard({username: project.username})">{{project.username}}:</a> {{project.repo}}</h1>
+      <h1><a ui-sref="dashboard({username: project.username})">{{project.username}}:</a> {{project.reponame}}</h1>
       <div ui-view="projectDetail"></div>
     </div>
     <div class="control" ng-controller="ProjectsController">
@@ -25,7 +25,7 @@
   <modal-dialog show="modalShown">
     <h3>Delete Project</h3>
     <form ng-submit="deleteProject(project); toggleModal()">
-      <p>Are you sure you want to delete {{project.repo}}?</p>
+      <p>Are you sure you want to delete {{project.reponame}}?</p>
       <button type="submit">Delete</button>
     </form>
     <div class="validation-error">{{error}}</div>
