@@ -540,3 +540,11 @@ img {
   width: 260px
 }
 
+.profile img {
+  border-radius: 25px;
+  border: 2px solid rgb(111, 157, 214);
+}
+
+
+
+
