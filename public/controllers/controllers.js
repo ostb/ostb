@@ -548,6 +548,8 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     queryObj.commitHash = $stateParams.commitHash;
   }
 
+  console.log('query: ----', queryObj);
+
   ProjectsFactory.checkout(queryObj)
   .then(function(data) {
     md = data;
