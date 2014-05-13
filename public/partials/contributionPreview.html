@@ -4,13 +4,17 @@
 <br>
 
 <div ng-show="currentUser === project.username">
-  <span style="float: left;">Save this contribution as<br>the current master version.
-    <button><a ng-click="acceptContribution()">Accept Changes</a></button>
-  </span>
+  <div style="float: left; margin-right: 30px">
+    <span>Save this contribution as<br>the current master version.
+      <a ng-click="acceptContribution()"><button>Accept Changes</button></a>
+    </span>
+  </div>
 
-  <span>Delete this contribution<br>and keep the current version as is.
-    <button><a ng-click="removeContribution()">Reject Changes</a></button>
-  </span>
+  <div>
+    <span>Delete this contribution<br>and keep the current version as is.
+      <a ng-click="removeContribution()"><button>Reject Changes</button></a>
+    </span>
+  </div>
 </div>
 
 <div id="preview"></div>
