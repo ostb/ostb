@@ -25,10 +25,9 @@ exports.createUser = function(username, next) {
 exports.init = function(username, repo, next) {
   var savedHash;
 
-  if(!isLegalName(repo)) {
+  if(!isLegalNameAllowSpace(repo)) {
     throw 'Illegal character in project name. Please use only alphanumberic characters and spaces.';
   }
-  repo = repo.trim();
 
   if(fs.existsSync('user_data/' + username + '/' + repo + '/')) {
     throw 'You already have a project named ' + repo + '!';
@@ -41,6 +40,7 @@ exports.init = function(username, repo, next) {
       'index.html': '<!DOCTYPE HTML>',
       'js/' : ''
     }
+
     var cmt = Promise.promisify(commit);
     return cmt(username, repo, 'Created new project ' + repo, commitBody, null);
   })
@@ -55,7 +55,7 @@ exports.init = function(username, repo, next) {
 }
 
 var commit = exports.commit = function(username, repo, commitMessage, commitBody, branch, next) {
-  if(!isLegalCommitMessage(commitMessage)) {
+  if(!isLegalNameAllowSpace(commitMessage)) {
     throw 'Illegal character in version name. Please use only alphanumberic characters and spaces.';
   }
 
@@ -160,7 +160,7 @@ var isLegalName = function(name) {
   return regex.test(name);
 }
 
-var isLegalCommitMessage = function(name) {
+var isLegalNameAllowSpace = function(name) {
   var regex = /^[\w\-\s]+$/;
   return regex.test(name);
 }
