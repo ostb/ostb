@@ -44,10 +44,10 @@
         </div>
       </div>
     </div>
-    <div class="control">
-      <button>New Book</button>
-      <div ng-controller='ProjectsController'>
-        <button ng-click='toggleModal()'>New Page</button>
+    <div ng-controller='ProjectsController' class="control">
+      <button ng-hide='currentUser!==username'>New Book</button>
+      <div>
+        <button ng-click='toggleModal()' ng-hide='currentUser!==username'>New Page</button>
       </div>
     </div>
   </div>

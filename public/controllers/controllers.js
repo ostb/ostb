@@ -405,6 +405,9 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 
 .controller('ProjectsController', function($scope, $state, $stateParams, ProjectsFactory, ModalsFactory) {
 
+  $scope.username = $stateParams.username;
+  console.log('ProjectsController stateParams', $stateParams.username);
+
   $scope.modalShown = false;
 
   $scope.isActiveModals = function() {
