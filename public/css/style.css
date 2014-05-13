@@ -545,6 +545,15 @@ img {
   border: 2px solid rgb(111, 157, 214);
 }
 
+.boldlink {
+  font-weight: bold;
+}
 
+.contributorList {
+  float: left;
+  border: 2px solid rgb(111, 157, 214);
+  padding: 0 20px;
+  border-radius: 25px;
+}
 
 
