@@ -365,7 +365,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 })
 
 .controller('DownloadController', function($scope, $stateParams, ProjectsFactory) {
-  var converter = new Showdown.converter();
+  var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
   var render = function(data) {
     return '' +
     '<!DOCTYPE HTML>\n<html>\n<head>\n' + 
@@ -541,7 +541,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 .controller('DocumentController', function($scope, $state, $stateParams, ProjectsFactory) {
   
   var preview = document.getElementById('preview');
-  var converter = new Showdown.converter();
+  var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
   var md;
 
   var render = function(data) {
