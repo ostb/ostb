@@ -269,23 +269,25 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.response = undefined;
 
   $scope.query = function (user) {
-
+    console.log('inside contributors controller $scope.query function', user);
     $scope.response = undefined;
     $scope.queryUser = [];
-    UsersFactory.getUser(user)
-    .then(function(data) {
-      var userList = data;
-      userList = _.reject(userList, function(userObj){    
-        return _.contains($scope.membersList, userObj.username) || userObj.username === $rootScope.currentUser;
-      });
-      if (userList.length === 0) {
-        $scope.response = 'No users found';
-      }
-      $scope.queryUser = userList;
-    })
-    .catch(function(err) {
-      $scope.response = err;
-    })
+    if(user){
+      UsersFactory.getUser(user)
+      .then(function(data) {
+        var userList = data;
+        userList = _.reject(userList, function(userObj){    
+          return _.contains($scope.membersList, userObj.username) || userObj.username === $rootScope.currentUser;
+        });
+        if (userList.length === 0) {
+          $scope.response = 'No users found';
+        }
+        $scope.queryUser = userList;
+      })
+      .catch(function(err) {
+        $scope.response = err;
+      })
+    }
   };
 
   updateMembers();

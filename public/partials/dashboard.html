@@ -20,7 +20,7 @@
             <li>Org:</li>
           </ul>
           <ul class="left data">
-            <li>&nbsp;&nbsp;{{user.meta.createdAt}}</li>
+            <li>&nbsp;&nbsp;{{user.meta.createdAt | date: yyyy-mm-dd}}</li>
             <li>&nbsp;&nbsp;{{user.meta.fullName}}</li>
             <li>&nbsp;&nbsp;{{user.email}}</li>
             <li>&nbsp;&nbsp;{{user.meta.title}}</li>
@@ -38,7 +38,7 @@
           </div>
           <ul class="nav">
             <div ng-repeat='project in projects'>
-              <li><a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/><span class="right">{{project.lastUpdate}}</span></li>
+              <li><a ui-sref='project.preview({username: project.username, repo: project.repo})'>{{project.repo}}<a/><span class="right">{{project.lastUpdate | date: yyyy-mm-dd}}</span></li>
             </div>
           </ul>
         </div>
