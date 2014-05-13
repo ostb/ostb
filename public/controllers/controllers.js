@@ -8,7 +8,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
           $rootScope.showLogin = false;
           return $rootScope.currentUser;
         } else {
-          console.log('hit inside index cont');
+          // console.log('hit inside index cont');
           $state.go('dashboard');
         }
       }
@@ -29,7 +29,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 })
 
 .controller('Splash', function($rootScope, $scope) {
-  console.log('Splash');
+  // console.log('Splash');
 })
 
 .controller('Login', function($rootScope, $state, $scope, UsersFactory) {
@@ -80,7 +80,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     })
     .then(function() {
     //should store user info to rootscope currentuser
-      console.log('success');
+      // console.log('success');
     })
     .catch(function(err) {
       $scope.error = err;
@@ -148,7 +148,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     .then(function() {
       $scope.postUser($scope.user);
       // $state.go('dashboard');
-      console.log('success');
+      // console.log('success');
     })
     .catch(function(err) {
       $scope.error = err;
@@ -406,7 +406,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 .controller('ProjectsController', function($scope, $state, $stateParams, ProjectsFactory, ModalsFactory) {
 
   $scope.username = $stateParams.username;
-  console.log('ProjectsController stateParams', $stateParams.username);
+  // console.log('ProjectsController stateParams', $stateParams.username);
 
   $scope.modalShown = false;
 
@@ -472,7 +472,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 
     ProjectsFactory.commit(project)
     .then(function() {
-      console.log('success');
+      // console.log('success');
     })
     .catch(function(err) {
       $scope.error = err;
@@ -505,7 +505,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.createUser = function(user) {
     UsersFactory.create(user)
     .then(function() {
-      console.log('success');
+      // console.log('success');
     })
     .catch(function(err) {
       $scope.error = err;
@@ -515,7 +515,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.deleteUser = function(user) {
     UsersFactory.delete(user)
     .then(function() {
-      console.log('success');
+      // console.log('success');
     })
     .catch(function(err) {
       $scope.error = err;
@@ -592,7 +592,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 
     ProjectsFactory.removeContribution(project)
     .then(function() {
-      console.log('success');
+      // console.log('success');
       $state.go('project.versions', {username: project.username, repo: project.repo});
     })
     .catch(function(err) {
