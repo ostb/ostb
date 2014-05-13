@@ -315,6 +315,24 @@ input:focus {
   color: rgba(0, 0, 0, .4);
 }
 
+.tutorial h3 {
+  margin-top: 2em;
+}
+
+.tutorial img {
+  margin-left: 5px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 6px #ccc;
+}
+
+.tutorial blockquote {
+
+}
+
+.tutorial p {
+  font-size: .9em;
+}
+
 
 
 
@@ -391,7 +409,7 @@ input:focus {
    EDITOR
    ================= */
 
-img {
+#editor img, #right img {
   max-width: 500px;
 }
 

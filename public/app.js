@@ -44,6 +44,15 @@ var ostb = angular.module('ostb', [
       }
     }
   })
+  .state('tutorial', {
+    url: "/tutorial",
+    views: {
+      'content': {
+        templateUrl: 'partials/tutorial.html',
+        controller: 'DiscoverController'
+      }
+    }
+  })
   .state('discover', {
     url: "/discover",
     views: {
