@@ -1,17 +1,31 @@
 <h3>Versions</h3>
 
-<ul>
+<ul class="pages" style="list-style: none;">
   <li ng-repeat='(key, value) in project.commits | orderObjectBy: "date": true'>
-      <a ui-sref="project.preview({username: project.username, repo: project.repo, commitHash: key})"> {{value.date | date: yyyy-mm-dd}} || {{value.commitMessage}}</a><a> || author: {{value.author}}</a>
+    <div>
+      <a ui-sref="project.preview({username: project.username, repo: project.repo, commitHash: value.hash})">{{value.commitMessage}}</a>
+
+      <span class="right">
+        {{value.date | date: yyyy-mm-dd}} || author: 
+        <a ng-hide="value.author === 'anonymous_user'" ui-sref="dashboard({username: value.author})">{{value.author}}</a>
+        <span ng-show="value.author === 'anonymous_user'">anonymous user</span>
+      </span>
     </div>
   </li>
 </ul>
 
 <h3>Pending Contributions</h3>
 
-<ul>
+<ul class="pages" style="list-style: none;">
   <li ng-repeat='(key, value) in project.contributions | orderObjectBy: "date": true'>
-      <a ui-sref="project.contribution({username: project.username, repo: project.repo, commitHash: key})"> {{value.date | date: yyyy-mm-dd}} || {{value.commitMessage}}</a><a>|| author: {{value.author}}</a>
+    <div>
+      <a ui-sref="project.contribution({username: project.username, repo: project.repo, commitHash: value.hash})">{{value.commitMessage}}</a>
+
+      <span class="right">
+        {{value.date | date: yyyy-mm-dd}} || author: 
+        <a ng-hide="value.author === 'anonymous_user'" ui-sref="dashboard({username: value.author})">{{value.author}}</a>
+        <span ng-show="value.author === 'anonymous_user'">anonymous user</span>
+      </span>
     </div>
   </li>
 </ul>

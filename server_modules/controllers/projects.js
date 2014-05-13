@@ -25,6 +25,7 @@ exports.create = function(req, res) {
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Created new project ' + req.body.repo,
+        author: req.body.username,
         date: new Date()
       }
       collection.insert(newProject);
@@ -70,10 +71,12 @@ exports.clone = function(req, res) {
       var newProject = {
         repo: req.body.repo,
         username: req.body.username,
+        members: [req.body.username],
         commits: {}
       }
       newProject.commits[commitHash] = {
         commitMessage: 'Cloned project ' + req.body.repo + ' from ' + req.body.owner,
+        author: req.body.username,
         date: new Date()
       }
       collection.insert(newProject);
