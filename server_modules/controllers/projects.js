@@ -71,6 +71,7 @@ exports.clone = function(req, res) {
       var newProject = {
         repo: req.body.repo,
         username: req.body.username,
+        members: [req.body.username],
         commits: {}
       }
       newProject.commits[commitHash] = {
