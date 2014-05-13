@@ -133,7 +133,7 @@ html {
   width: 20em;
 }
 
-input {
+.wrapper input, .ng-modal-dialog input {
   display: block;
   width: 18em;
   height: 1em;
@@ -145,7 +145,7 @@ input {
   font-weight: 300;
 }
 
-input:focus {
+.wrapper input:focus, .ng-modal-dialog input:focus {
   border: 1px solid #99c3e3;
   outline: 0;
 }
