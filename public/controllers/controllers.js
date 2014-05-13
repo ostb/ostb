@@ -117,6 +117,8 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     $scope.user.username = username;
     $scope.user.email = email;
     $scope.user.password = password;
+    var atpos = email ? email.indexOf('@') : 0;
+    var dotpos = email ? email.indexOf('.') : 0;
     if((username && email && password) && (password === passwordVerify)){
       var signupInfo = {username: username, email: email, password: password};
       var filtered = [];
@@ -124,8 +126,10 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
           if(value.length < 4){
             filtered.push(key);
           }
-        });
-        if(!filtered.length){
+        });        
+        if(atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= email.length){
+          $scope.errorMsg = 'not a valid email address'
+        }else if(!filtered.length){
           $scope.createUser($scope.user);
         }else{
           $scope.errorMsg = filtered.join(', ') + ' needs to be greater than or equal to 4 characters';
