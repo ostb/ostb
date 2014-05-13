@@ -201,7 +201,6 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
 })
 
 .controller('Page', function($scope) {
-  console.log('Page');
 })
 
 .controller('IndexContent', function($scope){
@@ -213,7 +212,6 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   ProjectsFactory.getProjects()
   .then(function(data) {
     $scope.projects = data;
-    console.log($scope.projects);
   })
   .catch(function(err) {
     $scope.error = err;
@@ -273,7 +271,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   $scope.response = undefined;
 
   $scope.query = function (user) {
-    console.log('inside contributors controller $scope.query function', user);
+    // console.log('inside contributors controller $scope.query function', user);
     $scope.response = undefined;
     $scope.queryUser = [];
     if(user){
@@ -396,7 +394,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
       var blob = zip.generate({type:"blob"});
       saveAs(blob, $stateParams.repo + ".zip");
     }catch(e) {
-      console.log(e);
+      // console.log(e);
     }
     return false;
   }
@@ -467,7 +465,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     project.repo = $stateParams.repo;
     project.author = $scope.currentUser || 'anonymous_user';
 
-    console.log('commit: ------ ', project)
+    // console.log('commit: ------ ', project)
 
     ProjectsFactory.commit(project)
     .then(function() {
@@ -552,7 +550,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     queryObj.commitHash = $stateParams.commitHash;
   }
 
-  console.log('query: ----', queryObj);
+  // console.log('query: ----', queryObj);
 
   ProjectsFactory.checkout(queryObj)
   .then(function(data) {
