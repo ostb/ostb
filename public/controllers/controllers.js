@@ -113,12 +113,12 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   };
 
   $scope.submitTheForm = function(username, email, password, passwordVerify) {
-    // console.log('hit submitTheForm Signup');
     $scope.user.username = username;
     $scope.user.email = email;
     $scope.user.password = password;
     var atpos = email ? email.indexOf('@') : 0;
     var dotpos = email ? email.indexOf('.') : 0;
+    dotpos = dotpos < atpos ? email.indexOf('.', atpos) : dotpos;
     if((username && email && password) && (password === passwordVerify)){
       var signupInfo = {username: username, email: email, password: password};
       var filtered = [];
