@@ -328,7 +328,7 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
     })
     .then(function(data) {
       doc = data;
-      return ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo})
+      return ProjectsFactory.checkout({username: $stateParams.username, repo: $stateParams.repo});
     })
     .then(function(data) {
       if(doc.getLength() === 0) {
@@ -368,10 +368,13 @@ ostb.controller('IndexController', function($rootScope, $scope, $location, $stat
   var converter = new Showdown.converter({ extensions: ['ostb', 'table'] });
   var render = function(data) {
     return '' +
-    '<!DOCTYPE HTML>\n<html>\n<head>\n' + 
+    '<!DOCTYPE HTML>\n<html>\n<head>\n' +
+    '<title>' + $scope.project.reponame + '</title>' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+    '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700|Merriweather:400,700,300" type="text/css">' +
     '<link rel="stylesheet" type="text/css" href="css/normalize.css">\n' +
-    '<link rel="stylesheet" type="text/css" href="css/default.css">\n</head>\n<body>\n' + 
-    converter.makeHtml(data) + '\n</body>\n</html>';
+    '<link rel="stylesheet" type="text/css" href="css/default.css">\n</head>\n<body>\n<div class="wrapper">' +
+    converter.makeHtml(data) + '\n</div>\n</body>\n</html>';
   };
 
   $scope.getFolder = function() {
