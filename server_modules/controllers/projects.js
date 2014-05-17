@@ -250,6 +250,9 @@ exports.getMembers = function(req, res) {
     if(err) {
       res.send(404, err.toString());
     }else {
+      if(!data) {
+        res.send(404, 'no such project');
+      }
       res.send(data.members);
     }
   })
