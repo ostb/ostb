@@ -213,6 +213,9 @@ exports.getFile = function(req, res) {
 
   checkout(req.query.username, req.query.repo, req.query.commitHash)
   .then(function(data) {
+    if(!data) {
+      res.send(404, 'no such project');
+    }
     res.send(200, data);
   })
   .catch(function(err){
