@@ -33,48 +33,6 @@ var Mustache = (function() {
   }
 })();
 
-var render = function(content, name, docName, res) {
-  var html, markdown;
-  markdown = showdown.makeHtml(content);
-  html = Mustache.to_html(template, {
-    content: content,
-    markdown: markdown,
-    name: name,
-    docName: docName
-  });
-  res.writeHead(200, {
-    'content-type': 'text/html'
-  });
-  return res.end(html);
-};
-
-module.exports = function(docName, model, res) {
-  var name;
-  name = docName;
-  docName = "wiki:" + docName;
-  return model.getSnapshot(docName, function(error, data) {
-    if (error === 'Document does not exist') {
-      return model.create(docName, 'text', function() {
-        var content;
-        content = defaultContent(name);
-        return model.applyOp(docName, {
-          op: [
-            {
-              i: content,
-              p: 0
-            }
-          ],
-          v: 0
-        }, function() {
-          return render(content, name, docName, res);
-        });
-      });
-    } else {
-      return render(data.snapshot, name, docName, res);
-    }
-  });
-};
-
 //initialize users dir
 fs.exists('user_data/', function(exists) {
   if(!exists) {
