@@ -255,8 +255,9 @@ exports.getMembers = function(req, res) {
     }else {
       if(!data) {
         res.send(404, 'no such project');
+      }else {
+        res.send(data.members);
       }
-      res.send(data.members);
     }
   })
 }
